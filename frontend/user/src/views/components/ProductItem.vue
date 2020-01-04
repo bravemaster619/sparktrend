@@ -1,6 +1,6 @@
 <template>
     <div class="col-6 col-md-4 col-lg-4 p-2 product-item">
-        <a v-bind:href="product.url" class="text-light font-weight-300 d-table border border-light">
+        <router-link :to="product.url" class="text-light font-weight-300 d-table border border-light">
             <div class="product-header text-center">
                 <img class="w-100 product-banner" v-bind:src="product.product_banner" v-bind:alt="product.title + ' banner'">
                 <img class="m-auto profile-img" v-bind:src="product.user.profile_img" v-bind:alt="product.title + ' profile image'">
@@ -38,7 +38,7 @@
                                   :color="colors[index % colors.length]"
                 ></percent-progress>
             </div>
-        </a>
+        </router-link>
     </div>
 </template>
 <script>
