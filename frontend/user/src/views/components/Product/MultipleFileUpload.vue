@@ -44,8 +44,6 @@
             loaddropfile: function(e) {
                 e.preventDefault()
                 e.stopPropagation()
-                alert('ok')
-                console.log(e)
             },
             openinput: function() {
                 document.getElementById("vue-file-upload-input").click();
@@ -80,7 +78,6 @@
             },
             upload: function() {
                 alert('Check console to see uploads')
-                console.log(this.files)
             }
         }
     }
