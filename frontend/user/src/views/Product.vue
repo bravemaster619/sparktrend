@@ -292,7 +292,6 @@
             }
             this.withBio = false;
             this.selectedPricing = selectedPricing;
-            console.log(this.selectedPricing)
          },
          onBioUrlCheck: function(e) {
             this.withBio = !(this.withBio)
