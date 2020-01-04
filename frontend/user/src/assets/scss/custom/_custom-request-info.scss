@@ -1,0 +1,95 @@
+$theme-color: #5e72e4;
+$theme-color-light: #64c0df;
+
+.salesorder-list-item {
+  width: 100%;
+  padding: 24px;
+  display: flex;
+}
+@media (max-width: 767.98px) {
+  .salesorder-list-item {
+    flex-direction:column;
+    padding: 12px 0;
+    align-items: center
+  }
+}
+.salesorder-price {
+  display: inherit
+}
+.salesorder-list-detail {
+  padding: 0 24px
+}
+
+@media (max-width: 767.98px) {
+  .salesorder-list-detail {
+    padding:0
+  }
+}
+.salesorder-list-date {
+  font-size: 20px
+}
+
+@media (max-width: 767.98px) {
+  .salesorder-list-date {
+    font-size:18px
+  }
+}
+.salesorder-list-description {
+  height: 100%;
+  width: 100%;
+  padding: 0 24px
+}
+
+@media (max-width: 767.98px) {
+  .salesorder-list-description {
+    padding:12px 0
+  }
+}
+
+.salesorder-list-payment-status {
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: .4em;
+  padding: .2rem .8rem
+}
+
+.salesorder-list-image {
+  width: 200px;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+}
+.salesorder-list-img-product{
+  height: 180px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.salesorder-list-download-post {
+  position: absolute;
+  border-radius: 0 8px 0 4px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  top: 30px;
+  right: 0;
+  padding: 6px;
+  background-color: rgba(0,0,0,.3);
+  -webkit-transition: all .4s ease;
+  transition: all .4s ease;
+  &:hover {
+    background-color: rgba(0,0,0,.5);
+  }
+}
+.salesorder-list-download-post img {
+  width: 34px;
+}
+
+
+.salesorder-list-img-profile{
+  height: 120px;
+  width: 120px;
+  object-fit: cover;
+  border-radius: 100%;
+  border: 2px solid #2fc468;
+}
