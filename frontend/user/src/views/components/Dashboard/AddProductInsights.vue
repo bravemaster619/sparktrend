@@ -10,7 +10,7 @@
         </div>
         <div class="col-12 col-md-10 mt-3 d-flex justify-content-between">
             <button class="btn text-uppercase">{{$t("back")}}</button>
-            <button class="btn btn-my-effect text-uppercase">{{$t("next")}}</button>
+            <button class="btn btn-grad-effect text-uppercase">{{$t("next")}}</button>
         </div>
     </div>
 </template>

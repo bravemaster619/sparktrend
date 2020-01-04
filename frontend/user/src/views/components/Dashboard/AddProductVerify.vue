@@ -11,7 +11,7 @@
                 <input name="username" hidden value="leomessi">
                 <div class="form-group row">
                     <div class="col-md-10 col-12">
-                        <button class="btn btn-primary btn-my-effect m-0 w-100 text-uppercase" action="submit">{{$t("Verify Instagram")}}</button>
+                        <button class="btn btn-primary btn-grad-effect m-0 w-100 text-uppercase" action="submit">{{$t("Verify Instagram")}}</button>
                     </div>
                 </div>
             </form>

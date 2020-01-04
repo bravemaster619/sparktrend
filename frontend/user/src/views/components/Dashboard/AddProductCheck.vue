@@ -13,7 +13,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-md-6 col-12">
-                        <button  class="btn btn-primary btn-my-effect w-100 m-0 text-uppercase" action="submit">{{$t("Check Instagram")}}</button>
+                        <button  class="btn btn-primary btn-grad-effect w-100 m-0 text-uppercase" action="submit">{{$t("Check Instagram")}}</button>
                     </div>
                 </div>
             </form>
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="row button-next">
-                <button class="btn btn-primary btn-my-effect text-uppercase">{{$t("Next")}}</button>
+                <button class="btn btn-primary btn-grad-effect text-uppercase">{{$t("Next")}}</button>
             </div>
         </div>
     </div>

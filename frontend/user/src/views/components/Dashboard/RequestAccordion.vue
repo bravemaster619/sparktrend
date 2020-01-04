@@ -90,7 +90,7 @@
                                              alt="download-icon">
                                     </button>
                                     <div class="d-flex mt-2">
-                                        <button class="btn btn-primary btn-my-effect btn-md flex-1 mx-0" action="submit" style="font-size: 14px;">
+                                        <button class="btn btn-primary btn-grad-effect btn-md flex-1 mx-0" action="submit" style="font-size: 14px;">
                                             Pay
                                         </button>
                                     </div>
