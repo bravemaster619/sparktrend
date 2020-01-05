@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import BaseImageInput from "../uploader/BaseImageInput";
+    import BaseImageInput from "./BaseImageInput";
 
     export default {
         name: "AddProductInsights",
