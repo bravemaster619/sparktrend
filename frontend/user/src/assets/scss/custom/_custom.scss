@@ -402,7 +402,7 @@ $theme-color-light: #64c0df;
   border-radius: 50%/100px 0px 0px 0px;
 }
 footer.footer {
-  padding-bottom: 0px;
+  padding-bottom: 0;
 }
 footer.footer::before {
   content: "";
@@ -606,10 +606,10 @@ $transition-time: 0.2s;
   align-items: center;
   background-color: $white;
   border: 0;
-  border-radius: 0px;
+  border-radius: 0;
   color: $dark-blue;
   display: flex;
-  font-family: 'Josefin Sans', Arial;
+  //font-family: 'Josefin Sans', Arial;
   font-size: 1.25rem;
   line-height: 1;
   padding: $half-spacing-unit;
@@ -728,7 +728,15 @@ button.badger-accordion-toggle:focus {
   display: block;
   animation: fadein .35s ease-in;
 }
-
+.button-basic{
+  transition: all .5s ease;
+  -webkit-transition: all .5s ease;
+  color: #898989;
+}
+.button-basic:hover{
+  background-color: #ffffff;
+  color: #606062;
+}
 .btn-grad-effect{
   color: #f5f5f5;
   background: linear-gradient(45deg, $theme-color-light, $theme-color, $theme-color-light);
@@ -764,6 +772,23 @@ button.badger-accordion-toggle:focus {
     background-color: #2fc468;
     color: #fff;
   }
+}
+//-------form validation---added by rmaj---
+.invalid-feedback {
+  display: block;
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #dc3545;
+  &:after, &:before {
+    box-sizing: border-box;
+  }
+}
+form .form-group .form-control.invalid-input {
+  border-color: #e74c3c;
+}
+html body{
+  font-weight: 300;
 }
 //-------several part seperator----added by rmaj-------
 @media (min-width: 768px) {
@@ -815,6 +840,9 @@ form.form-verifyproduct{
 .row.button-next {
   justify-content: flex-end;
   width: 60%;
+}
+.dropzone-border{
+  border: 4px dotted $theme-color;
 }
 //=================================
 .addon-svg {
@@ -952,9 +980,9 @@ form.form-verifyproduct{
 
 .navbar-light {
   padding-bottom: 0.3rem;
-  -webkit-box-shadow: 0px 3px 3px 0px rgba(177,177,177,1);
-  -moz-box-shadow: 0px 3px 3px 0px rgba(177,177,177,1);
-  box-shadow: 0px 3px 3px 0px rgba(177,177,177,1);
+  -webkit-box-shadow: 0 3px 3px 0 rgba(177,177,177,1);
+  -moz-box-shadow: 0 3px 3px 0 rgba(177,177,177,1);
+  box-shadow: 0 3px 3px 0 rgba(177,177,177,1);
   .toggler-line {
     border-color: $navbar-light-toggler-border-color;
     background-color: $navbar-light-color;
