@@ -38,7 +38,13 @@ const i18n = new VueI18n({
 });
 
 Vue.component('v-select', vSelect);
-
+Vue.mixin({
+  methods: {
+    isEmpty(str){
+      return str === null || str === undefined || str === false || str === "";
+    }
+  }
+});
 new Vue({
   router,
   i18n,

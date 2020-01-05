@@ -1,6 +1,6 @@
 <template>
 
-    <div class="base-image-input"
+    <div class="base-image-input dropzone-border" ref="imgdiv"
         :style="{ 'background-image' : `url(${imageData})`, 'width': width + '%', 'height': height + 'px'}"
         @click="chooseImage">
         <span class="placeholder"
@@ -12,7 +12,6 @@
             ref="fileInput"
             @input="onSelectFile">
     </div>
-
 </template>
 <script>
     export default {
@@ -23,6 +22,9 @@
             }
         },
         props: ['width', 'height'],
+        event: [
+            'input'
+        ],
         computed: {
             style() {
                 return 'width: ' + this.width
@@ -35,12 +37,15 @@
             onSelectFile() {
                 const input = this.$refs.fileInput;
                 const files = input.files;
+                let file = files[0];
                 if(files && input.files){
                     const reader = new FileReader();
-                    reader.onload = e => {
+                    reader.onload = (e) => {
                         this.imageData = e.target.result
                     };
-                    reader.readAsDataURL(files[0]);
+
+                    reader.readAsDataURL(file);
+                    this.$refs.imgdiv.classList.remove("dropzone-border");
                     this.$emit('input', files[0]);
                     //https://levelup.gitconnected.com/how-to-preview-images-before-uploading-them-in-vue-4964803adb64
                 }
@@ -55,6 +60,7 @@
         cursor: pointer;
         background-size: cover;
         background-position: center center;
+        border-radius: 10px;
     }
     .placeholder{
         background: #f0f0f0;
@@ -65,6 +71,7 @@
         align-items: center;
         color: #333;
         font-size: 18px;
+        border-radius: 10px;
     }
     .placeholder:hover{
         background: #e0e0e0;
