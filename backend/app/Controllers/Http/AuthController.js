@@ -3,7 +3,8 @@
 const User = use('App/Models/User')
 const Token = use('App/Models/Token')
 const { validate } = use('Validator')
-const { isDevelopment } = require('../../../helper/global')
+const { isDevelopment } = use('App/Helpers')
+const randomstring = require('randomstring')
 class AuthController {
 
   async register({ request, auth, response }) {
@@ -36,7 +37,7 @@ class AuthController {
       })
     }
     let data = request.only(['name', 'email', 'password', 'country', 'gender', 'paypal_email'])
-    data['verify_token'] =  
+    data['verify_token'] = randomstring.generate(40)
     let user = await User.create(data)
     let token = await auth.generate(user)
     user.password = undefined
