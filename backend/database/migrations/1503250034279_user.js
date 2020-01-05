@@ -13,6 +13,7 @@ class UserSchema extends Schema {
       table.string('country', 191).notNullable()
       table.string('gender', 20)
       table.string('paypal_email', 191)
+      table.string('verify_token', 191)
       table.datetime('email_verified_at')
       table.timestamps()
     })
