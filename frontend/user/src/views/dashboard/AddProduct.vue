@@ -6,6 +6,7 @@
         </add-product-verify>
         <add-product-insights v-if="status==='insights'" tab_id="2" @back="back" @next="next">
         </add-product-insights>
+        <add-product-price v-if="status==='price'" tab_id="3"></add-product-price>
     </div>
 </template>
 
@@ -13,20 +14,22 @@
     import AddProductInsights from "../components/Dashboard/AddProductInsights";
     import AddProductCheck from "../components/Dashboard/AddProductCheck";
     import AddProductVerify from "../components/Dashboard/AddProductVerify";
+    import AddProductPrice from "../components/Dashboard/AddProductPrice";
 
     export default {
         name: "AddProduct",
         components: {
             AddProductInsights,
             AddProductCheck,
-            AddProductVerify
+            AddProductVerify,
+            AddProductPrice
         },
         data () {
             return {
                 status_enum: [
-                    "check", "verify", "insights"
+                    "check", "verify", "insights", "price"
                 ],
-                status : "check",
+                status : "price",
                 current_tab_id: 0,
                 verification_code   : "",
                 username            : "",
