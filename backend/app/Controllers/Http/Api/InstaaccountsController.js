@@ -89,7 +89,8 @@ class InstaaccountsController extends BaseController {
       instaaccount.type = instainfo.type
     }
     await instaaccount.save()
-    return response.apiUpdated(instaaccount.merge(instainfo))
+    instaaccount.merge(instainfo)
+    return response.apiUpdated(instaaccount)
   }
 
   async validateInstagram({ request, auth, response, instance }) {
@@ -159,6 +160,27 @@ class InstaaccountsController extends BaseController {
       return response.apiFail(e, 'product_save_failed')
     }
     return response.apiUpdated(instaaccount)
+  }
+
+  async delete({ request, auth, instance, response }) {
+    const user = auth.user
+    let instaaccount = instance
+    if(user.role !== 'admin' && user._id.toString() != instance.user_id.toString()) {
+      throw UnAuthorizeException.invoke()
+    }
+    await instaaccount.delete()
+    return response.apiDeleted()
+  }
+
+  async deleteProduct({ request, auth, instance, response }) {
+    const user = auth.user
+    let instaaccount = instance
+    if(user.role !== 'admin' && user._id.toString() != instance.user_id.toString()) {
+      throw UnAuthorizeException.invoke()
+    }
+    instaaccount.product = null
+    await instaaccount.save()
+    return response.apiDeleted(instaaccount);
   }
 
   async getInstaInfo(username) {

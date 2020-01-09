@@ -226,5 +226,49 @@ Route.group(() => {
    */
   Route.post('/:id/product', 'Api/InstaaccountsController.storeProduct').middleware(['auth:jwt']).instance('App/Models/Instaaccount')
 
-  Route.delete('/id:/')
+  /**
+   * @swagger
+   * /instaaccounts/{id}:
+   *   delete:
+   *     tags:
+   *       - Instaaccount
+   *     summary: Delete an instaaccount
+   *     parameters:
+   *       - $ref: '#/components/parameters/Id'
+   *     responses:
+   *       200:
+   *         description: delete success
+   *       404:
+   *         $ref: '#/components/responses/NotFound'
+   *       401:
+   *         $ref: '#/components/responses/Unauthorized'
+   *       403:
+   *         $ref: '#/components/responses/Forbidden'
+   */
+  Route.delete('/:id', 'Api/InstaaccountsController.delete').middleware(['auth:jwt']).instance('App/Models/Instaaccount')
+
+  /**
+   * @swagger
+   * /instaaccounts/{id}/product:
+   *   delete:
+   *     tags:
+   *       - Instaaccount
+   *     summary: Delete the product of an instaaccount
+   *     parameters:
+   *       - $ref: '#/components/parameters/Id'
+   *     responses:
+   *       200:
+   *         description: instaaccount
+   *         content:
+   *           application/json:
+   *             schema:
+   *             $ref: '#/components/schemas/Instaaccount'
+   *       404:
+   *         $ref: '#/components/responses/NotFound'
+   *       401:
+   *         $ref: '#/components/responses/Unauthorized'
+   *       403:
+   *         $ref: '#/components/responses/Forbidden'
+   */
+  Route.delete('/:id/product', 'Api/InstaaccountsController.deleteProduct').middleware(['auth:jwt']).instance('App/Models/Instaaccount')
 }).prefix('/api/instaaccounts')

@@ -35,7 +35,7 @@ class ExtendResponseProvider extends ServiceProvider {
       this.status(202).json({
         status: 202,
         message: 'Deleted successfully',
-        data: null,
+        data: item,
         meta: meta
       })
     })
