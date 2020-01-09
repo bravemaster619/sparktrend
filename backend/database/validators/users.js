@@ -46,6 +46,10 @@ module.exports = {
             maxLength:1000
           },
 
+        role: {
+            enum: ['user', 'admin'],
+        },
+
         created_at: { bsonType: 'date' },
 
         updated_at: { bsonType: 'date' }

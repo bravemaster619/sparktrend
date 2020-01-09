@@ -23,7 +23,7 @@ class MigrationController extends BaseController {
     }
 
     await db.createCollection('instaaccounts', validators.InstaValidator)
-    await db.collection('instaaccounts').createIndex({"username": 1}, { unique: true })
+    // await db.collection('instaaccounts').createIndex({"username": 1}, { unique: true })
     console.log('collection instaaccounts created')
 
     try {
@@ -52,6 +52,7 @@ class MigrationController extends BaseController {
       country: 'China',
       gender: 'male',
       locale: 'en',
+      role: 'user',
       created_at: new Date(),
       updated_at: new Date()
     });
@@ -62,6 +63,7 @@ class MigrationController extends BaseController {
       country: 'China',
       gender: 'male',
       locale: 'en',
+      role: 'user',
       created_at: new Date(),
       updated_at: new Date()
     });
