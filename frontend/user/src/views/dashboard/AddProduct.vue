@@ -29,7 +29,7 @@
                 status_enum: [
                     "check", "verify", "insights", "price"
                 ],
-                status : "price",
+                status : "check",
                 current_tab_id: 0,
                 verification_code   : "",
                 username            : "",
