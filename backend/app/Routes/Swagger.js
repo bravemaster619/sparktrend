@@ -10,7 +10,7 @@ Route.get('api-specs', async ({ request, response }) => {
     definition: {
       openapi: '3.0.0',
       info: {
-        title: 'My REST API', // Title (required)
+        title: 'Sparktrade API', // Title (required)
         version: '1.0.0' // Version (required)
       },
       servers: [

@@ -16,16 +16,22 @@ const Model = use('Model')
  *         - name
  *         - email
  *         - password
+ *         - country
  *       properties:
  *         name:
  *           type: string
  *         email:
  *           type: string
- *         phone:
- *           type: string
  *         password:
  *           type: string
  *           format: password
+ *         country:
+ *           type: string
+ *           format: string
+ *         gender:
+ *           type: string
+ *         paypal_email:
+ *           type: string
  *     UpdateUser:
  *       type: object
  *       properties:
@@ -56,7 +62,7 @@ class User extends Model {
   }
 
   static get hidden() {
-    return ['password', 'verificationToken']
+    return ['password', 'verificationToken', 'role']
   }
 
   /**

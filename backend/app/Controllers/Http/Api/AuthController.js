@@ -43,6 +43,7 @@ class AuthController extends BaseController {
     if (!user.locale) {
       user.locale = 'en'
     }
+    user.role = 'user'
     try {
       await user.save()
     } catch (e) {
