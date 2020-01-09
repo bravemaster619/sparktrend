@@ -3,7 +3,7 @@ const { ServiceProvider } = require('@adonisjs/fold')
 class ExtendResponseProvider extends ServiceProvider {
   boot () {
     const Response = use('Adonis/Src/Response')
-    const { Env } = use('Adonis/Src/Env')
+    const Env = use('Adonis/Src/Env')
     Response.macro('validateFailed', function (errorMessages) {
       this.status(422).json({
         status: 422,

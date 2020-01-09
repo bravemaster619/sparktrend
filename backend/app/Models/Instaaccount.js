@@ -151,6 +151,10 @@ const Model = use('Model')
  *           $ref: '#/components/schemas/Demographics'
  *         product:
  *           $ref: '#/components/schemas/Product'
+ *         created_at:
+ *           type: string
+ *         updated_at:
+ *           type: string
  */
 class Instaaccount extends Model {
 }
