@@ -16,6 +16,12 @@ module.exports = {
           maxLength: 1000
         },
 
+        pricing_idx: {
+          bsonType: 'int',
+          minimum: 0,
+          maximum: 1000
+        },
+
         with_bio : { bsonType: 'bool' },
 
         bio_url: {
@@ -56,23 +62,24 @@ module.exports = {
         },
 
         price: {
-          bsonType: 'decimal',
           minimum: 0
         },
 
         bio_price: {
-          bsonType: 'decimal',
           minimum: 0
         },
 
         charge: {
-          bsonType: 'decimal',
           minimum: 0
         },
 
         total: {
-          bsonType: 'decimal',
           minimum: 0
+        },
+
+        verfication_code: {
+          bsonType: 'string',
+          maxLength: 1000
         },
 
         history: {
@@ -86,6 +93,11 @@ module.exports = {
             rejected_at: { bsonType: 'date' },
             refunded_at: { bsonType: 'date' },
           }
+        },
+
+        payment_method: {
+          bsonType: 'string',
+          maxLength: 1000
         },
 
         created_at: { bsonType: 'date' },

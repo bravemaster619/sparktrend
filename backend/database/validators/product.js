@@ -1,7 +1,7 @@
 const ProductCategoryValidator = require('./product-category')
 
 module.exports = {
-  bsonType: 'object',
+  bsonType: ['object', 'null'],
   properties: {
 
     description: {
