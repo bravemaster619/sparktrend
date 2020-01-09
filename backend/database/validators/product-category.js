@@ -20,10 +20,9 @@ module.exports = {
                 minimum: 0
               },
             price: {
-                bsonType: 'double',
                 minimum: 0
               },
-            bio_price: { bsonType: 'double',
+            bio_price: {
                 minimum: 0
               }
           }

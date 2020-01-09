@@ -2,50 +2,52 @@
 
 const Route = use('Route')
 
-Route.group('product', () => {
+Route.group(() => {
   /**
    * @swagger
-   * /products:
+   * /instaaccounts:
    *   get:
    *     tags:
-   *       - Product
-   *     summary: Get products
+   *       - Instaaccount
+   *     summary: Get instaaccounts
    *     parameters:
    *       - $ref: '#/components/parameters/ListQuery'
    *     responses:
    *       200:
-   *         description: products
+   *         description: instaaccounts
    *         content:
    *           application/json:
    *             schema:
    *               type: array
    *               items:
-   *                   $ref: '#/components/schemas/Product'
+   *                   $ref: '#/components/schemas/Instaaccount'
    */
-  Route.get('/', 'Api/ProductsController.index')
+  Route.get('/', 'Api/InstaaccountsController.index')
+
+  Route.post('/new', 'Api/InstaaccountsController.create')
 
   /**
    * @swagger
-   * /products/{id}:
+   * /instaaccounts/{id}:
    *   get:
    *     tags:
-   *       - Product
-   *     summary: Returns product
+   *       - Instaaccount
+   *     summary: Returns Instaaccount
    *     parameters:
    *       - $ref: '#/components/parameters/Id'
    *       - $ref: '#/components/parameters/SingleQuery'
    *     responses:
    *       200:
-   *         description: product
+   *         description: instaaccount
    *         content:
    *           application/json:
    *             schema:
-   *               $ref: '#/components/schemas/Product'
+   *               $ref: '#/components/schemas/Instaaccount'
    *       404:
    *         $ref: '#/components/responses/NotFound'
    */
-  Route.get('/:id', 'Api/ProductsController.show').instance('App/Models/Instaaccount')
+  Route.get('/:id', 'Api/InstaaccountsController.show').instance('App/Models/Instaaccount')
 
-  Route.post('/new', 'Api/ProductsController.store').validator('StoreProduct')
+  Route.post('/:id/register-instagram', 'Api/InstaaccountsController.')
 
-}).prefix('/api/products')
+}).prefix('/api/instaaccounts')

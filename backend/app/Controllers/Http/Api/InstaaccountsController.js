@@ -4,12 +4,13 @@
 const BaseController = require('./BaseController')
 /** @type {typeof import('../../../Models/Instaaccount')} */
 const Instaaccount = use('App/Models/Instaaccount')
-
+const randomstring = require('randomstring')
 /**
  *
- * @class ProductsController
+ * @class InstaaccountsController
  */
-class ProductsController extends BaseController{
+class InstaaccountsController extends BaseController {
+
   /**
    * Index
    *
@@ -18,8 +19,8 @@ class ProductsController extends BaseController{
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async index({request, response, decodeQuery}) {
-    const instaaccounts = await Instaaccount.query(decodeQuery()).where({verified: true}).fetch()
+  async index({ request, response, decodeQuery }) {
+    const instaaccounts = await Instaaccount.query(decodeQuery()).fetch()
     return response.apiCollection(instaaccounts)
   }
 
@@ -36,10 +37,22 @@ class ProductsController extends BaseController{
     return response.apiItem(instaaccount)
   }
 
-  async store({request, auth, response}) {
-    await this.validate(request.all(), Product.rules())
+  async create({ request, auth, response}) {
+    const user = auth.user;
+    const instaaccount = new Instaaccount({
+      user_id: user._id,
+      username: request.only(['username']).username,
+      verified: false,
+      verification_code: randomstring.generate(7)
+    })
+    await instaaccount.save()
+    return response.apiCreated(instaaccount)
+  }
+
+  async getInstaInfo({ request, auth, response }) {
+
   }
 
 }
 
-module.exports = ProductsController
+module.exports = InstaaccountsController

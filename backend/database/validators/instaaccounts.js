@@ -7,7 +7,10 @@ module.exports = {
       required: ['user_id', 'username'],
       properties: {
 
-        user_id: { bsonType: 'objectId' },
+        user_id: {
+            bsonType: ['string', 'objectId'],
+            maxLength: 65535
+          },
 
         username: {
             bsonType: 'string',
