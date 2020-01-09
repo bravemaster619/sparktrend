@@ -22,7 +22,7 @@ class UsersController extends BaseController {
    * @param {Response} ctx.response
    */
   async index ({ request, response, decodeQuery }) {
-    const users = await User.query(decodeQuery()).fetch()
+    const users = await User.query(decodeQuery()).where({role: 'user'}).fetch()
     return response.apiCollection(users)
   }
 

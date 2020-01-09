@@ -8,7 +8,7 @@ module.exports = {
       properties: {
 
         user_id: {
-            bsonType: ['string', 'objectId'],
+            bsonType: ['objectId'],
             maxLength: 65535
           },
 
@@ -35,6 +35,8 @@ module.exports = {
           },
 
         verified: { bsonType: 'bool' },
+
+        allowed: { bsonType: 'bool' },
 
         type: {
             bsonType: 'string',
