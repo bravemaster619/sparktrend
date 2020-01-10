@@ -9,7 +9,7 @@ class StoreUser extends BaseValidator {
       email: `required|email|unique:users,email`,
       password: 'required|min:6|max:255',
       country: 'required|min:3|max:100',
-      gender: 'required|in:0,1',
+      gender: 'required|in:male,female',
       paypal_email: 'min:3|max:255',
       locale: 'in:en,ar'
     }

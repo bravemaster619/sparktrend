@@ -16,7 +16,9 @@ module.exports = {
   | Function - Receives the current origin and should return one of the above values.
   |
   */
-  origin: 'localhost:8080',
+  origin: (currentOrigin) => {
+    return ['http://localhost:8080', 'http://127.0.0.1:3333'].includes(currentOrigin)
+  },
 
   /*
   |--------------------------------------------------------------------------

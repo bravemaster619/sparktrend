@@ -42,7 +42,6 @@ module.exports = {
 
         paypal_email : {
             bsonType: 'string',
-            minLength:3,
             maxLength:1000
           },
 
