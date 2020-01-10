@@ -14,12 +14,17 @@ import AppBody from "./layout/AppBody";
 import Product from "./views/Product";
 import Purchases from "./views/dashboard/Purchases";
 import TermsOfService from "./views/TermsOfService";
-import PrivacyPolicy from "./views/PrivacyPolicy";import myproducts from "./views/dashboard/MyProducts";
-import AddProduct from "./views/dashboard/AddProduct";import BuyerGuide from "./views/BuyerGuide";
+import PrivacyPolicy from "./views/PrivacyPolicy";
+import myproducts from "./views/dashboard/MyProducts";
+import AddProduct from "./views/dashboard/AddProduct";
+import BuyerGuide from "./views/BuyerGuide";
 import SellerGuide from "./views/SellerGuide";
+import ChangePassword from "./views/ChangePassword";
+import MySales from "./views/dashboard/MySales";
+
 Vue.use(Router);
 
-export default new Router({
+export const router= new Router({
   linkExactActiveClass: "active",
   mode: "history",
   routes: [
@@ -118,7 +123,17 @@ export default new Router({
           path: '/addproduct',
           name: 'addproduct',
           component: AddProduct
-		}
+		},
+        {
+          path: '/changepassword',
+          name: 'change_password',
+          component: ChangePassword
+        },
+        {
+          path: '/myorders/sales',
+          name: 'mysales',
+          component: MySales
+        }
       ]
     }
   ],
@@ -128,5 +143,23 @@ export default new Router({
     } else {
       return { x: 0, y: 0 };
     }
-  }
+  },
 });
+router.beforeEach(
+    (to,from, next) => {
+      const public_pages = [
+          '/',
+        '/landing',
+        "/login",
+        "/register",
+        '/browse'
+      ];
+      console.log("beforeEach");
+      const authRequired = !public_pages.includes(to.path);
+      const loggedIn = localStorage.getItem("user");
+      if(authRequired && !loggedIn){
+        return next('/login');
+      }
+      next();
+    }
+);
