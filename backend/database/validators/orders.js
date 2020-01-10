@@ -89,6 +89,7 @@ module.exports = {
             accepted_at: { bsonType: 'date' },
             started_at: { bsonType: 'date' },
             completed_at: { bsonType: 'date' },
+            expired_at: { bsonType: 'date' },
             paid_at: { bsonType: 'date' },
             rejected_at: { bsonType: 'date' },
             refunded_at: { bsonType: 'date' },

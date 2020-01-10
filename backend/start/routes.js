@@ -28,6 +28,8 @@ Route.group(() => {
 
   Route.get('/seed', 'Api/MigrationController.seed');
 
+  Route.get('/instainfo', 'Api/InstaaccountsController.getInstaInfo')
+
 }).prefix('/api')
 
 

@@ -22,8 +22,9 @@ class UsersController extends BaseController {
    * @param {Response} ctx.response
    */
   async index ({ request, response, decodeQuery }) {
-    const users = await User.query(decodeQuery()).where({role: 'user'}).fetch()
-    return response.apiCollection(users)
+    const users = await User.query(decodeQuery().query).where({role: 'user'}).fetch()
+    const total = await User.query(decodeQuery().countQuery).where({role: 'user'}).count()
+    return response.apiCollection(users, { total })
   }
 
   /**

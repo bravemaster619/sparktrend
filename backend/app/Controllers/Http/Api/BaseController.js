@@ -30,7 +30,36 @@ class BaseController {
     return Config.get('app.baseUrl')
   }
 
+  getSiteConfig() {
+    if (this.isDevelopment()) {
+      return {
+        "seller": {
+          "minimum_followers": 0 // any instagram account is accepted
+        },
+        "order": {
+          "time_margin": {
+            "start_from": 10000, // order start_from must be at least 10s later from now
+            "accept": 30000, // seller must accept a shoutout in 30s
+            "start_time": Infinity, // seller can start a shoutout at anytime
+          }
+        }
+      }
+    } else {
+      return {
+        "seller": {
+          "minimum_followers": 10000 // sellers should have more than 10K followers
+        },
+        "order": {
+          "time_margin": {
+            "start_from": 2 * 24 * 3600 * 1000, // order start_from must be at least 2 days later from now
+            "accept": 3 * 24 * 3600 * 1000, // seller must accept a shoutout in 3 days
+            "start_time": 30 * 60 * 1000, // seller must start a shoutout in +/- 30 minutes from start_time
+          }
+        }
+      }
+    }
 
+  }
 }
 
 module.exports = BaseController

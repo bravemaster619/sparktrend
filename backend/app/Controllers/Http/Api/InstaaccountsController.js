@@ -21,8 +21,9 @@ class InstaaccountsController extends BaseController {
    * @param {Response} ctx.response
    */
   async index({ request, response, decodeQuery }) {
-    const instaaccounts = await Instaaccount.query(decodeQuery()).where({allowed: true}).fetch()
-    return response.apiCollection(instaaccounts)
+    const instaaccounts = await Instaaccount.query(decodeQuery().query).where({allowed: true}).fetch()
+    const total = await Instaaccount.query(decodeQuery().countQuery).where({allowed: true}).count()
+    return response.apiCollection(instaaccounts, { total })
   }
 
   /**
@@ -52,46 +53,55 @@ class InstaaccountsController extends BaseController {
     if (appliedAccountExists) {
       return response.validateFailed('instagram_already_exists')
     }
+    const instainfo = await this.getInstaInfo(username)
+    if (!instainfo) {
+      return response.apiFail('cannot_get_instagram_account')
+    }
+    console.log(instainfo)
+    if (instainfo.follower_count < this.getSiteConfig()['seller']['minimum_followers']) {
+      return response.validateFailed('insufficient_followers')
+    }
     const instaaccount = new Instaaccount({
       user_id: user._id,
       username,
       verified: false,
       verification_code: randomstring.generate(7)
     })
+    instaaccount.merge(instainfo)
     await instaaccount.save()
     return response.apiCreated(instaaccount)
   }
 
-  async registerInstagram({ request, auth, instance, response }) {
-    const user = auth.user
-    let instaaccount = instance
-
-    if (user.role != 'admin' && user._id.toString() != instance.user_id.toString()) {
-      throw UnAuthorizeException.invoke()
-    }
-    const instainfo = await this.getInstaInfo(instaaccount.username)
-    if (instaaccount.verified && instainfo.follower_count) {
-
-    } else {
-      if (!instainfo) {
-        return response.validateFailed('no_such_account')
-      }
-      if (instainfo.follower_count < 10000) {
-        return response.validateFailed('insufficient_followers')
-      }
-      if (!instaaccount.verfication_code) {
-        instaaccount.verification_code = randomstring.generate(7)
-      }
-    }
-    if (instainfo) {
-      instaaccount.follower_count = instainfo.follower_count
-      instaaccount.profile_img = instainfo.profile_img
-      instaaccount.type = instainfo.type
-    }
-    await instaaccount.save()
-    instaaccount.merge(instainfo)
-    return response.apiUpdated(instaaccount)
-  }
+  // async registerInstagram({ request, auth, instance, response }) {
+  //   const user = auth.user
+  //   let instaaccount = instance
+  //
+  //   if (user.role != 'admin' && user._id.toString() != instance.user_id.toString()) {
+  //     throw UnAuthorizeException.invoke()
+  //   }
+  //   const instainfo = await this.getInstaInfo(instaaccount.username)
+  //   if (instaaccount.verified && instainfo.follower_count) {
+  //
+  //   } else {
+  //     if (!instainfo) {
+  //       return response.validateFailed('no_such_account')
+  //     }
+  //     if (instainfo.follower_count < 10000) {
+  //       return response.validateFailed('insufficient_followers')
+  //     }
+  //     if (!instaaccount.verfication_code) {
+  //       instaaccount.verification_code = randomstring.generate(7)
+  //     }
+  //   }
+  //   if (instainfo) {
+  //     instaaccount.follower_count = instainfo.follower_count
+  //     instaaccount.profile_img = instainfo.profile_img
+  //     instaaccount.type = instainfo.type
+  //   }
+  //   await instaaccount.save()
+  //   instaaccount.merge(instainfo)
+  //   return response.apiUpdated(instaaccount)
+  // }
 
   async validateInstagram({ request, auth, response, instance }) {
     const user = auth.user
@@ -184,13 +194,20 @@ class InstaaccountsController extends BaseController {
   }
 
   async getInstaInfo(username) {
-    return {
-      posts: this.randomIntBetween(10, 10000),
-      following: this.randomIntBetween(0, 200),
-      follower_count: this.randomIntBetween(10000, 999999),
-      profile_img: 'https://scontent-lax3-2.cdninstagram.com/v/t51.2885-19/s150x150/18380890_110724382837223_774891342345011200_n.jpg?_nc_ht=scontent-lax3-2.cdninstagram.com&_nc_ohc=U7n98U2i0OoAX8BMvzo&oh=7b89d55f19d64f55b9f1a7b139ea47b9&oe=5E8D5BFA',
-      bio: '<p>Lorem ipsum dolor sit amet...</p>',
-      type: 'business'
+    try {
+      const req = require('request-promise')
+      const instaresp = await req(`https://www.instagram.com/${username}/?__a=1`)
+      const instadata = JSON.parse(instaresp)
+      const userdata = instadata.graphql.user
+      return {
+        follower_count: userdata.edge_followed_by.count,
+        username: userdata.username,
+        profile_img: userdata.profile_pic_url,
+        type: userdata.is_business_account ? 'business' : 'personal'
+      }
+    } catch(e) {
+      console.log(e)
+      return null
     }
   }
 

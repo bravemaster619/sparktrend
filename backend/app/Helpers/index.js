@@ -24,9 +24,10 @@ const safeBoolean = (val) => {
   if (val == "true") {
     return true;
   }
-
+  return false;
 }
 
 module.exports = {
-  $n: safeNumber
+  $n: safeNumber,
+  $b: safeBoolean
 }

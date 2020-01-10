@@ -74,9 +74,9 @@ class AuthController extends BaseController {
    *
    */
   async login ({ request, response, auth }) {
+    await this.validate(request.all(), { email: 'required', password: 'required' })
     const email = punycode.toUnicode(request.input('email'))
     const password = request.input('password')
-    await this.validate(request.all(), { email: 'required', password: 'required' })
     // Attempt to login with email and password
     let data = null
     try {

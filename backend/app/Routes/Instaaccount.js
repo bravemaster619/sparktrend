@@ -69,34 +69,11 @@ Route.group(() => {
    *         content:
    *           application/json:
    *             schema:
-   *               $ref: '#/components/schemas/NewInstaaccount'
+   *               $ref: '#/components/schemas/RegisterToInstagram'
    */
   Route.post('/new', 'Api/InstaaccountsController.create').middleware(['auth:jwt'])
 
-  /**
-   * @swagger
-   * /instaaccounts/{id}/register-instagram:
-   *   post:
-   *     tags:
-   *       - Instaaccount
-   *     summary: Connects to instagram account
-   *     parameters:
-   *       - $ref: '#/components/parameters/Id'
-   *     responses:
-   *       200:
-   *         description: instaaccount
-   *         content:
-   *           application/json:
-   *             schema:
-   *               $ref: '#/components/schemas/RegisterToInstagram'
-   *       401:
-   *         $ref: '#/components/responses/Unauthorized'
-   *       422:
-   *         $ref: '#/components/responses/ValidateFailed'
-   *       404:
-   *         $ref: '#/components/responses/NotFound'
-   */
-  Route.post('/:id/register-instagram', 'Api/InstaaccountsController.registerInstagram').middleware(['auth:jwt']).instance('App/Models/Instaaccount')
+
   /**
    * @swagger
    * /instaaccounts/{id}/validate-instagram:

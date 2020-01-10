@@ -91,6 +91,23 @@ const { $n } = require('../Helpers')
  */
 class Order extends Model {
 
+  static STATUS = {
+    SHOUTOUT: {
+      NOT_CREATED: 0,
+      CREATED: 1,
+      ACCEPTED: 2,
+      STARTED: 3,
+      EXPIRED: 4,
+      COMPLETED: 5,
+      REJECTED: -1
+    },
+    PAYMENT: {
+      NOT_PAID: 0,
+      PAID: 1,
+      REFUNDED: -1
+    }
+  }
+
   calcSubtotal() {
     this.subtotal = this.with_bio ? $n(this.price) + $n(this.bio_price) : $n(this.price);
 
@@ -103,7 +120,55 @@ class Order extends Model {
     return this.total;
   }
 
+  relationship(user) {
+    try {
+      if (this.buyer_id.toString() === user._id.toString()) {
+        return 'buyer'
+      }
+      if (this.seller_id.toString() === user._id.toString()) {
+        return 'seller'
+      }
+    } catch(e) {
+      console.log(e)
+      return 'unknown'
+    }
+    return 'unknown'
+  }
 
+  getStatus() {
+    let status = {
+      shoutout: Order.STATUS.SHOUTOUT.NOT_CREATED,
+      payment: Order.STATUS.PAYMENT.NOT_PAID
+    }
+    if (!(this.history)) {
+      return status;
+    }
+    if (this.history.paid_at) {
+      status.payment = Order.STATUS.PAYMENT.PAID;
+    }
+    if (this.history.refunded_at) {
+      status.payment = Order.STATUS.PAYMENT.REFUNDED;
+    }
+    if (this.history.created_at) {
+      status.shoutout = Order.STATUS.SHOUTOUT.CREATED;
+    }
+    if (this.history.accepted_at) {
+      status.shoutout = Order.STATUS.SHOUTOUT.ACCEPTED;
+    }
+    if (this.history.started_at) {
+      status.shoutout = Order.STATUS.SHOUTOUT.STARTED;
+    }
+    if (this.history.expired_at) {
+      status.shoutout = Order.STATUS.SHOUTOUT.EXPIRED;
+    }
+    if (this.history.completed_at) {
+      status.shoutout = Order.STATUS.SHOUTOUT.COMPLETED;
+    }
+    if (this.history.rejected_at) {
+      status.shoutout = Order.STATUS.SHOUTOUT.REJECTED;
+    }
+    return status
+  }
 }
 
 module.exports = Order
