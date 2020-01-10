@@ -18,7 +18,7 @@
                     <close-button @click="closeMenu"></close-button>
                 </div>
             </div>
-            <ul class="navbar-nav align-items-lg-center ml-lg-auto h-sm-100vh py-3">
+            <ul v-if="!isLoggedIn" class="navbar-nav align-items-lg-center ml-lg-auto h-sm-100vh py-3">
                 <li class="nav-item d-none d-lg-block ml-lg-2">
                     <router-link to="/login" class="btn btn-primary btn-icon">
                         <span class="nav-link-inner--text">{{$t('Sign In')}}</span>
@@ -39,8 +39,44 @@
                     <router-link to="/register">{{$t('Sign Up')}}</router-link>
                 </li>
             </ul>
+            <ul v-if="isLoggedIn" class="navbar-nav align-items-lg-center ml-lg-auto h-sm-100vh py-3">
+                <li class="nav-item d-none d-lg-block ml-lg-2">
+                    <router-link :to="{name:'browse'}" class="align-bottom">
+                        <span class="nav-link-inner--text text-uppercase white-color d-flex align-items-center"
+                              :class="[{'color-theme' : !['landing', 'login', 'register'].includes(currentRoute)}]"
+                                style="padding:1rem;">
+                            <i class="ni ni-world mr-2"></i>
+                            {{$t("browse")}}
+                        </span>
+                    </router-link>
+                </li>
+                <base-dropdown tag="li" class="nav-item">
+                    <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
+                        <span class="nav-link-inner--text text-uppercase white-color d-flex align-items-center dropdown-toggle"
+                              :class="[{'color-theme' : !['landing', 'login', 'register'].includes(currentRoute)} ]">
+                            <i class="ni ni-money-coins"></i>
+                            {{$t("Dashboard")}}
+                        </span>
+                    </a>
+                    <router-link :to="{name:'dashboard_main'}" class="dropdown-item">{{$t("Overview")}}</router-link>
+                    <router-link :to="{name:'dashboard_purchase'}" class="dropdown-item">{{$t("My Purchases")}}</router-link>
+                    <router-link :to="{name:'mysales'}" class="dropdown-item">{{$t("My sales")}}</router-link>
+                    <router-link :to="{name:'myproducts'}" class="dropdown-item">{{$t("My Products")}}</router-link>
+                </base-dropdown>
+                <base-dropdown tag="li" class="nav-item">
+                    <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
+                        <span class="nav-link-inner--text text-uppercase white-color d-flex align-items-center dropdown-toggle"
+                              :class="[{'color-theme' : !['landing', 'login', 'register'].includes(currentRoute)} ]">
+                            <i class="ni ni-circle-08"></i>{{this.name}}
+                        </span>
+                    </a>
+                    <router-link :to="{name:'profile'}" class="dropdown-item color-theme">{{$t("Edit Profile")}}</router-link>
+                    <router-link :to="{name:'change_password'}" class="dropdown-item color-theme">{{$t("Change Password")}}</router-link>
+                    <a class="dropdown-item color-theme" @click.prevent="signOut">{{$t("Sign Out")}}</a>
+                </base-dropdown>
+            </ul>
         </base-nav>
-        <nav v-if="currentRoute != 'landing'" id="bottombar" class="list-unstyled d-block d-lg-none border-top border-primary">
+        <nav v-if="isLoggedIn" id="bottombar" class="list-unstyled d-block d-lg-none border-top border-primary">
             <div class="row justify-content-around p-3 pb-2 m-0">
                 <div class="bottombar-link">
                     <router-link to="/browse">
@@ -76,17 +112,61 @@ import BaseDropdown from "@/components/BaseDropdown";
 import CloseButton from "@/components/CloseButton";
 
 export default {
-  components: {
-    BaseNav,
-    CloseButton,
-    BaseDropdown
-  },
-   computed: {
-     currentRoute() {
-        return this.$route.name;
-     }
-   }
+    components: {
+        BaseNav,
+        CloseButton,
+        BaseDropdown
+    },
+    computed: {
+        isLoggedIn() {
+            return this.$store.state.auth.logged_in ;
+        },
+        currentRoute() {
+            return this.$route.name;
+        },
+        name() {
+            return this.$store.state.auth.user.name;
+        }
+    },
+    methods:{
+        signOut(){
+            this.$store.dispatch("auth/logout");
+        }
+    },
 };
 </script>
-<style>
+<style scoped>
+    .white-color{
+        color: #fff;
+    }
+    .nav-item span{
+        -webkit-transition: all 0.6s ease ;
+        -moz-transition: all 0.6s ease ;
+        -ms-transition: all 0.6s ease ;
+        -o-transition: all 0.6s ease ;
+        transition: all 0.6s ease ;
+    }
+    .navbar-nav .nav-link{
+        font-size:1rem;
+        font-weight: 300;
+    }
+    .dropdown-toggle::after {
+        vertical-align: middle !important;
+    }
+    .dropdown-toggle::after {
+        display: inline-block;
+        margin-left: .255em;
+        vertical-align: .255em;
+        content: "";
+        border-top: .3em solid;
+        border-right: .3em solid transparent;
+        border-bottom: 0;
+        border-left: .3em solid transparent;
+    }
+    .dropdown-item:active{
+        color:  #fff !important;
+    }
+    .dropdown-item.active{
+        color:  #fff !important;
+    }
 </style>
