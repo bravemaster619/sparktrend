@@ -1,30 +1,41 @@
-import config from '../config';
-import { axios } from 'axios';
+import { config } from '../config';
+import  Axios  from 'axios';
 
 export const authService = {
     login,
     logout,
-    register
+    register,
+    changePassword
 };
 
 function login(email, password) {
-    return axios.post(
-        config.base_url('/auth/login'), {
+    return Axios.post(
+        config.base_url('auth/login'), {
             email   :   email,
             password:   password
         });
 }
 
 function logout(){
-    return axios.post( config.base_url('/auth/logout') );
+    return Axios.post( config.base_url('auth/logout') );
 }
 function register(user_info){
-    return axios.post(
-        config.base_url('/auth/register'),{
+    return Axios.post(
+        config.base_url('auth/register'),{
             name    :   user_info.name,
             email   :   user_info.email,
-            phone   :   user_info.phone,
-            password:   user_info.password
+            password:   user_info.password,
+            country :   user_info.country,
+            gender  :   user_info.gender,
+            paypal_email: user_info.paypal_email
         }
     );
+}
+function changePassword({password, new_password}){
+    return Axios.post(
+        config.base_url("auth/password", {
+            password    :   password,
+            new_password:   new_password
+        })
+    )
 }
