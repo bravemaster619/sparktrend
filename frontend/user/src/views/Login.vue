@@ -19,29 +19,49 @@
                           class="border-0">
 
                         <template>
-
-                            <form role="form">
-                                <h3 class="text-center">{{$t("Sign In")}}</h3>
-                                <hr class="hr-primary short">
-                                <base-input alternative
-                                            class="mb-3"
-                                            :placeholder="$t('Email')"
-                                            addon-left-icon="ni ni-email-83">
-                                </base-input>
-                                <base-input alternative
+                            <h3 class="text-center">{{$t("Sign In")}}</h3>
+                            <hr class="hr-primary short">
+                            <base-input alternative
+                                        class="mb-3"
+                                        addon-left-icon="ni ni-email-83"
+                                        :error="error.email">
+                                <template v-slot:slot_input>
+                                    <input
+                                        class="form-control valid"
+                                        :placeholder="$t('Email')"
+                                        aria-describedby="addon-right addon-left"
+                                        ref="email"
+                                        v-model="email">
+                                </template>
+                            </base-input>
+                            <base-input alternative
+                                        type="password"
+                                        addon-left-icon="ni ni-lock-circle-open"
+                                        :error="error.password">
+                                <template v-slot:slot_input>
+                                    <input
+                                            v-model="password"
                                             type="password"
+                                            class="form-control valid"
                                             :placeholder="$t('Password')"
-                                            addon-left-icon="ni ni-lock-circle-open">
-                                </base-input>
-                                <div class="form-group input-group">
-                                    <div class="w-100 d-flex justify-content-between">
+                                            aria-describedby="addon-right addon-left"
+                                            ref="password">
+                                </template>
+                            </base-input>
+                            <div class="form-group input-group">
+                                <div class="w-100 d-flex justify-content-between">
 <!--                                        <base-checkbox>-->
 <!--                                            {{$t("Remember me")}}-->
 <!--                                        </base-checkbox>-->
-                                        <base-button type="primary" class="my-0 w-100">{{$t("Sign In")}}</base-button>
-                                    </div>
+<!--                                        <base-button type="primary" class="my-0 w-100" @click="signIn">{{$t("Sign In")}}</base-button>-->
+                                    <effect-button type="primary" class="btn btn-grad-effect w-100 m-0 text-uppercase "
+                                                   @click="signIn" :loading="loading" style="height:50px;"
+                                                   color="#fff">
+                                        {{$t("Sign In")}}
+                                    </effect-button>
                                 </div>
-                            </form>
+                            </div>
+
                         </template>
                         <template>
                             <div class="text-muted text-center">
@@ -69,7 +89,55 @@
     </section>
 </template>
 <script>
-export default {};
+    import EffectButton from "@/components/EffectButton";
+
+    export default {
+        components: {
+            EffectButton,
+        },
+        data () {
+            return {
+                email   :   "",
+                password:   "",
+                error   :   {
+                    email   :   "",
+                    password:   ""
+                },
+                loading : false
+            }
+        },
+        watch : {
+            email : function(val){
+                if(!val){
+                    this.error.email = this.$t("Email must not be empty");
+                }else{
+                    this.error.email = "";
+                }
+            },
+            password : function(val){
+                if(!val){
+                    this.error.password = this.$t("Password must not be empty");
+                }else{
+                    this.error.password = "";
+                }
+            }
+        },
+        methods :   {
+            signIn() {
+                if(!this.validation()) return;
+
+                this.loading = true;
+                this.$store.dispatch("auth/login", {email : this.email, password : this.password})
+                    .then(() => {
+                        console.log("logged in");
+                        this.loading = false;
+                    });
+            },
+            validation(){
+                return !this.isEmpty(this.email) && !this.isEmpty(this.password);
+            }
+        }
+    };
 </script>
 <style>
 </style>
