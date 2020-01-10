@@ -25,7 +25,7 @@
               </slot>
             </span>
         </div>
-        <slot v-bind="slotData" v-on="listeners">
+        <slot v-bind="slotData" v-on="listeners" name="slot_input">
             <select v-if="$attrs.type==='select'"
                     v-bind="$attrs"
                     class="form-control"
@@ -160,7 +160,10 @@
             this.focused = false;
             this.$emit("blur", value);
          }
-      }
+      },
+       mounted() {
+          console.log(this.valid);
+       }
    };
 </script>
 <style>
