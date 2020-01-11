@@ -343,9 +343,9 @@ class AuthController extends BaseController {
    *
    */
   async password ({ request, response, auth }) {
-    await this.validate(request.all(), { password: 'required', newPassword: 'required|min:6|max:50' })
+    await this.validate(request.all(), { password: 'required', new_password: 'required|min:6|max:50' })
     const password = request.input('password')
-    const newPassword = request.input('newPassword')
+    const newPassword = request.input('new_password')
     const user = auth.user
     const check = await Hash.verify(password, user.password)
     if (!check) {
