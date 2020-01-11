@@ -75,7 +75,7 @@ Route.group(() => {
    *       404:
    *         $ref: '#/components/responses/NotFound'
    */
-  Route.post('/new', 'Api/OrdersController.new').middleware(['auth:jwt'])
+  Route.post('/new', 'Api/OrdersController.new')/*.middleware(['auth:jwt'])*/
 
   /**
    * @swagger
@@ -178,6 +178,15 @@ Route.group(() => {
    *     summary: Pay for a shoutout.
    *     parameters:
    *       - $ref: '#/components/parameters/Id'
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               paypal_order_id:
+   *                 type: string
    *     responses:
    *       200:
    *         description: order

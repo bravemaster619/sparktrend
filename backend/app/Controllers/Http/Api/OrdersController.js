@@ -2,11 +2,13 @@
 const User = use('App/Models/user')
 const Instaaccount = use('App/Models/Instaaccount')
 const Order = use('App/Models/Order')
+const Transaction = use('App/Models/Transaction')
 const BaseController = require('./BaseController')
 const UnAuthorizeException = use('App/Exceptions/UnAuthorizeException')
 const randomstring = require('randomstring')
 const { $n, $b } = require('../../../Helpers')
-
+const PaymentService = require('../../../Services/Payment/Paypal')
+const Env = use('Env')
 class OrdersController extends BaseController{
 
   async new({ request, auth, response }) {
@@ -52,7 +54,7 @@ class OrdersController extends BaseController{
       types: ['image'],
       size: '5mb',
       maxSize: '5mb',
-      allowedExtensions: ['jpg', 'png', 'jpeg']
+      allowedExtensions: ['jpg', 'png', 'jpeg', 'mp4']
     }))
     if (!postFiles) {
       return response.validateFailed('empty_posts')
@@ -61,7 +63,11 @@ class OrdersController extends BaseController{
     const filePath = `uploads/image/posts/${user._id.toString()}`
     postFiles.moveAll(use('Helpers').publicPath(filePath), (post) => {
       let fileName = `${use('uuid').v1().replace(/-/g, '')}_${post.clientName}`
-      orderData.posts.push(`${filePath}/${fileName}`)
+      orderData.posts.push({
+        filename: post.clientName,
+        type: post.type,
+        path: `${filePath}/${fileName}`
+      })
       return {
         name: fileName
       }
@@ -167,14 +173,54 @@ class OrdersController extends BaseController{
   }
 
   async pay({ request, response, auth, instance }) {
+    if (!(request.input("paypal_order_id"))) {
+      throw api.validateFailed("empty_paypal_order_id")
+    }
     let user = auth.user
     const order = instance
     const perm = this.checkPermission(order, user, 'pay')
     if (perm.isAllowed) {
-      // TODO: Create payment flow
+      const paypal_order_id = request.input("paypal_order_id")
+      const paymentService = new PaymentService();
+      let orderInfo = null;
+      try {
+        orderInfo = await paymentService.getOrder(paypal_order_id)
+      } catch (e) {
+        console.log(e)
+        return response.apiFail('paypal_error')
+      }
+      if (orderInfo.error) {
+        console.log(orderInfo.error)
+        return response.apiFail('paypal_error')
+      }
+      if ($n(orderInfo.result.purchase_units[0].amount.value) != $n(instance.total)) {
+        return response.validateFailed('paid_amount_mismatch')
+      }
+      let transaction = new Transaction(orderInfo.result)
+      try {
+        await transaction.save()
+      } catch(e) {
+        console.log(e)
+        console.warn('transaction save failed')
+      }
+      try {
+        let seller = await order.seller().fetch()
+        let chargeRate = $n(this.getSiteConfig()['charge']['commission'])
+        let payoutAmount = ($n(order.subtotal) * $n(1 - chargeRate / 100)).toFixed(2)
+        orderInfo = await paymentService.payOut(seller.paypal_email, payoutAmount)
+        transaction = new Transaction(orderInfo)
+        transaction.charge_rate = chargeRate
+        transaction.payout_amount = payoutAmount
+        transaction.sender = seller.paypal_email
+        console.log(transaction)
+        await transaction.save()
+      } catch (e) {
+        console.log(e)
+      }
+
       order.history.paid_at = new Date
       await order.save()
-      return response.apiSuccess('order_paid', order)
+      return response.apiSuccess(order, {}, 'order_paid')
     } else {
       throw UnAuthorizeException.invoke(perm.reason)
     }
@@ -204,6 +250,37 @@ class OrdersController extends BaseController{
     return response.apiDeleted()
   }
 
+  // async getPayPalOrderInfo(paypalOrderID) {
+  //   const request = require('request-promise')
+  //   const base64 = require('base-64')
+  //   const PAYPAL_CLIENT = Env.get('PAYPAL_CLIENT')
+  //   const PAYPAL_SECRET = Env.get('PAYPAL_SECRET')
+  //   const PAYPAL_OAUTH_API = Env.get('PAYPAL_OAUTH_API', 'https://api.sandbox.paypal.com/v1/oauth2/token/')
+  //   const PAYPAL_ORDER_API = Env.get('PAYPAL_ORDER_API', 'https://api.sandbox.paypal.com/v2/checkout/orders/')
+  //   // 1c. Get an access token from the PayPal API
+  //   const basicAuth = base64.encode(`${ PAYPAL_CLIENT }:${ PAYPAL_SECRET }`)
+  //   const auth = await request({
+  //     method: 'POST',
+  //     url: PAYPAL_OAUTH_API,
+  //     headers: {
+  //       "Accept": 'application/json',
+  //       "Content-Type": "application/x-www-form-urlencoded",
+  //       "Authorziaton": `Basic ${ basicAuth }`
+  //     },
+  //     form: {
+  //       grant_type: 'client_credentials'
+  //     },
+  //   })
+  //   // Call paypal api to get the transaction details
+  //   const orderDetails = await request.get(PAYPAL_ORDER_API + paypalOrderID, {
+  //     headers: {
+  //       Accept:        `application/json`,
+  //       Authorization: `Bearer ${ auth.access_token }`
+  //     }
+  //   })
+  //   return orderDetails
+  // }
+
   copyInfoFromProduct(order, product) {
     let pricing = null;
     product.categories.forEach((c) => {
@@ -224,9 +301,7 @@ class OrdersController extends BaseController{
     return order;
   }
 
-  decideOrderStatus(order) {
 
-  }
 
   checkPermission(order, user, action) {
     if (!(user.verified)) {
@@ -321,6 +396,12 @@ class OrdersController extends BaseController{
     // end shoutout actions
     if (action === "pay") {
       if (ownership === "buyer") {
+        if (status.payment !== Order.STATUS.PAYMENT.NOT_PAID) {
+          return {
+            isAllowed: false,
+            reason: 'already_paid'
+          }
+        }
         return {
           isAllowed: true,
         }
@@ -332,6 +413,12 @@ class OrdersController extends BaseController{
       }
     }
     if (action === "refund") {
+      if (status.payment !== Order.STATUS.PAYMENT.PAID) {
+        return {
+          isAllowed: false,
+          reason: 'not_paid_yet'
+        }
+      }
       if (ownership === "seller") {
         return {
           isAllowed: true

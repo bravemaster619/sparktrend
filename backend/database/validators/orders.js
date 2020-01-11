@@ -51,8 +51,18 @@ module.exports = {
           minItems: 1,
           maxItems: 100,
           items: {
-            bsonType: 'string',
-            maxLength: 65535
+            bsonType: 'object',
+            properties: {
+              filename: {
+                bsonType: 'string'
+              },
+              type: {
+                bsonType: 'string'
+              },
+              path: {
+                bsonType: 'string'
+              }
+            }
           }
         },
 

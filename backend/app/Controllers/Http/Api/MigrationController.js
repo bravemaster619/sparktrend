@@ -35,7 +35,14 @@ class MigrationController extends BaseController {
     await db.createCollection('orders', validators.OrderValidator)
     console.log('collection orders created')
 
+    try {
+      await db.dropCollection('transactions')
+    } catch(e) {
+      console.log('collection transactions not exists')
+    }
 
+    await db.createCollection('transactions')
+    console.log('collection transactions created')
 
     return response.json({
       success: true
@@ -53,6 +60,8 @@ class MigrationController extends BaseController {
       gender: 'male',
       locale: 'en',
       role: 'user',
+      verified: true,
+      paypal_email: 'sb-ictjo870631@personal.example.com',
       created_at: new Date(),
       updated_at: new Date()
     });
@@ -64,6 +73,8 @@ class MigrationController extends BaseController {
       gender: 'male',
       locale: 'en',
       role: 'user',
+      verified: true,
+      paypal_email: 'sb-1swn0866533@personal.example.com',
       created_at: new Date(),
       updated_at: new Date()
     });

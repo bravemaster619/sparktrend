@@ -118,6 +118,7 @@ import UsdCircle from './../components/Svg/UsdCircle';
 import ProductItem from "./components/ProductItem";
 export default {
    name: 'browse',
+
    state: {
 
    },

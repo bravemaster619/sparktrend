@@ -57,7 +57,6 @@ class InstaaccountsController extends BaseController {
     if (!instainfo) {
       return response.apiFail('cannot_get_instagram_account')
     }
-    console.log(instainfo)
     if (instainfo.follower_count < this.getSiteConfig()['seller']['minimum_followers']) {
       return response.validateFailed('insufficient_followers')
     }

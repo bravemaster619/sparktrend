@@ -108,6 +108,18 @@ class Order extends Model {
     }
   }
 
+  instaaccount() {
+    return this.belongsTo('App/Models/Instaaccount')
+  }
+
+  buyer() {
+    return this.hasOne('App/Models/User', 'buyer_id', '_id')
+  }
+
+  seller() {
+    return this.hasOne('App/Models/User', 'seller_id', '_id')
+  }
+
   calcSubtotal() {
     this.subtotal = this.with_bio ? $n(this.price) + $n(this.bio_price) : $n(this.price);
 

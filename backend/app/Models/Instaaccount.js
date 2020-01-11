@@ -157,6 +157,11 @@ const Model = use('Model')
  *           type: string
  */
 class Instaaccount extends Model {
+
+  user() {
+    return this.belongsTo('App/Models/User')
+  }
+
 }
 
 module.exports = Instaaccount

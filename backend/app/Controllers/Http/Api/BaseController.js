@@ -33,8 +33,11 @@ class BaseController {
   getSiteConfig() {
     if (this.isDevelopment()) {
       return {
+        "charge": {
+          "commission": 5 // percent
+        },
         "seller": {
-          "minimum_followers": 0 // any instagram account is accepted
+          "minimum_followers": 10000 // any instagram account is accepted
         },
         "order": {
           "time_margin": {
@@ -46,6 +49,9 @@ class BaseController {
       }
     } else {
       return {
+        "charge": {
+          "commission": 5
+        },
         "seller": {
           "minimum_followers": 10000 // sellers should have more than 10K followers
         },
