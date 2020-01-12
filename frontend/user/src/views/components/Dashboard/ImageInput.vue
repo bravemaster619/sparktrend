@@ -37,7 +37,10 @@
             onSelectFile() {
                 const input = this.$refs.fileInput;
                 const files = input.files;
+                // let data = new FormData();
+                // data.append("image", )
                 let file = files[0];
+
                 if(files && input.files){
                     const reader = new FileReader();
                     reader.onload = (e) => {
@@ -46,8 +49,8 @@
 
                     reader.readAsDataURL(file);
                     this.$refs.imgdiv.classList.remove("dropzone-border");
-                    this.$emit('input', files[0]);
-                    //https://levelup.gitconnected.com/how-to-preview-images-before-uploading-them-in-vue-4964803adb64
+
+                    this.$emit('input', file);
                 }
             }
         }

@@ -7,7 +7,7 @@
             <h4>{{$t("Validate Instagram")}}</h4>
             {{$t("Please add the code below into your Instagram bio and then click validate.")}}
             <form username="lemessi" @submit.prevent="verifyAccount">
-                <h4 class="my-3">{{verification_code}}</h4>
+                <h4 class="my-3">{{verificationCode}}</h4>
                 <input name="username" hidden v-model="username">
                 <div class="form-group row">
                     <div class="col-md-10 col-12">
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+    import { addProductService } from "../../../services";
+
     export default {
         name: "AddProductVerify",
         event: [
@@ -32,17 +34,32 @@
         props:  {
             tab_id:{
                 required: true
-            }
-        },
-        data () {
-            return {
-                verification_code   :   "sgweyawey",
-                username            :   "leomessi",
+            },
+            verificationCode: {
+                required: true
+            },
+            username    :   {
+                required: true
+            },
+            _id         :   {
+                required: true
             }
         },
         methods: {
             verifyAccount(){
-                this.$emit('next', this.tab_id, {'is_verified' : true})
+                addProductService.validateInstagram(this._id)
+                    .then( ({data}) => {
+                        console.log(data);
+                        if(!data.data.verified){
+                            console.log("Server is strange");
+                            this.$store.dispatch("alert/error", "Please try again");
+                        }else{
+                            this.$emit('next', this.tab_id, {'verified' : data.data.verified})   ;
+                        }
+                }).catch( ( {response} ) => {
+                    this.$store.dispatch("auth/checkAuth", response);
+                    this.$store.dispatch("alert/error", msg);
+                });
             },
             onBack(){
                 this.$emit('back', this.tab_id);

@@ -14,48 +14,58 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-md-6 col-12">
-                        <button  class="btn btn-primary btn-grad-effect w-100 m-0 text-uppercase" type="submit">{{$t("Check Instagram")}}</button>
+<!--                        <button  class="btn btn-primary btn-grad-effect w-100 m-0 text-uppercase" type="submit">{{$t("Check Instagram")}}</button>-->
+                        <effect-button class="btn btn-grad-effect w-100 m-0 text-uppercase " type="submit"
+                                       :loading="loading" style="height:50px;" color="#fff" ref="checkBtn">
+                            {{$t("Check Instagram")}}
+                        </effect-button>
                     </div>
                 </div>
             </form>
-            <div class="preview-profile animated fadeIn z-depth-2" v-if="loaded">
+            <div class="preview-profile animated fadeIn z-depth-2" v-if="fullname">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-center">
-                        <img src="https://scontent-ams4-1.cdninstagram.com/v/t51.2885-19/s150x150/43818140_2116018831763532_3803033961098117120_n.jpg?_nc_ht=scontent-ams4-1.cdninstagram.com&_nc_ohc=HmoDmCowxUsAX_To_yq&oh=ce3c80ff70d434a0000cb987779be509&oe=5EA533F6"
+                        <img :src="profile_picture"
                              alt="profile" class="img-fluid img-round img-preview-ig">
                     </div>
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-8">
-                        <h4 class="pt-1 text-md-left text-center">{{insta_info.fullname}}</h4>
+                        <h4 class="pt-1 text-md-left text-center">{{fullname}}</h4>
                         <div class="row text-md-left text-center">
                             <div class="col-4 text-center">
-                                {{decimalFormat(insta_info.media_count)}}<br>posts
+                                {{decimalFormat(media_count)}}<br>posts
                             </div>
                             <div class="col-4 text-center">
-                                {{decimalFormat(insta_info.follower_count)}}<br>followers
+                                {{decimalFormat(follower_count)}}<br>followers
                             </div>
                             <div class="col-4 text-center">
-                                {{decimalFormat(insta_info.following_count)}}<br>following
+                                {{decimalFormat(following_count)}}<br>following
                             </div>
                         </div>
                         <div class="description pt-3">
                             <p>
-                                {{insta_info.description}}
+                                {{description}}
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row button-next" v-if="loaded">
-                <button class="btn btn-primary btn-grad-effect text-uppercase" @click="next">{{$t("Next")}}</button>
+            <div class="row button-next" v-if="fullname">
+                <button class="btn btn-primary btn-grad-effect text-uppercase" @click="next" ref="nextBtn">{{$t("Next")}}</button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import { addProductService } from "../../../services";
+    import EffectButton from "@/components/EffectButton";
+
     export default {
         name: "AddProductCheck",
         event: 'next',
+        components: {
+            EffectButton,
+        },
         props: {
             tab_id  :   {
                 required:   true
@@ -63,23 +73,18 @@
         },
         data() {
             return {
-                error       :   "",
-                loaded      :   false,
+                error       :   false,
+                loading     :    false,
                 account_input:  "",
 
-                insta_info: {
-                    description: "Bienvenidos a la cuenta oficial de Instagram de Leo Messi / Welcome to the official Leo Messi Instagram account",
-                    follower_count: 140177931,
-                    following_count: 227,
-                    fullname: "leomessi",
-                    is_business: true,
-                    is_creator: false,
-                    media_count: 552,
-                    pk: "427553890",
-                    profile_picture: "https://scontent-amt2-1.cdninstagram.com/v/t51.2885-19/s150x150/43818140_2116018831763532_3803033961098117120_n.jpg?_nc_ht=scontent-amt2-1.cdninstagram.com&_nc_ohc=jqMAsDwXKkcAX_FY_-q&oh=a109ee05f0a90dae6edcdc1a1ff2a650&oe=5EA533F6",
-                    username: "leomessi",
-                    verification_code: "",
-                },
+                insta_info: {},
+                fullname    :   "",
+                media_count :   0,
+                follower_count  :   0,
+                following_count :   0,
+                description :   "",
+                profile_picture: "",
+                username    :   "",
             }
         },
         methods:{
@@ -105,28 +110,64 @@
                     this.$refs.instagram_account.classList.add("invalid-input");
                     return;
                 }
-                this.loaded = true;
+                this.loading = true;
+                this.error = false;
+                this.clearInfo();
+                addProductService.getInstaInfo(this.account_input)
+                    .then( ( response) => {
+                        this.loading = false;
+                        let info = response.data.graphql.user;
+                        if(!info.full_name){
+                            this.$store.dispatch("alert/error", "Invalid account", "Warning");
+                            this.error = true;
+                            return;
+                        }
+                        this.fullname = info.full_name;
+                        this.follower_count = info.edge_followed_by.count;
+                        this.following_count = info.edge_follow.count;
+                        this.media_count = info.edge_owner_to_timeline_media.count;
+                        this.description = info.biography;
+                        this.profile_picture = info.profile_pic_url;
+                        this.username = info.username;
+                        if(this.follower_count < 1000){
+                            this.$store.dispatch("alert/error", "Not enough followers", "Warning");
+                            // this.error = true;
+                        }
 
-                this.insta_info.description = "Thank you. Welcome to my instagram account";
-                this.insta_info.follower_count = 123123123;
-                this.insta_info.following_count = 100;
-                this.insta_info.fullname = "Janes Kane";
-                this.insta_info.is_business = true;
-                this.insta_info.is_creator = false;
-                this.insta_info.media_count = 10093;
-                this.insta_info.pk = "54548646";
-                this.insta_info.profile_picture = "https://scontent-amt2-1.cdninstagram.com/v/t51.2885-19/s150x150/43818140_2116018831763532_3803033961098117120_n.jpg?_nc_ht=scontent-amt2-1.cdninstagram.com&_nc_ohc=jqMAsDwXKkcAX_FY_-q&oh=a109ee05f0a90dae6edcdc1a1ff2a650&oe=5EA533F6";
-                this.insta_info.username = "RMaj";
-                this.insta_info.verification_code = "0c47047fb";
+                }).catch( () => {
+                    this.$store.dispatch("alert/error", "Please type valid account", "Error");
+                    this.loading = false;
+                    this.error = true;
+                })
+
+            },
+            clearInfo(){
+                this.fullname = "";
+                this.media_count = 0;
+                this.follower_count = 0;
+                this.following_count = 0;
+                this.description = "";
             },
             next(){
-                if(this.isEmpty(this.insta_info.verification_code) || !this.isEmpty(this.error)){
-                    return;
+                if(this.error || !this.fullname){
+                    return false;
                 }else{
-                    this.$emit('next', this.tab_id, {
-                        'verification_code' : this.insta_info.verification_code,
-                        'username'          : this.insta_info.username
-                    });
+                    addProductService.register_instagram(this.username)
+                        .then( ( { data }) => {
+                            if( data.data.verification_code)
+                                this.$emit('next', this.tab_id, {
+                                    'verification_code' : data.data.verification_code,
+                                    'username'          : data.data.username,
+                                    'id'                : data.data._id
+                                });
+                            else
+                                this.$store.dispatch("alert/error", "Server Error. Please try again.", "Error");
+                        })
+                        .catch( ( { response } ) => {
+                            let msg = response.data.message || "Error Occrred. Please try again.";
+                            this.$store.dispatch("auth/checkAuth", response);
+                            this.$store.dispatch("alert/error", msg);
+                        });
                 }
             }
         },
@@ -139,8 +180,17 @@
                     this.error = "";
                     this.$refs.instagram_account.classList.remove("invalid-input");
                 }
+            },
+            loading : function(value) {
+                if(value){
+                    this.$refs.checkBtn.setAttribute("disabled", true);
+                    this.$refs.nextBtn.setAttribute("disabled", true);
+                }else{
+                    this.$refs.checkBtn.removeAttribute("disabled");
+                    this.$refs.nextBtn.removeAttribute("disabled");
+                }
             }
-        }
+        },
     }
 </script>
 
