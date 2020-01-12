@@ -827,7 +827,10 @@ button.badger-accordion-toggle:focus {
     box-sizing: border-box;
   }
 }
-form .form-group .form-control.invalid-input {
+//form .form-group .form-control.invalid-input {
+//  border-color: #e74c3c;
+//}
+.form-control.invalid-input {
   border-color: #e74c3c;
 }
 html body{

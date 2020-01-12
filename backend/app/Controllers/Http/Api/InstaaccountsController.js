@@ -163,6 +163,7 @@ class InstaaccountsController extends BaseController {
     }
     let productData = request.only(['description', 'banner_img', 'niches', 'categories'])
     instaaccount.product = productData;
+    console.log(productData.categories[0].pricing);
     try {
       await instaaccount.save()
     } catch(e) {

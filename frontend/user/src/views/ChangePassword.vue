@@ -34,11 +34,14 @@
 
 <script>
     import EffectButton from "@/components/EffectButton";
+    import { authService } from "../services/auth.service";
+
+    // let toastr = require("toastr");
 
     export default {
         name: "ChangePassword",
         components: {
-            EffectButton
+            EffectButton,
         },
         data(){
             return {
@@ -58,7 +61,25 @@
             onSubmit(){
                 if(this.validation()){
                     this.loading = true;
-                    this.$store.dispatch("")
+
+                    authService.changePassword({
+                        password: this.old_password,
+                        new_password: this.new_password
+                    })
+                        .then(() => {
+                            this.loading = false;
+                            this.$toastr.success("Successfully changed", "Result", {timeOut : 3000});
+                            this.$router.push("/");
+                    })
+                        .catch(({response}) => {
+                            this.loading = false;
+                            this.$toastr.error("Change Password failed", "Result", {timeOut : 3000});
+                            console.log("checkAuth");
+                            this.old_password = "";
+                            this.new_password = "";
+                            this.confirm_password = "";
+                            this.$store.dispatch("auth/checkAuth", response.data);
+                        })
                 }
             },
             validation(){
@@ -91,6 +112,17 @@
                 }else{
                     this.error.confirm_password = "";
                 }
+            }
+        },
+        computed : {
+            success() {
+                return this.$store.state.auth.is_success;
+            },
+            error_msg(){
+                if(this.$store.state.auth.error_msg) {
+                    console.log(this.$store.state.auth.error_msg);
+                }
+                return this.$store.state.auth.error_msg
             }
         }
     }

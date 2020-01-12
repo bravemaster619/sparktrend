@@ -23,19 +23,17 @@ import vSelect from "vue-select";
 import VueI18n from "vue-i18n";
 import './registerServiceWorker'
 import messages from './i18n';
-// import Vuex from 'vuex';
-// import { authAction, alert } from "./store";
 import { store } from './store';
+// import VueToastr2 from 'vue-toastr-2';
+// import 'vue-toastr-2/dist/vue-toastr-2.min.css'
+
 
 Vue.config.productionTip = false;
 Vue.use(Argon);
 Vue.use(VueI18n);
-// Vue.use(Vuex);
 
-
-// const store = new Vuex.Store({});
-// store.registerModule('auth',  authAction);
-// store.registerModule('alert'  ,alert);
+// window.toastr = require("toastr");
+// Vue.use(VueToastr2);
 
 const i18n = new VueI18n({
   locale: 'en',
@@ -49,6 +47,9 @@ Vue.component('v-select', vSelect);
 Vue.mixin({
   methods: {
     isEmpty(str){
+      if(str instanceof Object){
+        return Object.keys(str).length === 0 && str.constructor === Object;
+      }
       return str === null || str === undefined || str === false || str === "";
     }
   }

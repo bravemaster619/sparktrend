@@ -5,7 +5,8 @@
             <a class="btn button-primary btn-grad-effect" href="/addproduct">Add Account</a>
         </div>
         <div class="row">
-            <no-data></no-data>
+<!--            <no-data></no-data>-->
+            <product-pad></product-pad>
         </div>
 
     </div>
@@ -13,11 +14,12 @@
 
 <script>
     import NoData from '../components/Dashboard/NoData';
+    import ProductPad from '../components/Dashboard/ProductPad';
 
     export default {
         name: "MyProducts",
         components: {
-            NoData
+            ProductPad
         }
     }
 </script>
