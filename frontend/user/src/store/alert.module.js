@@ -1,3 +1,10 @@
+import Vue from "vue";
+import VueToastr2 from 'vue-toastr-2';
+import 'vue-toastr-2/dist/vue-toastr-2.min.css'
+
+let toastr = require("toastr");
+Vue.use(VueToastr2);
+
 export const alert = {
     namespaced  :   true,
     state       :   {
@@ -5,11 +12,11 @@ export const alert = {
         message :   null
     },
     actions     :   {
-        success({commit}, message){
-            commit('success', message);
+        success({commit}, message, title = "", timeOut = 3000){
+            toastr.success(message, title, {timeOut : timeOut});
         },
-        error({commit}, message){
-            commit('error', message);
+        error({commit}, message, title = "", timeOut = 3000){
+            toastr.error(message, title, {timeOut : timeOut});
         },
         clear({commit}, message){
             commit('clear', message);

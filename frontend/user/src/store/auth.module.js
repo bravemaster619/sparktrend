@@ -1,6 +1,7 @@
 import { authService } from "../services/auth.service";
 import { router } from "../router";
 
+window.toastr = require("toastr");
 
 let user = JSON.parse(localStorage.getItem('user'));
 /**
@@ -41,9 +42,7 @@ export const auth =  {
                         return;
                     }
                     if(response.data.token){
-                        localStorage.setItem('user', JSON.stringify(response.data.user));
-                        commit('loginSuccess', response.data.user);
-                        console.log("test");
+                        commit('loginSuccess', response.data);
                         router.push('/');
                     }else{
                         commit('loginFailure', "Error Occured");
@@ -64,41 +63,49 @@ export const auth =  {
                 });
         },
         register({commit}, user_info){
-            commit("registerRequest");
+            commit("clearState");
             authService.register(user_info)
                 .then(result => {
                     console.log(result);
                     let response = result.data;
                     if(response.status === 201){
-                        commit('registerSuccess');
+                        commit('setResult', true);
                         router.push("/login");
                     }
                 })
                 .catch( (error) => {
                     if(error.response.data.status === 422){
-                        commit("registerFailed", "Validation failed");
+                        commit("setResult", false, "Validation failed");
+
                     }else{
-                        commit("registerFailed", "Register failed");
+                        commit("setResult", false, "Register failed");
                     }
                 });
         },
+
         logout({commit}){
             commit('logout');
             authService.logout();
             router.push("/login");
         },
-        changePassword({commit}, change_info){
-            commit("clearState");
-            authService.changePassword(change_info)
-                .then( ( { data }) => {
-
-                })
+        checkAuth({commit}, response){
+            console.log(response);
+            if(response.status === 401){
+                commit('logout');
+                router.push("/login");
+            }
         }
     },
     mutations   :   {
-        loginSuccess(state, user){
+        loginSuccess(state, user_data){
+            let data = {
+                token           : user_data.token,
+                refresh_token   : user_data.refreshToken,
+                ... user_data.user
+            };
+            localStorage.setItem('user', JSON.stringify(data));
             state.status = true;
-            state.user = user;
+            state.user = user_data.user;
             state.logged_in = true;
         },
         loginRequest(state){
@@ -118,34 +125,34 @@ export const auth =  {
             state.msg = msg;
         },
         logout(state) {
-            state.status = "req_end";
             state.logged_in = false;
             state.user = null;
             localStorage.removeItem("user");
-        },
 
-        registerRequest(state){
-            state.status = false;
-            state.msg = "";
-            localStorage.removeItem("user");
-        },
-        registerFailed(state, msg){
-            state.status = false;
-            state.msg = msg;
-            localStorage.removeItem("user");
-        },
-        registerSuccess(state){
             state.status = true;
             state.msg = "";
-            localStorage.removeItem("user");
         },
-        clearState(state){
+        clearState(state){        //change password state clear
             state.status = false;
             state.msg = "";
         },
         setResult(state, status, msg = ""){
             state.status = status;
             state.msg = msg;
+        },
+    },
+    getters : {
+        is_success   : (state) => {
+            return state.status;
+        },
+        error_msg    : (state) => {
+            if(state.status || !state.msg) return false;
+            return state.msg;
+        },
+        is_ended    :  (state) => {
+            if(state.status) return true;
+            if(state.msg) return true;
+            return false;
         }
     }
 };
