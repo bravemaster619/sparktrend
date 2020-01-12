@@ -1,5 +1,6 @@
 import { config } from '../config';
 import  Axios  from 'axios';
+import { authHeader } from "../helpers";
 
 export const authService = {
     login,
@@ -32,10 +33,14 @@ function register(user_info){
     );
 }
 function changePassword({password, new_password}){
+
     return Axios.post(
-        config.base_url("auth/password", {
+        config.base_url("auth/password"),{
             password    :   password,
             new_password:   new_password
-        })
-    )
+        },
+        {
+            headers :   authHeader()
+        }
+    );
 }
