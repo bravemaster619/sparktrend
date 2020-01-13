@@ -90,10 +90,10 @@ export const router= new Router({
           component: Purchases
         },
         {
-          path: '/product',
+          path: '/products/:id',
           name: 'product',
           component: Product
-		},
+		  },
         {
           path: '/checkout',
           name: 'checkout',

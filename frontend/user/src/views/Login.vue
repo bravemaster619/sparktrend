@@ -25,20 +25,17 @@
                                         class="mb-3"
                                         addon-left-icon="ni ni-email-83"
                                         :error="error.email">
-                                <template v-slot:slot_input>
                                     <input
                                         class="form-control valid"
                                         :placeholder="$t('Email')"
                                         aria-describedby="addon-right addon-left"
                                         ref="email"
                                         v-model="email">
-                                </template>
                             </base-input>
                             <base-input alternative
                                         type="password"
                                         addon-left-icon="ni ni-lock-circle-open"
                                         :error="error.password">
-                                <template v-slot:slot_input>
                                     <input
                                             v-model="password"
                                             type="password"
@@ -46,7 +43,6 @@
                                             :placeholder="$t('Password')"
                                             aria-describedby="addon-right addon-left"
                                             ref="password">
-                                </template>
                             </base-input>
                             <div class="form-group input-group">
                                 <div class="w-100 d-flex justify-content-between">

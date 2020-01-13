@@ -31,6 +31,7 @@ class BaseController {
   }
 
   getSiteConfig() {
+
     if (this.isDevelopment()) {
       return {
         "charge": {

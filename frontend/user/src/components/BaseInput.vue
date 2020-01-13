@@ -25,22 +25,24 @@
               </slot>
             </span>
         </div>
-        <slot v-bind="slotData" v-on="listeners" name="slot_input">
+        <slot v-bind="slotData">
             <select v-if="$attrs.type==='select'"
                     v-bind="$attrs"
+                    v-on="listeners"
                     class="form-control"
                     :class="[{'is-valid': valid === true}, {'is-invalid': valid === false}, inputClasses]"
                     aria-describedby="addon-right addon-left">
                 <option v-for="(option, index) in $attrs.optionlist"
                         :key="index"
                         v-bind:value="option.value">
-                    {{$t(option.text)}}
+                    {{option.text}}
                 </option>
             </select>
             <input
                     v-else
                     :value="value"
                     v-bind="$attrs"
+                    v-on="listeners"
                     class="form-control"
                     :class="[{'is-valid': valid === true}, {'is-invalid': valid === false}, inputClasses]"
                     aria-describedby="addon-right addon-left">
@@ -141,6 +143,7 @@
             return (
                addonRight !== undefined ||
                addonLeft !== undefined ||
+               addonLeftSvg !== undefined ||
                this.addonRightIcon !== undefined ||
                this.addonLeftIcon !== undefined ||
                this.addonLeftSvg !== undefined
@@ -161,9 +164,6 @@
             this.$emit("blur", value);
          }
       },
-       mounted() {
-          console.log(this.valid);
-       }
    };
 </script>
 <style>

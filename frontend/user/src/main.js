@@ -24,6 +24,7 @@ import VueI18n from "vue-i18n";
 import './registerServiceWorker'
 import messages from './i18n';
 import { store } from './store';
+import Pagniate from 'vuejs-paginate'
 // import VueToastr2 from 'vue-toastr-2';
 // import 'vue-toastr-2/dist/vue-toastr-2.min.css'
 
@@ -44,6 +45,7 @@ const i18n = new VueI18n({
 
 
 Vue.component('v-select', vSelect);
+Vue.component('paginate', Pagniate)
 Vue.mixin({
   methods: {
     isEmpty(str){

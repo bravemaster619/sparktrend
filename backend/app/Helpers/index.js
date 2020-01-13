@@ -1,15 +1,23 @@
-const safeNumber = (num, allowNegative = false) => {
+const safeNumber = (num, defaultValue = undefined, allowNegative = false) => {
   if (!num) {
     num = 0;
   }
   num = Number(num)
   if (num === Infinity) {
-    console.log(num)
-    throw new Error('Given argument is infinity')
+    if (defaultValue === undefined) {
+      console.log(num)
+      throw new Error('Given argument is infinity')
+    } else {
+      return defaultValue
+    }
   }
   if (!allowNegative && num < 0) {
-    console.log(num)
-    throw new Error('Given argument is negative')
+    if (defaultValue === undefined) {
+      console.log(num)
+      throw new Error('Given argument is negative')
+    } else {
+      return defaultValue
+    }
   }
   return num
 }

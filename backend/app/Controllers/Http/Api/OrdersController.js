@@ -123,9 +123,18 @@ class OrdersController extends BaseController{
   async accept({ request, response, auth, instance }) {
     let user = auth.user
     const order = instance
+    let sellerAccount = null
+    try {
+      sellerAccount = await order.instaaccount().fetch()
+    } catch (e) {
+      console.log(e)
+      throw response.validateFailed('account_empty')
+    }
     const perm = this.checkPermission(order, user, 'accept')
     if (perm.isAllowed) {
       order.history.accepted_at = new Date
+      sellerAccount.total_shoutout = sellerAccount.total_shoutout + 1
+      await sellerAccount.save()
       await order.save()
       return response.apiSuccess('order_accepted', order)
     } else {
@@ -163,9 +172,18 @@ class OrdersController extends BaseController{
     let user = auth.user
     const order = instance
     const perm = this.checkPermission(order, user, 'complete')
+    let sellerAccount = null
+    try {
+      sellerAccount = await order.instaaccount().fetch()
+    } catch (e) {
+      console.log(e)
+      throw response.validateFailed('account_empty')
+    }
     if (perm.isAllowed) {
       order.history.completed_at = new Date
+      sellerAccount.completed_shoutout = sellerAccount.completed_shoutout + 1
       await order.save()
+      await sellerAccount.save()
       return response.apiSuccess('order_completed', order)
     } else {
       throw UnAuthorizeException.invoke(perm.reason)

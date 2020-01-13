@@ -151,6 +151,10 @@ const Model = use('Model')
  *           $ref: '#/components/schemas/Demographics'
  *         product:
  *           $ref: '#/components/schemas/Product'
+ *         total_shoutout:
+ *           type: integer
+ *         completed_shoutout:
+ *           type: integer
  *         created_at:
  *           type: string
  *         updated_at:

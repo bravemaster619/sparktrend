@@ -51,6 +51,12 @@ module.exports = {
               country: DemoValidator
             }
           },
+        total_shoutout: {
+            bsonType: 'int'
+          },
+        completed_shoutout: {
+            bsonType: 'int'
+          },
 
         product: ProductValidator,
 

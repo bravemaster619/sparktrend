@@ -25,26 +25,22 @@
                                             class="mb-3"
                                             addon-left-icon="ni ni-hat-3"
                                             :error="error.full_name">
-                                    <template v-slot:slot_input>
-                                        <input
-                                                v-model="name"
-                                                :placeholder="$t('Full Name')"
-                                                class="form-control"
-                                                aria-describedby="addon-right addon-left">
-                                    </template>
+                                    <input
+                                            v-model="name"
+                                            :placeholder="$t('Full Name')"
+                                            class="form-control"
+                                            aria-describedby="addon-right addon-left">
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
                                             :placeholder="$t('Email')"
                                             addon-left-icon="ni ni-email-83"
                                             :error="error.email">
-                                    <template v-slot:slot_input>
-                                        <input
-                                                v-model="email"
-                                                :placeholder="$t('Email')"
-                                                class="form-control"
-                                                aria-describedby="addon-right addon-left">
-                                    </template>
+                                    <input
+                                            v-model="email"
+                                            :placeholder="$t('Email')"
+                                            class="form-control"
+                                            aria-describedby="addon-right addon-left">
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
@@ -52,7 +48,7 @@
                                             :placeholder="$t('Password')"
                                             addon-left-icon="ni ni-lock-circle-open"
                                             :error="error.password">
-                                    <template v-slot:slot_input>
+                                    <template >
                                         <input
                                                 v-model="password"
                                                 :placeholder="$t('Password')"
@@ -66,13 +62,11 @@
                                             :placeholder="$t('Confirm Password')"
                                             addon-left-icon="ni ni-check-bold"
                                             :error="error.confirm">
-                                    <template v-slot:slot_input>
                                         <input
                                                 v-model="confirm_pass"
                                                 :placeholder="$t('Confirm Password')"
                                                 class="form-control"
                                                 aria-describedby="addon-right addon-left">
-                                    </template>
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
@@ -80,7 +74,6 @@
                                             :optionlist="genders"
                                             addon-left-icon="ni ni-circle-08"
                                             :error="error.gender">
-                                    <template v-slot:slot_input>
                                         <select
                                                 class="form-control"
                                                 aria-describedby="addon-right addon-left"
@@ -89,7 +82,6 @@
                                             <option value="male">Male</option>
                                             <option value="female">Female</option>
                                         </select>
-                                    </template>
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
@@ -97,7 +89,6 @@
                                             :optionlist="countries"
                                             addon-left-icon="ni ni-world"
                                             :error="error.country">
-                                    <template v-slot:slot_input>
                                         <select
                                                 class="form-control"
                                                 aria-describedby="addon-right addon-left"
@@ -105,10 +96,9 @@
                                             <option v-for="(option, index) in countries"
                                                     :key="index"
                                                     v-bind:value="option.value">
-                                                {{$t(option.text)}}
+                                                {{option.text}}
                                             </option>
                                         </select>
-                                    </template>
                                 </base-input>
                                 <base-input
                                             alternative
@@ -117,13 +107,11 @@
                                             addon-left-icon="ni ni-credit-card"
                                             type="text"
                                             :error="error.paypal_email">
-                                    <template v-slot:slot_input>
                                         <input
                                                 v-model="paypal_email"
                                                 :placeholder="$t('PayPal E-mail (optional)')"
                                                 class="form-control"
                                                 aria-describedby="addon-right addon-left">
-                                    </template>
                                 </base-input>
                                 <base-input
                                             alternative
@@ -132,13 +120,11 @@
                                             addon-left-icon="ni ni-like-2"
                                             type="text"
                                             :error="error.referral_code">
-                                    <template v-slot:slot_input>
                                         <input
                                                 v-model="referral_code"
                                                 :placeholder="$t('Referral Code (optional)')"
                                                 class="form-control"
                                                 aria-describedby="addon-right addon-left">
-                                    </template>
 
                                 </base-input>
                                 <div class="text-center">

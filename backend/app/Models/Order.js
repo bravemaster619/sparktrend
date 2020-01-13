@@ -109,7 +109,7 @@ class Order extends Model {
   }
 
   instaaccount() {
-    return this.belongsTo('App/Models/Instaaccount')
+    return this.belongsTo('App/Models/Instaaccount', 'insta_id', '_id')
   }
 
   buyer() {

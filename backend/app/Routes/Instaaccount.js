@@ -10,8 +10,6 @@ Route.group(() => {
    *     tags:
    *       - Instaaccount
    *     summary: Get instaaccounts
-   *     parameters:
-   *       - $ref: '#/components/parameters/ListQuery'
    *     responses:
    *       200:
    *         description: instaaccounts
@@ -23,6 +21,25 @@ Route.group(() => {
    *                 $ref: '#/components/schemas/Instaaccount'
    */
   Route.get('/', 'Api/InstaaccountsController.index')
+
+  /**
+   * @swagger
+   * /instaaccounts/products:
+   *   get:
+   *     tags:
+   *       - Instaaccount
+   *       - Product
+   *     summary: Get product list
+   *     responses:
+   *       200:
+   *         description: products registered to insta accounts
+   *         content:
+   *           application/json:
+   *             type: array
+   *             items:
+   *               $ref: '#/components/schemas/Instaaccount'
+   */
+  Route.get('/products', 'Api/InstaaccountsController.products')
 
   /**
    * @swagger
@@ -170,12 +187,15 @@ Route.group(() => {
    */
   Route.put('/:id/adminedit', 'Api/InstaaccountsController.adminEdit').middleware(['auth:jwt']).instance('App/Models/Instaaccount')
 
+
+
   /**
    * @swagger
    * /instaaccounts/{id}/product:
    *   post:
    *     tags:
    *       - Instaaccount
+   *       - Product
    *     summary: Add or save product to a instagram account
    *     parameters:
    *       - $ref: '#/components/parameters/Id'
@@ -230,6 +250,7 @@ Route.group(() => {
    *   delete:
    *     tags:
    *       - Instaaccount
+   *       - Product
    *     summary: Delete the product of an instaaccount
    *     parameters:
    *       - $ref: '#/components/parameters/Id'

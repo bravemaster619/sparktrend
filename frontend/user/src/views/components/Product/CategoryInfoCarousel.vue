@@ -11,15 +11,15 @@
                                 :interval=5000
                                 >
                         <!-- Text slides with image -->
-                        <b-carousel-slide img-src="img/category-info/single-post.png">
+                        <b-carousel-slide img-src="/img/category-info/single-post.png">
                             <h6>{{$t("Single")}}</h6>
                             <p>{{$t("Single post is a simple post of a picture and caption.")}}</p>
                         </b-carousel-slide>
-                        <b-carousel-slide img-src="img/category-info/multiple-post.gif">
+                        <b-carousel-slide img-src="/img/category-info/multiple-post.gif">
                             <h6>{{$t("Multiple")}}</h6>
                             <p>{{$t("Multiple post is a post of multiple pictures at once and a caption.")}}</p>
                         </b-carousel-slide>
-                        <b-carousel-slide img-src="img/category-info/story-post.png">
+                        <b-carousel-slide img-src="/img/category-info/story-post.png">
                             <h6>{{$t("Story")}}</h6>
                             <p>{{$t("Story post is a post on Instagram story.")}}</p>
                         </b-carousel-slide>
