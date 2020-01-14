@@ -3,3 +3,4 @@ tmp
 .env
 package-lock.json
 .nyc_output
+/public/uploads/
