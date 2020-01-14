@@ -25,9 +25,11 @@ import './registerServiceWorker'
 import messages from './i18n';
 import { store } from './store';
 import Pagniate from 'vuejs-paginate'
+import Loading from 'vue-loading-overlay'
 // import VueToastr2 from 'vue-toastr-2';
 // import 'vue-toastr-2/dist/vue-toastr-2.min.css'
-
+import 'vue-loading-overlay/dist/vue-loading.css';
+Vue.use(Loading)
 
 Vue.config.productionTip = false;
 Vue.use(Argon);

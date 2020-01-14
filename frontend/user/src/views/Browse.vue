@@ -110,7 +110,13 @@
                     </div>
                 </div>
             </div>
-            <div class="filter-result-body">
+            <div class="filter-result-body vld-parent">
+                <loading
+                        :active="loading"
+                        :is-full-page="true"
+                        loader="dots"
+                        color="#5e72e4"
+                ></loading>
                 <div class="row p-2" v-if="instaaccounts.length">
                     <product-item
                             v-for="(instaaccount, index) in instaaccounts"
@@ -133,6 +139,7 @@
                 :next-text="'&raquo;'"
                 :container-class="'pagination browse-pagination'"
                 :click-handler="onPageNavigate"
+
                 v-model=filter.page
                 ></paginate>
         </div>
@@ -145,6 +152,9 @@
    import UsdCircle from './../components/Svg/UsdCircle';
    import ProductItem from "./components/ProductItem";
    import httpService from '../services/http.service'
+   import Loading from 'vue-loading-overlay'
+   import 'vue-loading-overlay/dist/vue-loading.css';
+
    const defaultState = {
       UsdCircle,
       niches: [{"value":"1","text":"Humour & Memes","checked":false},{"value":"2","text":"Fashion & Style","checked":false},{"value":"3","text":"Fitness & Sports","checked":false},{"value":"4","text":"Quotes & Texts","checked":false},{"value":"5","text":"Luxury & Motivation","checked":false},{"value":"6","text":"Cars & Bikes","checked":false},{"value":"7","text":"Outdoor & Travel","checked":false},{"value":"8","text":"Food & Nutrition","checked":false},{"value":"9","text":"Pets & Animals","checked":false},{"value":"10","text":"Models & Lifestyle","checked":false},{"value":"11","text":"Personal & Talent","checked":false},{"value":"12","text":"Music & Singers","checked":false},{"value":"13","text":"Science & Technology","checked":false},{"value":"14","text":"Art","checked":false},{"value":"15","text":"Beauty, Cosmetic & Personal Care","checked":false},{"value":"16","text":"Clip & Movie","checked":false},{"value":"17","text":"Drink & Beverage","checked":false},{"value":"18","text":"Games & Play","checked":false},{"value":"19","text":"Cabin and Wood","checked":false},{"value":"20","text":"Interior Design","checked":false}],
@@ -167,6 +177,7 @@
       state: {},
       data() {
          return {
+            loading: true,
             showMdFilters: false,
             showMdResults: true,
             isMd: window.innerWidth < 992,
@@ -189,7 +200,7 @@
             }
          }
       },
-      components: { ProductItem },
+      components: { ProductItem, Loading },
       computed: {
          canShowFilter() {
             return !this.isMd || this.showMdFilters;
@@ -288,11 +299,11 @@
          }
          httpService.get(`instaaccounts/${window.location.search}`).then((resp) => {
             if (resp.status === 200) {
-                console.log(resp)
                 this.instaaccounts = resp.data.data
                 if (resp.meta && resp.meta.total) {
                    this.total_count = resp.meta.total
                 }
+                this.loading = false
             } else {
                 toastr.error('Something is wrong')
             }

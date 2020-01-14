@@ -21,6 +21,7 @@ import BuyerGuide from "./views/BuyerGuide";
 import SellerGuide from "./views/SellerGuide";
 import ChangePassword from "./views/ChangePassword";
 import MySales from "./views/dashboard/MySales";
+import PageNotFound from "./views/PageNotFound"
 
 Vue.use(Router);
 
@@ -72,22 +73,34 @@ export const router= new Router({
         {
           path: '/profile',
           name: 'profile',
-          component: Profile
+          component: Profile,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path:'/myproducts',
           name: 'myproducts',
-          component: myproducts
+          component: myproducts,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: '/dashboard/main',
           name: 'dashboard_main',
-          component: Overview
+          component: Overview,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'myorders/purchases',
           name: 'dashboard_purchase',
-          component: Purchases
+          component: Purchases,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: '/products/:id',
@@ -95,9 +108,12 @@ export const router= new Router({
           component: Product
 		  },
         {
-          path: '/checkout',
+          path: '/products/:id/checkout',
           name: 'checkout',
-          component: Checkout
+          component: Checkout,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: '/tos',
@@ -122,20 +138,39 @@ export const router= new Router({
 		{
           path: '/addproduct',
           name: 'addproduct',
-          component: AddProduct
+          component: AddProduct,
+        meta: {
+          requiresAuth: true
+        }
 		},
         {
           path: '/changepassword',
           name: 'change_password',
-          component: ChangePassword
+          component: ChangePassword,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: '/myorders/sales',
           name: 'mysales',
-          component: MySales
+          component: MySales,
+          meta: {
+            requiresAuth: true
+          }
+        },
+        {
+          path: '/404',
+          name: '404',
+          component: PageNotFound
+        },
+        {
+          path: "*",
+          component: PageNotFound
         }
       ]
-    }
+    },
+
   ],
   scrollBehavior: to => {
     if (to.hash) {
@@ -145,21 +180,21 @@ export const router= new Router({
     }
   },
 });
-router.beforeEach(
-    (to,from, next) => {
-      const public_pages = [
-          '/',
-        '/landing',
-        "/login",
-        "/register",
-        '/browse'
-      ];
-      console.log("beforeEach");
-      const authRequired = !public_pages.includes(to.path);
-      const loggedIn = localStorage.getItem("user");
-      if(authRequired && !loggedIn){
-        return next('/login');
-      }
-      next();
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record && record.meta.requiresAuth)) {
+    const loggedIn = localStorage.getItem("user")
+    if(!loggedIn){
+      return next({
+        path: '/login',
+        params: { nextUrl: to.fullPath }
+      })
+    } else {
+      next()
     }
-);
+  } else {
+    next()
+  }
+})
+
+export default router

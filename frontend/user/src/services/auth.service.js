@@ -3,6 +3,7 @@ import  Axios  from 'axios';
 import { authHeader } from "../helpers";
 
 export const authService = {
+    getCurrentUser,
     login,
     logout,
     register,
@@ -43,4 +44,7 @@ function changePassword({password, new_password}){
             headers :   authHeader()
         }
     );
+}
+function getCurrentUser() {
+   return window.localStorage.getItem("user")
 }

@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-        <input type="file" class="d-none" id="vue-file-upload-input" @change="addImage">
+        <input type="file" class="d-none" id="vue-file-upload-input" @change="addFile">
     </div>
 </template>
 <script>
@@ -48,7 +48,7 @@
             openinput: function() {
                 document.getElementById("vue-file-upload-input").click();
             },
-            addImage: function(e) {
+            addFile: function(e) {
                 const tmpFiles = e.target.files
                 if (tmpFiles.length === 0) {
                     return false;
@@ -61,6 +61,7 @@
                     self.rawData.push(e.target.result)
                 }
                 reader.readAsDataURL(file)
+                this.$emit('files-changed', this.files)
             },
             getFileType: function(file) {
                 const fileType = file.type
@@ -75,9 +76,10 @@
                 this.files.splice(index, 1)
                 this.rawData.splice(index, 1)
                 document.getElementById("vue-file-upload-input").value = null
+                this.$emit('files-changed', this.files)
             },
             upload: function() {
-                alert('Check console to see uploads')
+                
             }
         }
     }

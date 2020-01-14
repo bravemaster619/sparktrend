@@ -38,10 +38,10 @@ class OrdersController extends BaseController{
     orderData.pricing_idx = $n(orderData.pricing_idx)
     orderData.insta_id = instaaccount._id
     if (orderData.with_bio) {
-      orderData.bio_url = request.input('bio_url')
+      orderData.bio_url = request.input('bio_url') ? request.input("bio_url") : ""
     }
     if (orderData.category === "Story") {
-      orderData.swipe_up_url = request.input('swipe_up_url')
+      orderData.swipe_up_url = request.input('swipe_up_url') ? request.input('swipe_up_url') : ""
     }
     if (!(orderData = this.copyInfoFromProduct(orderData, instaaccount.product))) {
       return response.validateFailed('invalid_product')
@@ -50,11 +50,11 @@ class OrdersController extends BaseController{
     orderData.seller_id = instaaccount.user_id
     orderData.start_from = new Date(orderData.start_from)
     // upload images
-    /*const postFiles = (request.file('posts', {
-      types: ['image'],
+    const postFiles = (request.file('posts', {
+      types: ['image', 'video'],
       size: '5mb',
       maxSize: '5mb',
-      allowedExtensions: ['jpg', 'png', 'jpeg', 'mp4']
+      allowedExtensions: ['jpg', 'png', 'jpeg', 'mp4', 'gif']
     }))
     if (!postFiles) {
       return response.validateFailed('empty_posts')
@@ -71,8 +71,8 @@ class OrdersController extends BaseController{
       return {
         name: fileName
       }
-    })*/
-    orderData.posts = ['change code when integrate with vuejs']
+    })
+    // orderData.posts = ['change code when integrate with vuejs']
     if (orderData.type === "Single") {
       orderData.posts = orderData.posts.slice(0,1)
     }
@@ -83,11 +83,12 @@ class OrdersController extends BaseController{
       order.history.created_at = new Date;
       order.verification_code = randomstring.generate(8)
       order.payment_method = 'paypal'
+      console.log(order)
       await order.save()
     } catch(e) {
       return response.apiFail(e)
     }
-    return response.json(order)
+    return response.apiItem(order)
   }
 
   async index({request, response, auth, decodeQuery}) {
