@@ -60,7 +60,7 @@
                     </a>
                     <router-link :to="{name:'dashboard_main'}" class="dropdown-item">{{$t("Overview")}}</router-link>
                     <router-link :to="{name:'dashboard_purchase'}" class="dropdown-item">{{$t("My Purchases")}}</router-link>
-                    <router-link :to="{name:'mysales'}" class="dropdown-item">{{$t("My sales")}}</router-link>
+                    <router-link :to="{name:'mysales'}" class="dropdown-item">{{$t("My Sales")}}</router-link>
                     <router-link :to="{name:'myproducts'}" class="dropdown-item">{{$t("My Products")}}</router-link>
                 </base-dropdown>
                 <base-dropdown tag="li" class="nav-item">

@@ -25,16 +25,15 @@ import './registerServiceWorker'
 import messages from './i18n';
 import { store } from './store';
 import Pagniate from 'vuejs-paginate'
-import Loading from 'vue-loading-overlay'
 // import VueToastr2 from 'vue-toastr-2';
 // import 'vue-toastr-2/dist/vue-toastr-2.min.css'
-import 'vue-loading-overlay/dist/vue-loading.css';
-Vue.use(Loading)
+import VueSweetalert2 from "vue-sweetalert2";
+import 'sweetalert2/dist/sweetalert2.min.css'
 
 Vue.config.productionTip = false;
 Vue.use(Argon);
 Vue.use(VueI18n);
-
+Vue.use(VueSweetalert2)
 // window.toastr = require("toastr");
 // Vue.use(VueToastr2);
 

@@ -3,23 +3,23 @@
     <div class="col-12">
         <h6 class="dashboard-home-title text-uppercase">{{$t("Status")}}</h6>
     </div>
-    <div class="col-sm-4 col-12 mt-3 mt-sm-0">
-        <status-card :title="$t('this month earnings')" :amount="monthly_income"></status-card>
+    <div class="col-sm-6 col-12 mt-3 mt-sm-0">
+        <status-card :title="$t('This Month Sales')" :amount="monthly_income"></status-card>
     </div>
 
-    <div class="col-sm-4 col-12 mt-3 mt-sm-0">
-        <status-card :title="$t('total earned')" :amount="total_income"></status-card>
+    <div class="col-sm-6 col-12 mt-3 mt-sm-0">
+        <status-card :title="$t('Total Sales')" :amount="total_income"></status-card>
     </div>
 
-    <div class="col-sm-4 col-12 mt-3 mt-sm-0">
-        <status-card :title="$t('current balance')" :amount="wallet_balance"></status-card>
-    </div>
+<!--    <div class="col-sm-4 col-12 mt-3 mt-sm-0">-->
+<!--        <status-card :title="$t('current balance')" :amount="wallet_balance"></status-card>-->
+<!--    </div>-->
 
     <div class="col-12 col-sm-6 col-md-4 mt-3">
-        <shoutout title="PURCHASED SHOUTOUTS" :total_info="purchased_shoutout"></shoutout>
+        <shoutout title="Purchased Shoutouts" :total_info="purchased_shoutout"></shoutout>
     </div>
     <div class="col-12 col-sm-6 col-md-4 mt-3">
-        <shoutout title="SOLD SHOUTOUTS" :total_info="sold_shoutout"></shoutout>
+        <shoutout title="Sold Shoutouts" :total_info="sold_shoutout"></shoutout>
     </div>
     <div class="col-12 col-md-4 mt-3">
         <success-rate-chart

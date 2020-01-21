@@ -38,7 +38,7 @@
                 <div class="container">
                     <div class="row mt-4">
                         <div class="card p-4">
-                            <h2 class="text-center mt-4">{{$t('Influencer Cart for Buyers')}}</h2>
+                            <h2 class="text-center mt-4">{{$t('Sparktrend for Buyers')}}</h2>
                             <hr class="hr-primary short mb-4 mt-0 mx-auto d-inline-block">
                             <div class="row text-center mt-5">
                                 <div class="col-12 col-md-4 d-flex flex-column">
@@ -95,7 +95,7 @@
                                          alt="img-landing-target">
                                 </div>
                                 <div class="d-flex flex-column justify-content-center col-12 col-sm-6 text-center text-sm-left mt-sm-3">
-                                    <h3>{{$t("Influencer Cart for Sellers")}}</h3>
+                                    <h3>{{$t("Sparktrend for Sellers")}}</h3>
                                     <div class="px-4">
                                         <ul class="list-unstyled text-left ml-4 ml-md-0 landing-list">
                                             <li>{{$t("Making it safe and sure for sellers to do transactions")}}</li>

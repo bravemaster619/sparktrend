@@ -22,6 +22,7 @@ import SellerGuide from "./views/SellerGuide";
 import ChangePassword from "./views/ChangePassword";
 import MySales from "./views/dashboard/MySales";
 import PageNotFound from "./views/PageNotFound"
+import ServerError from "./views/ServerError";
 
 Vue.use(Router);
 
@@ -108,7 +109,7 @@ export const router= new Router({
           component: Product
 		  },
         {
-          path: '/products/:id/checkout',
+          path: '/orders/:id/checkout',
           name: 'checkout',
           component: Checkout,
           meta: {
@@ -163,6 +164,11 @@ export const router= new Router({
           path: '/404',
           name: '404',
           component: PageNotFound
+        },
+        {
+          path: '/500',
+          name: '500',
+          component: ServerError
         },
         {
           path: "*",

@@ -69,7 +69,6 @@
                 if(!this.isEmpty(result.insight)){
                     this.insight_url = result.insight;
                     this.status = this.status_enum[++this.current_tab_id];
-                    console.log("insta_id" + this.insta_id);
                 }
             }
         }

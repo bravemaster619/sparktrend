@@ -124,7 +124,7 @@
                             :key="index"
                     ></product-item>
                 </div>
-                <div class="row p-2" v-else>
+                <div class="row p-2" v-if="(!instaaccounts || !instaaccounts.length) && !loading">
                     <div class="col-12 text-center p-3">
                         <img src="img/nodata.png" style="max-width: 125px">
                         <h6 class="mt-2">Ooops!</h6>
@@ -209,7 +209,7 @@
             return !this.isMd || this.showMdResults;
          },
          totalPage() {
-            return parseInt(parseInt(this.total_count) / parseInt(this.filter.page_length)) + 1
+             return parseInt((this.total_count + this.filter.page_length - 1) / this.filter.page_length)
          },
          queryBuilder() {
             const qb = {};

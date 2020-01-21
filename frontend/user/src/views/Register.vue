@@ -313,10 +313,8 @@
           },
            validation(){
               if(!this.name || !this.email || !this.password || !this.confirm_pass || !this.gender || !this.country){
-                  console.log("1");
                   return false;
               }
-              console.log("2");
                return (!this.error.full_name && !this.error.password && !this.error.password && !this.error.gender
                    && !this.error.country && !this.error.referral_code && !this.error.paypal_email);
 

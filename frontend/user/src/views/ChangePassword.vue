@@ -74,7 +74,6 @@
                         .catch(({response}) => {
                             this.loading = false;
                             this.$toastr.error("Change Password failed", "Result", {timeOut : 3000});
-                            console.log("checkAuth");
                             this.old_password = "";
                             this.new_password = "";
                             this.confirm_password = "";

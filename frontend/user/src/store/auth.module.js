@@ -86,7 +86,7 @@ export const auth =  {
         logout({commit}){
             commit('logout');
             authService.logout();
-            router.push("/login");
+            router.push("/");
         },
         checkAuth({commit}, response){
             console.log(response);

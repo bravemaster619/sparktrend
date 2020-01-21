@@ -733,7 +733,7 @@ $transition-time: 0.2s;
 }
 
 .badger-accordion__panel {
-  background-color: $off-white;
+
   position: relative;
 
 }
@@ -784,14 +784,18 @@ button.badger-accordion-toggle:focus {
   color: #f5f5f5;
   background: linear-gradient(45deg, $theme-color-light, $theme-color, $theme-color-light);
   background-size:300% 100%;
-  background-position: 100% 0;
+  background-position: 100% 0!important;
   background-color: $theme-color !important;
   border: none;
+  &.btn-danger{
+    background: linear-gradient(45deg, $pink, $danger, $pink);
+    background-size:300% 100%;
+  }
   &:not(:disabled):not(.disabled){
     cursor: pointer;
   }
   &:hover {
-    background-position: 0 100%;
+    background-position: 0 100% !important;
     transition: all .5s ease;
     -webkit-transition: all .5s ease;
     color: #f5f5f5 !important;
@@ -800,6 +804,7 @@ button.badger-accordion-toggle:focus {
     background-color: $theme-color;
     color: #fff !important;
   }
+
 }
 .lbl{
   border-radius: 5px;
@@ -1152,4 +1157,27 @@ form.form-verifyproduct{
 .browse-pagination {
   display: flex;
   justify-content: flex-end;
+}
+.prod-pad-item{
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 3px 3px 5px 2px #adadad;
+
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+
+  background-color: #fff;
+
+  &:hover{
+    background-color: #eee;
+    box-shadow: 6px 8px 10px 6px #bdbdbd;
+  }
+}
+.prod-status{
+  border-radius: 5px;
 }

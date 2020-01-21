@@ -1,6 +1,11 @@
 <template>
-    <div class="row">
-        <div class="col-12 col-md-6">
+    <div class="row vld-parent">
+        <loading
+                :active="loading"
+                :is-full-page="true"
+                loader="dots"
+                color="#5e72e4"></loading>
+        <div class="col-12 col-md-6" v-if="order">
             <div class="card p-0">
                 <div class="card-header">
                     <small class="font-weight-bold ">{{order._id}}</small>
@@ -17,7 +22,7 @@
                         </div>
                         <div class="col-12 col-md-4 text-center">
                             <label class="font-weight-bold">{{$t("Category Type")}}</label>
-                            <p>{{order.category_type}}</p>
+                            <p>{{order.category}}</p>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -37,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6" v-if="order">
             <div class="row">
                 <div class="col-12">
                     <div class="card p-0">
@@ -47,7 +52,7 @@
                         <div class="card-body">
                             <div class="price-detail border-bottom">
                                 <dl class="d-flex justify-content-between">
-                                    <dt>{{$t(order.category_type)}}</dt>
+                                    <dt>{{$t(order.category)}}</dt>
                                     <dd>${{order.subtotal.toFixed(2)}}</dd>
                                 </dl>
                                 <dl class="d-flex justify-content-between">
@@ -82,47 +87,46 @@
 </template>
 <script>
    import Axios from 'axios'
+   import httpService from "../services/http.service"
+   import Loading from 'vue-loading-overlay'
    const moment = require('moment')
    const orderService = require('../services/order.service')
+   const addPayPalButton = function() {
+       let paypalScript = document.createElement('script')
+       paypalScript.setAttribute('src', 'https://www.paypal.com/sdk/js?client-id=AZmZ06MLlFUMW3b9gBGbH2X5_vhUNlAATnqumGA1ajxixMmHpPz_8MBfqq4J2uAqcKbHjoI1yxHy0Bzx')
+       paypalScript.onload = function() {
+           paypal.Buttons({
+               createOrder: function(data, actions) {
+                   return actions.order.create({
+                       purchase_units: [{
+                           amount: {
+                               value: self.order.total,
+                               currency_code: "USD"
+                           }
+                       }]
+                   })
+               },
+               onApprove: function(data, actions) {
+                   return actions.order.capture().then(function(details) {
+                       orderService.confirmPayment(self.order['_id'], details.id).then(resp => {
+                           if (resp.status === 200) {
+
+                           }
+                       })
+                   })
+               }
+           }).render(document.getElementById('paypal_button'));
+       }
+       document.body.appendChild(paypalScript)
+   }
    export default {
+       components: {
+          Loading
+       },
        data() {
           return {
-             order: {
-                _id: "5e18c38d53322d1118713b67",
-                insta_id: "5e18c0a2d63de515c804211c",
-                category: "Single",
-                pricing_idx: 0,
-                start_from: "2020-01-17T00:00:00.000+00:00",
-                with_bio: true,
-                caption: 'Lorem ipsum dolor sit amet',
-                additional_info: 'Additional information goes here...',
-                status: 'waiting_for_payment',
-                code: 'FAQVL6',
-                bio_url: 'bio_url',
-                category_id: 2,
-                category_type: 'Multiple',
-                time: 12,
-                price:50,
-                bio_price: 10,
-                subtotal: 60,
-                charge: 0,
-                total: 60,
-                seller_id: '5e1871a183235942ac1b1276',
-                buyer_id: '5e18c244d63de515c804211d',
-                posts: [{
-                   filename: 'download.jpg',
-                   type: 'image',
-                   path: 'img/sana/download.jpg'
-                }, {
-                    filename: 'images (1).jpg',
-                    type: 'image',
-                    path: 'img/sana/images (1).jpg'
-                }, {
-                   filename: 'RPReplay_Final1577418789.MP4',
-                   type: 'video',
-                   path: 'img/sana/RPReplay_Final1577418789.MP4'
-                }]
-             }
+             loading: true,
+             order: null
           }
        },
        computed: {
@@ -130,37 +134,22 @@
              return new moment(this.order.start_from).local().format("YYYY-MM-DD hh:mm:ss (Z)")
           }
        },
-       beforeMount() {
-          window.self = this;
-          let paypalScript = document.createElement('script')
-          paypalScript.setAttribute('src', 'https://www.paypal.com/sdk/js?client-id=AZmZ06MLlFUMW3b9gBGbH2X5_vhUNlAATnqumGA1ajxixMmHpPz_8MBfqq4J2uAqcKbHjoI1yxHy0Bzx')
-          paypalScript.onload = function() {
-             paypal.Buttons({
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                       purchase_units: [{
-                          amount: {
-                             value: self.order.total,
-                             currency_code: "USD"
-                          }
-                       }]
-                    })
-                },
-                onApprove: function(data, actions) {
-                   return actions.order.capture().then(function(details) {
-                      orderService.confirmPayment(self.order['_id'], details.id).then(resp => {
-                         if (resp.status === 200) {
-
-                         }
-                      })
-                   })
-                }
-             }).render(document.getElementById('paypal_button'));
-          }
-          document.body.appendChild(paypalScript)
-       },
        mounted() {
-
+          httpService.get('orders/' + this.$route.params.id)
+             .then(res => {
+                if (res.status === 200 && res.data && res.data.data) {
+                    this.order = res.data.data
+                    this.loading = false
+                    addPayPalButton()
+                } else {
+                   this.$router.push({ name: '500' })
+                }
+             })
+             .catch(e => {
+                 if (e.response && e.response.status == "404") {
+                     this.$router.push({ name: '404' })
+                 }
+             })
        }
     }
 </script>

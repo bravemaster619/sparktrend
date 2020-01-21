@@ -1,6 +1,8 @@
 <template>
    <div>
-      <badger-accordion :icons="icons" v-for="order in displayOrders" :key="order._id">
+      <badger-accordion
+         :icons="icons" v-for="order in displayOrders" :key="order._id"
+      >
          <badger-accordion-item>
             <template slot="header">
                <div class="request-header">
@@ -81,7 +83,6 @@
                            <div class="salesorder-list-date mb-2">Attachment</div>
                            <div class="salesorder-list-image-product mb-2" v-for="(post,index) in order.posts"
                                 :key="index">
-
                               <img class="img-fluid salesorder-list-img-product z-depth-1 mb-1"
                                    :src="post.path" :alt="post.filename" v-if="post.type==='image'">
                               <video class="img-fluid salesorder-list-img-product z-depth-1 mb-1"
@@ -94,11 +95,40 @@
                                     alt="download-icon">
                               </a>
                            </div>
-                           <div class="d-flex mt-2" v-if="getOrderPaymentStatus(order)===OrderStatus.PAYMENT.NOT_PAID">
-                              <router-link class="btn btn-primary btn-grad-effect btn-md flex-1 mx-0"
-                                           style="font-size: 14px;" :to="`/orders/${order._id}/checkout`">
-                                 {{$t("Pay")}}
-                              </router-link>
+                           <div class="d-flex mt-2" v-if="getOrderShoutoutStatus(order)===OrderStatus.SHOUTOUT.CREATED">
+                              <button class="btn btn-primary btn-grad-effect btn-md  w-100"
+                                      style="font-size: 14px;" :data-url="`/orders/${order._id}/accept`"
+                                      data-message="Do you really want to accept it?"
+                                      @click="onActionButtonClick"
+                              >
+                                 {{$t("Accept")}}
+                              </button>
+                              <button class="btn btn-danger btn-grad-effect btn-md  w-100"
+                                      style="font-size: 14px;" :data-url="`/orders/${order._id}/reject`"
+                                      @click="onActionButtonClick"
+                                      data-message="Do you really want to reject it?"
+                              >
+                                 {{$t("Reject")}}
+                              </button>
+                           </div>
+                           <div class="d-flex mt-2"
+                                v-if="getOrderShoutoutStatus(order)===OrderStatus.SHOUTOUT.ACCEPTED">
+                              <button class="btn btn-primary btn-grad-effect btn-md  w-100"
+                                      style="font-size: 14px;" :data-url="`/orders/${order._id}/start`"
+                                      @click="onActionButtonClick"
+                                      data-message="Do you really want to start?"
+                              >
+                                 {{$t("Start")}}
+                              </button>
+                           </div>
+                           <div class="d-flex mt-2" v-if="getOrderShoutoutStatus(order)===OrderStatus.SHOUTOUT.STARTED">
+                              <button class="btn btn-primary btn-grad-effect btn-md  w-100"
+                                      style="font-size: 14px;" :data-url="`/orders/${order._id}/complete`"
+                                      @click="onActionButtonClick"
+                                      data-message="Do you really want to complete it?"
+                              >
+                                 {{$t("Complete")}}
+                              </button>
                            </div>
                         </div>
                         <div class="col-12 col-md-7">
@@ -108,7 +138,7 @@
                                  <textarea id="caption-box" rows="6" class="form-control"
                                            readonly
                                            :value="order.caption + ' #' + order.verification_code">
-                                    </textarea>
+                              </textarea>
                               </div>
                               <button class="btn button-basic m-0 mt-3">
                                  {{$t("Copy text")}}
@@ -158,6 +188,7 @@
                </div>
             </template>
          </badger-accordion-item>
+
       </badger-accordion>
       <div v-if="displayOrders.length">
          <paginate
@@ -255,7 +286,7 @@
                   if (e.response && e.response.status == "404") {
                      window.toastr("File not found", "Error", {timeOut: 3000})
                   } else {
-                     window.toastr("Oops! Something is wrong. Please try again later...", "", {timeOut: 3000});
+                     window.toastr("Oops! Something is wrong. Please try again later...", "", {timeOut: 3000})
                   }
                })
          },
@@ -264,6 +295,38 @@
          onPageNavigate: function (pageNum) {
             this.page = pageNum
             this.displayOrders = this.getDisplayOrders()
+         },
+
+         onActionButtonClick: function (e) {
+            const button = e.target
+            const message = button.getAttribute("data-message") || "Really?"
+            const url = button.getAttribute("data-url")
+            this.$swal({
+               title: "Are you sure?",
+               text: message,
+               icon: 'warning',
+               showCancelButton: true
+            }).then(result => {
+               if (result.value) {
+                  httpService.post(url).then(res => {
+                     console.log(res)
+                     if (res.data) {
+                        if (res.data.message) {
+                           this.$toastr.success(this.$t(`order.success.${res.data.message}`))
+                        }
+                        this.$emit('order-changed', res)
+                     }
+                  }).catch(e => {
+                     if (e.isAxiosError) {
+                        console.log(e.response)
+                        let message = e.response.data.errors ? this.$t(`order.error.${e.response.data.errors}`) : this.$t('Something went wrong')
+                        this.$toastr.error(this.$t(message))
+                     } else {
+                        throw e
+                     }
+                  })
+               }
+            })
          },
          getDisplayOrders: function () {
             const from = (this.page - 1) * this.pageLength
@@ -284,6 +347,7 @@
             }
             return parseInt((this.orders.length + this.pageLength - 1) / this.pageLength)
          },
+
       },
       mounted() {
          window.vuetemp = this

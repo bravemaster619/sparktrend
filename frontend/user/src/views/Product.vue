@@ -46,8 +46,7 @@
                         </div>
                         <div class="col-12 product-detail-body">
                             <p v-if="instaaccount.total_shoutout">{{$t("Shoutout completed: ")}}
-                                {{$t("shoutout_history", [instaaccount.total_shoutout,
-                                completed_shoutout])}}</p>
+                                {{$t("shoutout_history", [instaaccount.total_shoutout, instaaccount.completed_shoutout])}}</p>
                             <p v-else>{{$t("Has not completed a shoutout yet.")}}</p>
                             <pre>{{instaaccount.product.description}}</pre>
                         </div>
@@ -311,97 +310,108 @@
             this.form.files = files
          },
          onOrder: function () {
-            let formData = new FormData();
-            let self = this
+            this.$swal({
+                title: this.$t("Are you sure?"),
+                text: this.$t("Do you really want to order this shoutout?"),
+                showCancelButton: true
+            }).then(result => {
+                if (result.value) {
+                    let formData = new FormData();
+                    let self = this
 
-            // --- begin base info (insta_id, category, pricing_idx, with_bio)  ---
-            formData.append('insta_id', self.instaaccount._id)
-            if (!this.selectedCategory || !this.selectedPricing) {
-               this.$toastr.error("Please choose any of the category and time to continue", "", {timeOut: 3000});
-               return
-            }
-            formData.append('category', self.selectedCategory.type)
-            formData.append('pricing_idx', self.selectedPricing.idx)
-            formData.append('with_bio', self.form.with_bio ? true : false)
-            // ---  end base info (insta_id, category, pricing_idx, with_bio)   ---
+                    // --- begin base info (insta_id, category, pricing_idx, with_bio)  ---
+                    formData.append('insta_id', self.instaaccount._id)
+                    if (!this.selectedCategory || !this.selectedPricing) {
+                        this.$toastr.error(this.$t("Please choose any of the category and time to continue"), "", {timeOut: 3000});
+                        return
+                    }
+                    formData.append('category', self.selectedCategory.type)
+                    formData.append('pricing_idx', self.selectedPricing.idx)
+                    formData.append('with_bio', self.form.with_bio ? true : false)
+                    // ---  end base info (insta_id, category, pricing_idx, with_bio)   ---
 
-            // --- begin posts ---
-            if (!this.form.files || !this.form.files.length) {
-               this.error.post = "Upload your post"
-               return
-            } else if (this.form.files.length > 10) {
-               this.error.post = "Cannot upload more than 10 posts"
-               return
-            }
-            if (formData.get('category') !== "Multiple" && this.form.files.length > 1) {
-               this.error.post = "Cannot upload multiple posts in Single category."
-               return
-            }
-            for (let i = 0; i < this.form.files.length; i++) {
-               let file = this.form.files[i]
-               formData.append(`posts[${i}]`, file)
-            }
-            this.error.post = ''
-            // ---  end posts  ---
+                    // --- begin posts ---
+                    if (!this.form.files || !this.form.files.length) {
+                        this.error.post = "Upload your post"
+                        return
+                    } else if (this.form.files.length > 10) {
+                        this.error.post = "Cannot upload more than 10 posts"
+                        return
+                    }
+                    if (formData.get('category') !== "Multiple" && this.form.files.length > 1) {
+                        this.error.post = "Cannot upload multiple posts in Single category."
+                        return
+                    }
+                    for (let i = 0; i < this.form.files.length; i++) {
+                        let file = this.form.files[i]
+                        formData.append(`posts[${i}]`, file)
+                    }
+                    this.error.post = ''
+                    // ---  end posts  ---
 
-            // --- begin start_from ---
-            if (!this.form.start_from) {
-               this.error.start_from = "Please select start date"
-               return
-            }
-            let start_from = null
-            try {
-               start_from = new Date(self.form.start_from)
-            } catch (e) {
-               this.error.start_from = "Invalid date format"
-               return
-            }
-            this.error.start_from = ''
-            formData.append('start_from', start_from)
-            // ---  end start_from  ---
+                    // --- begin start_from ---
+                    if (!this.form.start_from) {
+                        this.error.start_from = "Please select start date"
+                        return
+                    }
+                    let start_from = null
+                    try {
+                        start_from = new Date(self.form.start_from)
+                    } catch (e) {
+                        this.error.start_from = "Invalid date format"
+                        return
+                    }
+                    this.error.start_from = ''
+                    formData.append('start_from', start_from)
+                    // ---  end start_from  ---
 
-            // --- begin caption ---
-            if (!this.form.caption) {
-               this.error.caption = "Please enter caption"
-               return
-            }
-            this.error.caption = ''
-            formData.append('caption', self.form.caption.substr(0, 500))
-            // ---  end caption  ---
+                    // --- begin caption ---
+                    if (!this.form.caption) {
+                        this.error.caption = "Please enter caption"
+                        return
+                    }
+                    this.error.caption = ''
+                    formData.append('caption', self.form.caption.substr(0, 500))
+                    // ---  end caption  ---
 
-            // --- begin with_bio ---
-            if (formData.get('with_bio')) {
-               if (!this.form.bio_url) {
-                  this.error.bio_url = "Please enter bio url"
-                  return
-               }
-               formData.append('with_bio', true)
-               formData.append('bio_url', this.form.bio_url)
-            }
-            // ---  end with_bio  ---
+                    // --- begin with_bio ---
+                    if (formData.get('with_bio')) {
+                        if (!this.form.bio_url) {
+                            this.error.bio_url = "Please enter bio url"
+                            return
+                        }
+                        formData.set('with_bio', true)
+                        formData.append('bio_url', this.form.bio_url)
+                    }
+                    // ---  end with_bio  ---
 
-            // --- begin swipe_up_url ---
-            if (this.selectedCategory.type === 'Story') {
-               if (this.form.swipe_up_url) {
-                  formData.append('swipe_up_url', this.form.swipe_up_url)
-               }
-            }
-            formData.append('additional_info', self.form.additional_info.substr(0, 500))
-            // ---  end swipe_up_url  ---
-
-            // finally
-            httpService.post('orders/new', formData, {
-               'Content-Type': 'multipart/form-data'
+                    // --- begin swipe_up_url ---
+                    if (this.selectedCategory.type === 'Story') {
+                        if (this.form.swipe_up_url) {
+                            formData.append('swipe_up_url', this.form.swipe_up_url)
+                        }
+                    }
+                    formData.append('additional_info', self.form.additional_info.substr(0, 500))
+                    // ---  end swipe_up_url  ---
+                    console.log(formData)
+                    // finally
+                    httpService.post('orders/new', formData, {
+                        'Content-Type': 'multipart/form-data'
+                    })
+                       .then(res => {
+                           if (res.status == 200 && res.data && res.data.data._id) {
+                               this.$router.push({name: 'checkout', params: {id: res.data.data._id}})
+                           } else {
+                               console.log(res)
+                               this.$toastr.error(this.$t("Oops! Something is wrong. Please try again later..."), "", {timeOut: 3000});
+                           }
+                       })
+                       .catch(e => (console.error(e)))
+                }
             })
-               .then(res => {
-                  if (res.status == 200 && res.data && res.data.data.insta_id) {
-                     this.$router.push({name: 'checkout', params: {id: res.data.data.insta_id}})
-                  } else {
-                     console.log(res)
-                     this.$toastr.error("Oops! Something is wrong. Please try again later...", "", {timeOut: 3000});
-                  }
-               })
-               .catch(e => (console.error(e)))
+
+
+
          }
       },
       computed: {

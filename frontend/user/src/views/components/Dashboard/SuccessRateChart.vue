@@ -3,8 +3,8 @@
         <div class="container p-0">
             <pie-chart :chart-data="datacollection"></pie-chart>
         </div>
-        <h2 class="text-neon-green">{{success_rate}}%</h2>
-        <div class="dashboard-home-title">SUCCESS RATE</div>
+        <h2 class="text-primary">{{success_rate}}%</h2>
+        <div class="dashboard-home-title text-uppercase">{{$t("Success rate")}}</div>
     </div>
 </template>
 
@@ -34,7 +34,7 @@
                     datasets: [
                         {
                             label: "Success Rate",
-                            backgroundColor: ['#57bc70', '#46bfbd'],
+                            backgroundColor: ['#5e72e4', '#8965e0'],
                             data: [this.success_shout, this.success_rate === 0 ? 0 : (this.success_shout * 100 / this.success_rate - this.success_shout).toFixed(2)]
                         }
                     ]

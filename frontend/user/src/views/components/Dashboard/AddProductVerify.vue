@@ -49,7 +49,6 @@
             verifyAccount(){
                 addProductService.validateInstagram(this._id)
                     .then( ({data}) => {
-                        console.log(data);
                         if(!data.data.verified){
                             console.log("Server is strange");
                             this.$store.dispatch("alert/error", "Please try again");
