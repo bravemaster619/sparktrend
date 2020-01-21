@@ -66,7 +66,7 @@ class OrdersController extends BaseController{
       orderData.posts.push({
         filename: post.clientName,
         type: post.type,
-        path: `${filePath}/${fileName}`
+        path: `${Env.get('APP_URL')}/${filePath}/${fileName}`
       })
       return {
         name: fileName
@@ -83,7 +83,6 @@ class OrdersController extends BaseController{
       order.history.created_at = new Date;
       order.verification_code = randomstring.generate(8)
       order.payment_method = 'paypal'
-      console.log(order)
       await order.save()
     } catch(e) {
       return response.apiFail(e)
@@ -92,25 +91,33 @@ class OrdersController extends BaseController{
   }
 
   async index({request, response, auth, decodeQuery}) {
+    const orderType = request.input("type")
+
     let user = auth.user
-    const orders = []
+    let orders = []
+    let total = 0
+    let documentQueryBuilder = Order.query(decodeQuery().query).with('instaaccount').sort({"_id": -1})
+    let countQueryBuilder = Order.query(decodeQuery().countQuery)
+    let whereQuery = {}
     if (user.role === "admin") {
-      const orders = await Order.query(decodeQuery().query).fetch()
-      const total = await Order.query(decodeQuery().countQuery).count()
+      // TODO: add some query to whereQuery
+    } else if (user.role === "user") {
+      whereQuery = { $or: [{ buyer_id: user._id }, { seller_id: user._id }] }
+      switch(orderType) {
+        case 'purchase':
+          whereQuery = { buyer_id: user._id }
+          break
+        case 'sales':
+          whereQuery = { seller_id: user._id }
+          break
+        default: break
+      }
+      orders = await documentQueryBuilder.where(whereQuery).fetch()
+      total = await countQueryBuilder.where(whereQuery).count()
       return response.apiCollection(orders, { total })
+    } else {
+      throw UnAuthorizeException.invoke()
     }
-    if (user.role === "user") {
-      const orders = await Order
-        .query(decodeQuery().query)
-        .where({ $or: [{ buyer_id: user._id }, { seller_id: user._id }] })
-        .fetch()
-      const total = await Order
-        .query(decodeQuery().countQuery)
-        .where({ $or: [{ buyer_id: user._id }, { seller_id: user._id }] })
-        .count()
-      return response.apiCollection(orders, { total })
-    }
-    throw UnAuthorizeException.invoke()
   }
 
   async show({ request, response, auth, instance }) {
@@ -129,17 +136,17 @@ class OrdersController extends BaseController{
       sellerAccount = await order.instaaccount().fetch()
     } catch (e) {
       console.log(e)
-      throw response.validateFailed('account_empty')
+      return response.validateFailed('account_empty')
     }
     const perm = this.checkPermission(order, user, 'accept')
     if (perm.isAllowed) {
       order.history.accepted_at = new Date
-      sellerAccount.total_shoutout = sellerAccount.total_shoutout + 1
+      sellerAccount.total_shoutout = $n(sellerAccount.total_shoutout) + 1
       await sellerAccount.save()
       await order.save()
-      return response.apiSuccess('order_accepted', order)
+      return response.apiSuccess(order, {}, 'order_accepted')
     } else {
-      throw UnAuthorizeException.invoke(perm.reason)
+      return response.validateFailed(perm.reason)
     }
   }
 
@@ -150,9 +157,9 @@ class OrdersController extends BaseController{
     if (perm.isAllowed) {
       order.history.rejected_at = new Date
       await order.save()
-      return response.apiSuccess('order_rejected', order)
+      return response.apiSuccess(order, {}, 'order_rejected')
     } else {
-      throw UnAuthorizeException.invoke(perm.reason)
+      return response.validateFailed(perm.reason)
     }
   }
 
@@ -163,9 +170,9 @@ class OrdersController extends BaseController{
     if (perm.isAllowed) {
       order.history.started_at = new Date
       await order.save()
-      return response.apiSuccess('order_started', order)
+      return response.apiSuccess(order, {}, 'order_started')
     } else {
-      throw UnAuthorizeException.invoke(perm.reason)
+      return response.validateFailed(perm.reason)
     }
   }
 
@@ -178,16 +185,16 @@ class OrdersController extends BaseController{
       sellerAccount = await order.instaaccount().fetch()
     } catch (e) {
       console.log(e)
-      throw response.validateFailed('account_empty')
+      return response.validateFailed('account_empty')
     }
     if (perm.isAllowed) {
       order.history.completed_at = new Date
-      sellerAccount.completed_shoutout = sellerAccount.completed_shoutout + 1
+      sellerAccount.completed_shoutout = $n(sellerAccount.completed_shoutout) + 1
       await order.save()
       await sellerAccount.save()
-      return response.apiSuccess('order_completed', order)
+      return response.apiSuccess(order, {}, 'order_completed')
     } else {
-      throw UnAuthorizeException.invoke(perm.reason)
+      return response.validateFailed(perm.reason)
     }
   }
 
@@ -241,7 +248,7 @@ class OrdersController extends BaseController{
       await order.save()
       return response.apiSuccess(order, {}, 'order_paid')
     } else {
-      throw UnAuthorizeException.invoke(perm.reason)
+      return response.validateFailed(perm.reason)
     }
   }
 
@@ -253,9 +260,9 @@ class OrdersController extends BaseController{
       // TODO: Create refund payment flow
       order.history.refunded_at = new Date
       await order.save()
-      return response.apiSuccess('order_refunded', order)
+      return response.apiSuccess(order, {}, 'order_refunded')
     } else {
-      throw UnAuthorizeException.invoke(perm.reason)
+      return response.validateFailed(perm.reason)
     }
   }
 
@@ -344,7 +351,7 @@ class OrdersController extends BaseController{
       }
     }
     const status = order.getStatus()
-
+    console.log(status)
     if (status.shoutout < Order.STATUS.SHOUTOUT.CREATED) {
       return {
         isAllowed: false,
@@ -372,7 +379,7 @@ class OrdersController extends BaseController{
               if (action === 'accept') {
                 return {
                   isAllowed: false,
-                  reason: 'rejected_order'
+                  reason: 'expired_order'
                 }
               }
             }
@@ -382,7 +389,6 @@ class OrdersController extends BaseController{
         case 'start':
           if (status.shoutout === Order.STATUS.SHOUTOUT.ACCEPTED ) {
             const timeDiff = Math.abs(now.getTime() - (new Date(order.start_from)).getTime())
-            console.log({timeDiff, config})
             if (timeDiff > config.start_time) {
               return {
                 isAllowed: false,

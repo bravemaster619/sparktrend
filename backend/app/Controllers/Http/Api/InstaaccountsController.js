@@ -224,7 +224,6 @@ class InstaaccountsController extends BaseController {
         type: userdata.is_business_account ? 'business' : 'personal'
       }
     } catch(e) {
-      console.log(e)
       return null
     }
   }

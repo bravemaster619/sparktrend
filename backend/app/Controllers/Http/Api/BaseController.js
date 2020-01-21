@@ -38,13 +38,13 @@ class BaseController {
           "commission": 5 // percent
         },
         "seller": {
-          "minimum_followers": 10000 // any instagram account is accepted
+          "minimum_followers": 0 // any instagram account is accepted
         },
         "order": {
           "time_margin": {
             "start_from": 10000, // order start_from must be at least 10s later from now
-            "accept": 30000, // seller must accept a shoutout in 30s
-            "start_time": Infinity, // seller can start a shoutout at anytime
+            "accept": 300000, // seller must accept a shoutout in 300s
+            "start_time": 30 * 60 * 1000, // seller must start a shoutout in +/- 30 minutes from start_time
           }
         }
       }

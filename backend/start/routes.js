@@ -32,6 +32,10 @@ Route.group(() => {
 
 }).prefix('/api')
 
+Route.group(() => {
 
+  Route.get('/image/posts/:user_id/:filename', 'DownloadController.post').middleware(['auth:jwt'])
+
+}).prefix('/api/download')
 
 use('require-all')(`${use('Helpers').appRoot()}/app/Routes`)

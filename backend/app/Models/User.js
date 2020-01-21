@@ -82,6 +82,22 @@ class User extends Model {
   images () {
     return this.morphMany('App/Models/Image', 'imageable_type', 'imageable_id')
   }
+
+  type () {
+    if (this.role === 'admin') {
+      return 'admin'
+    }
+    return 'user'
+  }
+
+  purchases() {
+    return this.hasMany('App/Models/Order', '_id', 'buyer_id')
+  }
+
+  sales() {
+    return this.hasMany('App/Models/Order', '_id', 'seller_id')
+  }
+
 }
 
 module.exports = User

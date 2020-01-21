@@ -52,10 +52,10 @@ module.exports = {
             }
           },
         total_shoutout: {
-            bsonType: 'int'
+            bsonType: ['int', 'null'],
           },
         completed_shoutout: {
-            bsonType: 'int'
+            bsonType: ['int', 'null'],
           },
 
         product: ProductValidator,
