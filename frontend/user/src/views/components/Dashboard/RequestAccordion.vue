@@ -86,7 +86,7 @@
                                    :src="post.path" :alt="post.filename" v-if="post.type==='image'">
                               <video class="img-fluid salesorder-list-img-product z-depth-1 mb-1"
                                      :src="post.path" v-if="post.type==='video'"></video>
-                              <a data-toggle="tooltip" :title="$t('Download Attatchment(s)')" :href="post.path"
+                              <a data-toggle="tooltip" :title="$t('Download Attachment(s)')" :href="post.path"
                                  :download="post.filename"
                                  class="salesorder-list-download-post" target="_blank" @click="downloadPost">
                                  <img
@@ -273,7 +273,6 @@
          displayRange: function () {
             const from = (this.page - 1) * this.pageLength
             const to = from + this.pageLength
-            console.log({from, to})
             return {from, to}
          }
       },
@@ -286,7 +285,6 @@
          },
       },
       mounted() {
-         window.vuetemp = this
          this.displayOrders = this.getDisplayOrders()
       }
    };

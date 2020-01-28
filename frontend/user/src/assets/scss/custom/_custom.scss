@@ -462,7 +462,7 @@ hr.short {
   width: 60px;
 }
 .footer-logo {
-  max-height: 36px;
+  max-height: 64px;
 }
 .form-control option {
   font-size: 1rem;
@@ -1158,7 +1158,7 @@ form.form-verifyproduct{
   display: flex;
   justify-content: flex-end;
 }
-.prod-pad-item{
+.prod-pad-item a{
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
@@ -1180,4 +1180,7 @@ form.form-verifyproduct{
 }
 .prod-status{
   border-radius: 5px;
+}
+.cursor-pointer {
+  cursor: pointer;
 }

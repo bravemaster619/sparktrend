@@ -2,7 +2,7 @@
     <div class="shoutout">
         <h6 class="dashboard-home-title text-uppercase">{{$t(title)}}</h6>
         <div class="d-flex flex-column card card-transparent">
-            <h2 class="text-primary">{{total_info.pending}}</h2>
+            <h2 class="text-primary">{{total_info.started}}</h2>
             <div class="dashboard-home-title text-uppercase">{{$t("Pending Outgoing")}}</div>
             <h2 class="text-primary">{{total_info.expired}}</h2>
             <div class="dashboard-home-title text-uppercase">{{$t("Expired")}}</div>

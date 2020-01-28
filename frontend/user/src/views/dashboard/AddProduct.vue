@@ -12,8 +12,8 @@
 </template>
 
 <script>
-    import AddProductInsights from "../components/Dashboard/AddProductInsights";
     import AddProductCheck from "../components/Dashboard/AddProductCheck";
+    import AddProductInsights from "../components/Dashboard/AddProductInsights";
     import AddProductVerify from "../components/Dashboard/AddProductVerify";
     import AddProductPrice from "../components/Dashboard/AddProductPrice";
 

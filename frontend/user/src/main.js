@@ -29,6 +29,7 @@ import Pagniate from 'vuejs-paginate'
 // import 'vue-toastr-2/dist/vue-toastr-2.min.css'
 import VueSweetalert2 from "vue-sweetalert2";
 import 'sweetalert2/dist/sweetalert2.min.css'
+import { getLocale } from "./services/lang.service";
 
 Vue.config.productionTip = false;
 Vue.use(Argon);
@@ -38,7 +39,7 @@ Vue.use(VueSweetalert2)
 // Vue.use(VueToastr2);
 
 const i18n = new VueI18n({
-  locale: 'en',
+  locale: getLocale(),
   fallbackLocale: 'en',
   silentFallbackWarn: true,
   messages

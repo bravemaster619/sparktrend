@@ -3,7 +3,7 @@ import { router } from "../router";
 
 window.toastr = require("toastr");
 
-let user = JSON.parse(localStorage.getItem('user'));
+let user = JSON.parse(localStorage.getItem('sparktrend-user'));
 /**
  * status : request result
  *
@@ -103,7 +103,7 @@ export const auth =  {
                 refresh_token   : user_data.refreshToken,
                 ... user_data.user
             };
-            localStorage.setItem('user', JSON.stringify(data));
+            localStorage.setItem('sparktrend-user', JSON.stringify(data));
             state.status = true;
             state.user = user_data.user;
             state.logged_in = true;
@@ -111,7 +111,7 @@ export const auth =  {
         loginRequest(state){
             state.user = null;
             state.logged_in = false;
-            localStorage.removeItem("user");
+            localStorage.removeItem("sparktrend-user");
 
             state.status = false;
             state.msg = "";
@@ -119,7 +119,7 @@ export const auth =  {
         loginFailure(state, msg) {
             state.logged_in = false;
             state.user = null;
-            localStorage.removeItem("user");
+            localStorage.removeItem("sparktrend-user");
 
             state.status = false;
             state.msg = msg;
@@ -127,7 +127,7 @@ export const auth =  {
         logout(state) {
             state.logged_in = false;
             state.user = null;
-            localStorage.removeItem("user");
+            localStorage.removeItem("sparktrend-user");
 
             state.status = true;
             state.msg = "";

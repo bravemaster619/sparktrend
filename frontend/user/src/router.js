@@ -15,7 +15,7 @@ import Product from "./views/Product";
 import Purchases from "./views/dashboard/Purchases";
 import TermsOfService from "./views/TermsOfService";
 import PrivacyPolicy from "./views/PrivacyPolicy";
-import myproducts from "./views/dashboard/MyProducts";
+import MyProducts from "./views/dashboard/MyProducts";
 import AddProduct from "./views/dashboard/AddProduct";
 import BuyerGuide from "./views/BuyerGuide";
 import SellerGuide from "./views/SellerGuide";
@@ -23,6 +23,7 @@ import ChangePassword from "./views/ChangePassword";
 import MySales from "./views/dashboard/MySales";
 import PageNotFound from "./views/PageNotFound"
 import ServerError from "./views/ServerError";
+import ManageProduct from "./views/dashboard/ManageProduct";
 
 Vue.use(Router);
 
@@ -82,7 +83,15 @@ export const router= new Router({
         {
           path:'/myproducts',
           name: 'myproducts',
-          component: myproducts,
+          component: MyProducts,
+          meta: {
+            requiresAuth: true
+          }
+        },
+        {
+          path: '/myproducts/:id',
+          name: 'manage_product',
+          component: ManageProduct,
           meta: {
             requiresAuth: true
           }
@@ -117,7 +126,7 @@ export const router= new Router({
           }
         },
         {
-          path: '/tos',
+          path: '/terms',
           name: 'tos',
           component: TermsOfService
         },
@@ -189,7 +198,7 @@ export const router= new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record && record.meta.requiresAuth)) {
-    const loggedIn = localStorage.getItem("user")
+    const loggedIn = localStorage.getItem("sparktrend-user")
     if(!loggedIn){
       return next({
         path: '/login',

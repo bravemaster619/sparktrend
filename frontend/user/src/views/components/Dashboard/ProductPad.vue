@@ -1,6 +1,6 @@
 <template>
-    <div class="col-12 col-md-4 col-lg-4 p-2 prod-pad-item">
-        <a href="#" class="text-weight-300 d-table text-dark">
+    <div class="col-12 col-md-4 col-lg-4 p-3 prod-pad-item">
+        <router-link :to="`/myproducts/${instaaccount._id}`" class="text-weight-300 d-table text-dark">
             <div class="prod-header p-3">
                 <div class="row  d-flex align-items-center">
                     <img :src="instaaccount.profile_img"
@@ -15,7 +15,7 @@
             <div class="prod-body p-3">
                 <div class="row d-flex align-items-center mb-2">
                     <div class="col-12 d-flex justify-content-center prod-status mb-2">
-                        <span class="text-uppercase alert-success p-1 prod-status">{{$t("in_progress")}}</span>
+                        <span class="text-uppercase py-1 px-2 prod-status" :class="'alert-' + alertClass[accountStatus]">{{$t(accountStatus)}}</span>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 text-center">
                         <div class="d-md-block font-size-lg font-weight-bold">{{getFormattedFollowerCount}}</div>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-        </a>
+        </router-link>
     </div>
 </template>
 
@@ -36,7 +36,11 @@
         name: "ProductPad",
         data() {
             return {
-
+                alertClass: {
+                    "instaaccount.status.verified": "success",
+                    "instaaccount.status.in_progress": "info",
+                    "instaaccount.status.unverified": "default"
+                }
             }
         },
         props: {
@@ -62,6 +66,17 @@
                     return "N/A"
                 }
                 return `${percent}%`
+            },
+            accountStatus: function() {
+                if (this.instaaccount.verified === true && this.instaaccount.allowed === true) {
+                    return "instaaccount.status.verified"
+                } else {
+                    if (this.instaaccount.verified === true) {
+                        return "instaaccount.status.in_progress"
+                    } else {
+                        return "instaaccount.status.unverified"
+                    }
+                }
             }
         }
     }

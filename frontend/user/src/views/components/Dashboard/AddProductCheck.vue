@@ -16,7 +16,7 @@
                     <div class="col-md-6 col-12">
 <!--                        <button  class="btn btn-primary btn-grad-effect w-100 m-0 text-uppercase" type="submit">{{$t("Check Instagram")}}</button>-->
                         <effect-button class="btn btn-grad-effect w-100 m-0 text-uppercase " type="submit"
-                                       :loading="loading" style="height:50px;" color="#fff" ref="checkBtn">
+                                       :loading="loading" style="height:50px;" color="#fff" ref="checkBtn" :disabled="loading">
                             {{$t("Check Instagram")}}
                         </effect-button>
                     </div>
@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="row button-next" v-if="fullname">
-                <button class="btn btn-primary btn-grad-effect text-uppercase" @click="next" ref="nextBtn">{{$t("Next")}}</button>
+                <button class="btn btn-primary btn-grad-effect text-uppercase" @click="next" ref="nextBtn" :disabled="!account_valid || loading">{{$t("Next")}}</button>
             </div>
         </div>
     </div>
@@ -75,8 +75,8 @@
             return {
                 error       :   false,
                 loading     :    false,
+                account_valid: false,
                 account_input:  "",
-
                 insta_info: {},
                 fullname    :   "",
                 media_count :   0,
@@ -106,19 +106,20 @@
             },
             checkInstagram(){
                 if(this.isEmpty(this.account_input)){
-                    this.error= this.$t("Please enter an instagram account");
-                    this.$refs.instagram_account.classList.add("invalid-input");
+                    this.error= this.$t("Please enter an instagram account")
+                    this.$refs.instagram_account.classList.add("invalid-input")
                     return;
                 }
-                this.loading = true;
-                this.error = false;
+                this.loading = true
+                this.error = false
+                this.account_valid = false
                 this.clearInfo();
                 addProductService.getInstaInfo(this.account_input)
                     .then( ( response) => {
-                        this.loading = false;
+                        this.loading = false
                         let info = response.data.graphql.user;
                         if(!info.full_name){
-                            this.$store.dispatch("alert/error", "Invalid account", "Warning");
+                            this.$toastr.error(this.$t("instaaccount.error.invalid_account"))
                             this.error = true;
                             return;
                         }
@@ -130,16 +131,18 @@
                         this.profile_picture = info.profile_pic_url;
                         this.username = info.username;
                         if(this.follower_count < 1000){
-                            this.$store.dispatch("alert/error", "Not enough followers", "Warning");
-                            // this.error = true;
+                            this.$toastr.error(this.$t("instaaccount.error.insufficient_followers"))
+                            this.error = true;
+                            return
                         }
-
-                }).catch( () => {
-                    this.$store.dispatch("alert/error", "Please type valid account", "Error");
+                        this.account_valid = true
+                }).catch( (e) => {
+                    console.error(e)
+                    this.$toastr.error(this.$t("instaaccount.error.invalid_account"))
                     this.loading = false;
-                    this.error = true;
+                    this.error = true
+                    this.account_valid = false
                 })
-
             },
             clearInfo(){
                 this.fullname = "";
@@ -154,19 +157,19 @@
                 }else{
                     addProductService.register_instagram(this.username)
                         .then( ( { data }) => {
-                            if( data.data.verification_code)
+                            if( data.data.verification_code) {
                                 this.$emit('next', this.tab_id, {
                                     'verification_code' : data.data.verification_code,
                                     'username'          : data.data.username,
                                     'id'                : data.data._id
                                 });
-                            else
-                                this.$store.dispatch("alert/error", "Server Error. Please try again.", "Error");
+                            } else {
+                                this.$toastr.error(this.$t("error.default"))
+                            }
                         })
                         .catch( ( { response } ) => {
-                            let msg = response.data.message || "Error Occrred. Please try again.";
-                            this.$store.dispatch("auth/checkAuth", response);
-                            this.$store.dispatch("alert/error", msg);
+                            const messageKey = response.data && response.data.errors && this.$te(`instaaccount.error.${response.data.errors}`) ? `instaaccount.error.${response.data.errors}` : 'error.default'
+                            this.$toastr.error(this.$t(messageKey))
                         });
                 }
             }
@@ -181,15 +184,6 @@
                     this.$refs.instagram_account.classList.remove("invalid-input");
                 }
             },
-            loading : function(value) {
-                if(value){
-                    this.$refs.checkBtn.setAttribute("disabled", true);
-                    this.$refs.nextBtn.setAttribute("disabled", true);
-                }else{
-                    this.$refs.checkBtn.removeAttribute("disabled");
-                    this.$refs.nextBtn.removeAttribute("disabled");
-                }
-            }
         },
     }
 </script>

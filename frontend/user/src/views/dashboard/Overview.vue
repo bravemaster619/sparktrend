@@ -1,39 +1,55 @@
 <template>
-<div class="row">
+<div class="row vld-parent">
+    <loading
+       :active="loading"
+       :is-full-page="true"
+       loader="dots"
+       color="#5e72e4"
+    ></loading>
+
     <div class="col-12">
         <h6 class="dashboard-home-title text-uppercase">{{$t("Status")}}</h6>
     </div>
     <div class="col-sm-6 col-12 mt-3 mt-sm-0">
-        <status-card :title="$t('This Month Sales')" :amount="monthly_income"></status-card>
+        <status-card :title="$t('This Month Sales')" :amount="monthlySale"></status-card>
     </div>
 
     <div class="col-sm-6 col-12 mt-3 mt-sm-0">
-        <status-card :title="$t('Total Sales')" :amount="total_income"></status-card>
+        <status-card :title="$t('Total Sales')" :amount="totalSale"></status-card>
     </div>
 
-<!--    <div class="col-sm-4 col-12 mt-3 mt-sm-0">-->
-<!--        <status-card :title="$t('current balance')" :amount="wallet_balance"></status-card>-->
-<!--    </div>-->
-
     <div class="col-12 col-sm-6 col-md-4 mt-3">
-        <shoutout title="Purchased Shoutouts" :total_info="purchased_shoutout"></shoutout>
+        <shoutout title="Purchased Shoutouts" :total_info="purchaseStats"></shoutout>
     </div>
     <div class="col-12 col-sm-6 col-md-4 mt-3">
-        <shoutout title="Sold Shoutouts" :total_info="sold_shoutout"></shoutout>
+        <shoutout title="Sold Shoutouts" :total_info="salesStats"></shoutout>
     </div>
     <div class="col-12 col-md-4 mt-3">
         <success-rate-chart
-            :success_rate="success_percentage"
-            :success_shout="success_shout">
+            :success_rate="0"
+            :success_shout="0">
 
         </success-rate-chart>
     </div>
     <div class="mt-3 col-12">
         <h6 class="text-uppercase">{{$t("upcoming schedule")}}</h6>
         <div class="d-flex flex-column card card-transparent">
-            <overview-schedule-table
-                :schedule="schedule">
-            </overview-schedule-table>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>{{$t("Schedule")}}</th>
+                    <th>{{$t("Username")}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(order, index) in upcomingOrders" :key="index">
+                    <td>{{index + 1}}</td>
+                    <td>{{$t(`order_status.shoutout.${getOrderShoutoutStatus(order)}`)}}</td>
+                    <td>{{order.buyer_name}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -44,56 +60,60 @@
     import StatusCard from '../components/Dashboard/StatusCard';
     import Shoutout from '../components/Dashboard/Shoutout';
     import SuccessRateChart from '../components/Dashboard/SuccessRateChart';
-    import OverviewScheduleTable from '../components/Dashboard/OverviewScheduleTable';
-
+    import Loading from 'vue-loading-overlay'
+    import 'vue-loading-overlay/dist/vue-loading.css'
+    import httpService from "../../services/http.service"
+    import {getOrderShoutoutStatus} from "../../helpers"
     export default {
         name: "Overview",
         components: {
             StatusCard,
             Shoutout,
             SuccessRateChart,
-            OverviewScheduleTable
+            Loading
         },
         data (){
             return {
-                purchased_shoutout:{
-                    pending: 1,
+                loading: true,
+                monthlySale: 0,
+                totalSale: 0,
+                purchaseStats: {
+                    started: 0,
                     expired: 0,
-                    failed: 0,
                     rejected: 0,
                     completed: 0,
+                    failed: 0
                 },
-                sold_shoutout: {
-                    pending: 1,
+                salesStats: {
+                    started: 0,
                     expired: 0,
-                    failed: 3,
                     rejected: 0,
                     completed: 0,
+                    failed: 0
                 },
-                schedule:[
-                    {
-                        no: 1,
-                        schedule_rep: "processing",
-                        username: "nayong"
-                    },
-                    {
-                        no: 2,
-                        schedule_rep: "request",
-                        username: "ziyu"
-                    }
-                ],
-                monthly_income: 0.00,
-                total_income: 0.00,
-                wallet_balance: 0.00,
-                success_shout: 5,
-                success_percentage:70
+                upcomingOrders: []
             }
         },
         methods: {
-            dataFormat: function(a, b) {
-                if(b) return b + "%";
-                return a;
-            }
+            getOrderShoutoutStatus
+        },
+        mounted() {
+            httpService.get('/statistics/dashboard').then(res => {
+                if (res.status == 200) {
+                    this.monthlySale = res.data.data.monthlySale
+                    this.totalSale = res.data.data.totalSale
+                    this.purchaseStats = res.data.data.purchaseStats
+                    this.salesStats = res.data.data.salesStats
+                    this.upcomingOrders = res.data.data.upcomingOrders
+                } else {
+                    this.$toastr.error(this.$t("error.default"), "", {timeOut: 3000})
+                }
+            }).catch(e => {
+                console.error(e)
+                this.$toastr.error(this.$t("error.default"), "", {timeOut: 3000})
+            }).finally(() => {
+                this.loading = false
+            })
         }
     }
 </script>

@@ -1,12 +1,12 @@
 <template>
     <div class="row animated fadeIn">
         <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-2">
-            <img src="img/addproduct/verifyinstruction.png" class="img-fluid" alt="profile-img">
+            <img src="/img/addproduct/verifyinstruction.png" class="img-fluid" alt="profile-img">
         </div>
         <div class="col-lg-4 col-md-6 col-sm-6 my-auto">
             <h4>{{$t("Validate Instagram")}}</h4>
             {{$t("Please add the code below into your Instagram bio and then click validate.")}}
-            <form username="lemessi" @submit.prevent="verifyAccount">
+            <form @submit.prevent="verifyAccount">
                 <h4 class="my-3">{{verificationCode}}</h4>
                 <input name="username" hidden v-model="username">
                 <div class="form-group row">
@@ -50,14 +50,13 @@
                 addProductService.validateInstagram(this._id)
                     .then( ({data}) => {
                         if(!data.data.verified){
-                            console.log("Server is strange");
-                            this.$store.dispatch("alert/error", "Please try again");
+                            this.$toastr.error(this.$t("instaaccount.error.verification_failed"))
                         }else{
                             this.$emit('next', this.tab_id, {'verified' : data.data.verified})   ;
                         }
-                }).catch( ( {response} ) => {
-                    this.$store.dispatch("auth/checkAuth", response);
-                    this.$store.dispatch("alert/error", msg);
+                }).catch( (e ) => {
+                    console.error(e)
+                    this.$toastr.error(this.$t("instaaccount.error.verification_failed"))
                 });
             },
             onBack(){

@@ -46,5 +46,5 @@ function changePassword({password, new_password}){
     );
 }
 function getCurrentUser() {
-   return window.localStorage.getItem("user")
+   return window.localStorage.getItem("sparktrend-user")
 }

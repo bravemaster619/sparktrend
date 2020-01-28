@@ -4,12 +4,12 @@
             <div class="row mt-3">
                 <div class="col-md-6 mb-4">
                     <div class="w-100">
-                        <img alt="logo" src="/img/brand/blue.png" class="footer-logo">
+                        <img alt="logo" src="/img/brand/logo.png" class="footer-logo">
                     </div>
                     <div class="mt-4">
                         <p>&copy; Copyright {{year}} Xinrong Software Co. Ltd.</p>
                         <p>Ji Lin Da Jie, Changyi Qu, Jilin Shi, Jilin Sheng, China, 132000</p>
-                        <p><a class="text-primary" href="mailto:support@xinrong.com">support@xinrong.com</a></p>
+                        <p><a class="text-primary" href="mailto:sparktrend@hotmail.net">sparktrend@hotmail.net</a></p>
                     </div>
                 </div>
                 <div class="col-md-3 mb-4">
@@ -32,7 +32,7 @@
                             <router-link class="btn-link text-primary" to="/buyerguide">{{$t("Buyer Guide")}}</router-link>
                         </li>
                         <li class="mb-2">
-                            <router-link class="btn-link text-primary" to="/tos">{{$t("Terms of Service")}}</router-link>
+                            <router-link class="btn-link text-primary" to="/terms">{{$t("Terms of Service")}}</router-link>
                         </li>
                         <li class="mb-2">
                             <router-link class="btn-link text-primary" to="/policy">{{$t("Privacy Policy")}}</router-link>

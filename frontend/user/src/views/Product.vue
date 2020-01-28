@@ -67,7 +67,7 @@
                                 </option>
                             </select>
                             <modal :show.sync="modalStatus.whatsThis">
-                                <h6 slot="header" class="modal-title" id="modal-title-whatsthis">{{$t("Cateogry Info")}}</h6>
+                                <h6 slot="header" class="modal-title" id="modal-title-whatsthis">{{$t("Category Info")}}</h6>
                                 <category-info-carousel></category-info-carousel>
                             </modal>
                         </div>
@@ -327,7 +327,7 @@
                     }
                     formData.append('category', self.selectedCategory.type)
                     formData.append('pricing_idx', self.selectedPricing.idx)
-                    formData.append('with_bio', self.form.with_bio ? true : false)
+                    formData.append('with_bio', self.form.with_bio ? 'true' : '')
                     // ---  end base info (insta_id, category, pricing_idx, with_bio)   ---
 
                     // --- begin posts ---
@@ -375,12 +375,11 @@
                     // ---  end caption  ---
 
                     // --- begin with_bio ---
-                    if (formData.get('with_bio')) {
+                    if (formData.get('with_bio') === 'true') {
                         if (!this.form.bio_url) {
                             this.error.bio_url = "Please enter bio url"
                             return
                         }
-                        formData.set('with_bio', true)
                         formData.append('bio_url', this.form.bio_url)
                     }
                     // ---  end with_bio  ---
@@ -393,7 +392,6 @@
                     }
                     formData.append('additional_info', self.form.additional_info.substr(0, 500))
                     // ---  end swipe_up_url  ---
-                    console.log(formData)
                     // finally
                     httpService.post('orders/new', formData, {
                         'Content-Type': 'multipart/form-data'
@@ -403,15 +401,19 @@
                                this.$router.push({name: 'checkout', params: {id: res.data.data._id}})
                            } else {
                                console.log(res)
-                               this.$toastr.error(this.$t("Oops! Something is wrong. Please try again later..."), "", {timeOut: 3000});
+                               this.$toastr.error(this.$t("error.default"), "", {timeOut: 3000});
                            }
                        })
-                       .catch(e => (console.error(e)))
+                       .catch(e => {
+                           let messageKey = 'error.default'
+                           if (e.response.data && e.response.data.errors) {
+                               messageKey = this.$te(`order.error.${e.response.data.errors}`) ? `order.error.${e.response.data.errors}` : 'error.default'
+                               this.$toastr.error(this.$t(messageKey))
+                           }
+                           console.error(e)
+                       })
                 }
             })
-
-
-
          }
       },
       computed: {

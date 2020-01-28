@@ -131,7 +131,7 @@
                                     <base-button type="primary" class="my-4 w-100" @click="onSubmit">{{$t("Sign Up")}}</base-button>
                                 </div>
                                 <div class="text-center">
-                                    <p>{{$t("By sign up, you agree to our")}} <router-link to="/policy">{{$t("Privacy Policy")}}</router-link> {{$t("and")}} <router-link to="/tos">{{$t("Terms of Service")}}.</router-link></p>
+                                    <p>{{$t("By sign up, you agree to our")}} <router-link to="/policy">{{$t("Privacy Policy")}}</router-link> {{$t("and")}} <router-link to="/terms">{{$t("Terms of Service")}}.</router-link></p>
                                 </div>
                             </form>
                         </template>

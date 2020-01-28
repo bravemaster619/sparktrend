@@ -126,9 +126,9 @@
                 </div>
                 <div class="row p-2" v-if="(!instaaccounts || !instaaccounts.length) && !loading">
                     <div class="col-12 text-center p-3">
-                        <img src="img/nodata.png" style="max-width: 125px">
-                        <h6 class="mt-2">Ooops!</h6>
-                        <p>Looks like there's nothing here...</p>
+                        <img src="/img/nodata.png" style="max-width: 125px">
+                        <h6 class="mt-2">{{$t("Oops!")}}</h6>
+                        <p>{{$t("Looks like there's nothing here...")}}</p>
                     </div>
                 </div>
             </div>

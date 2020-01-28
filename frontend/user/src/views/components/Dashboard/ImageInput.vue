@@ -5,7 +5,7 @@
         @click="chooseImage">
         <span class="placeholder"
             v-if="!imageData">
-            Choose an Image
+            {{$t("Choose an Image")}}
         </span>
         <input type="file"
                class="file-input"
@@ -16,12 +16,12 @@
 <script>
     export default {
         name: "BaseImageInput",
+        props: ['image', 'width', 'height'],
         data () {
             return {
-                imageData: null
+                imageData: this.image ? this.image: null
             }
         },
-        props: ['width', 'height'],
         event: [
             'input'
         ],

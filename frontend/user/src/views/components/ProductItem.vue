@@ -2,7 +2,7 @@
     <div class="col-6 col-md-4 col-lg-4 p-2 product-item">
         <router-link :to="'/products/' + instaaccount._id" class="text-light font-weight-300 d-table border border-light">
             <div class="product-header text-center">
-                <img class="w-100 product-banner" v-bind:src="instaaccount.product.banner_img" v-bind:alt="instaaccount.username + ' banner'">
+                <img class="w-100 product-banner" src="https://tse3-mm.cn.bing.net/th/id/OIP.jNCbt_c_8vnq7sbWluCVnQHaCG?w=300&h=85&c=7&o=5&pid=1.7" v-bind:alt="instaaccount.username + ' banner'">
                 <img class="m-auto profile-img" v-bind:src="instaaccount.profile_img" v-bind:alt="instaaccount.username + ' profile image'">
             </div>
             <div class="product-body pt-1 pb-3 px-3">
