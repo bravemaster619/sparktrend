@@ -10,7 +10,7 @@ const moment = require('moment')
 const { $n, $b } = require('../../../Helpers')
 const PaymentService = require('../../../Services/Payment/Paypal')
 const Env = use('Env')
-
+const fs = require('fs')
 
 class OrdersController extends BaseController{
 
@@ -65,6 +65,7 @@ class OrdersController extends BaseController{
     }
     orderData.posts = []
     const filePath = `uploads/image/posts/${user._id.toString()}`
+    fs.mkdirSync(use('Helpers').publicPath(filePath))
     postFiles.moveAll(use('Helpers').publicPath(filePath), (post) => {
       let fileName = `${use('uuid').v1().replace(/-/g, '')}_${post.clientName}`
       orderData.posts.push({
@@ -76,7 +77,6 @@ class OrdersController extends BaseController{
         name: fileName
       }
     })
-    // orderData.posts = ['change code when integrate with vuejs']
     if (orderData.type === "Single") {
       orderData.posts = orderData.posts.slice(0,1)
     }
