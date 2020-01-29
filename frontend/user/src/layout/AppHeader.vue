@@ -3,7 +3,7 @@
         <base-nav class="navbar-main" :transparent="['landing', 'login', 'register'].includes(currentRoute)" type="" effect="light" expand>
             <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
                 <img v-if="['landing', 'login', 'register'].includes(currentRoute)"
-                        src="/img/brand/logo.png" alt="logo">
+                        src="/img/brand/logo-white.png" alt="logo">
                 <img v-else
                         src="/img/brand/logo.png" alt="logo">
             </router-link>

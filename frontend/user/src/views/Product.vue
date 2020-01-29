@@ -400,7 +400,6 @@
                            if (res.status == 200 && res.data && res.data.data._id) {
                                this.$router.push({name: 'checkout', params: {id: res.data.data._id}})
                            } else {
-                               console.log(res)
                                this.$toastr.error(this.$t("error.default"), "", {timeOut: 3000});
                            }
                        })
@@ -410,7 +409,7 @@
                                messageKey = this.$te(`order.error.${e.response.data.errors}`) ? `order.error.${e.response.data.errors}` : 'error.default'
                                this.$toastr.error(this.$t(messageKey))
                            }
-                           console.error(e)
+                           window.console.error(e)
                        })
                 }
             })
@@ -422,7 +421,7 @@
             try {
                minPrice = this.instaaccount.product.categories[0].pricing[0].price
             } catch (e) {
-               console.warn("This product has no pricing plan.")
+               window.console.warn("This product has no pricing plan.")
             }
             const categories = this.instaaccount.product.categories
             categories.forEach(c => {
@@ -438,7 +437,7 @@
             if (this.instaaccount.total_shoutout == 0) {
                return "N/A"
             }
-            let percent = (this.instaaccount.completed_shoutout / this.instaaccount.total_shoutout).toFixed(2)
+            let percent = (this.instaaccount.completed_shoutout / this.instaaccount.total_shoutout * 100).toFixed(0)
             if (isNaN(percent)) {
                return "N/A"
             }

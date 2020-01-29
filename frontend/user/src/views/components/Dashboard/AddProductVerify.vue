@@ -55,7 +55,7 @@
                             this.$emit('next', this.tab_id, {'verified' : data.data.verified})   ;
                         }
                 }).catch( (e ) => {
-                    console.error(e)
+                    window.console.error(e)
                     this.$toastr.error(this.$t("instaaccount.error.verification_failed"))
                 });
             },

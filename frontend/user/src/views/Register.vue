@@ -301,7 +301,7 @@
        methods  :   {
           onSubmit(){
               if(!this.validation()) return;
-              console.log("onSubmit");
+              window.console.log("onSubmit");
               this.$store.dispatch("auth/register", {
                   name  :   this.name,
                   email :   this.email,

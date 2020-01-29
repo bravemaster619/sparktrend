@@ -21,6 +21,16 @@ export default new Router({
           component: () => import(/* webpackChunkName: "demo" */ './views/Dashboard.vue')
         },
         {
+          path: '/users',
+          name: 'users',
+          component: () => import(/* webpackChunkName: "demo" */ './views/Users.vue')
+        },
+        // {
+        //   path: '/users',
+        //   name: 'users',
+        //   component: () => import('./views/')
+        // },
+        {
           path: '/icons',
           name: 'icons',
           component: () => import(/* webpackChunkName: "demo" */ './views/Icons.vue')
@@ -35,11 +45,7 @@ export default new Router({
           name: 'maps',
           component: () => import(/* webpackChunkName: "demo" */ './views/Maps.vue')
         },
-        {
-          path: '/tables',
-          name: 'tables',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Tables.vue')
-        }
+
       ]
     },
     {

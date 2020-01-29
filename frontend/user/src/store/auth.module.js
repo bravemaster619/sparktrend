@@ -49,7 +49,7 @@ export const auth =  {
                     }
                 })
                 .catch((error) => {
-                    console.log(error);
+                    window.console.log(error);
                     let com_status = error.response.data.status || 404;
                     if(com_status === 401){
                         commit("loginFailure", "JWT token invalid or did not provided");
@@ -66,7 +66,7 @@ export const auth =  {
             commit("clearState");
             authService.register(user_info)
                 .then(result => {
-                    console.log(result);
+                    window.console.log(result);
                     let response = result.data;
                     if(response.status === 201){
                         commit('setResult', true);
@@ -89,7 +89,7 @@ export const auth =  {
             router.push("/");
         },
         checkAuth({commit}, response){
-            console.log(response);
+            window.console.log(response);
             if(response.status === 401){
                 commit('logout');
                 router.push("/login");

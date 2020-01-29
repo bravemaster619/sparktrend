@@ -188,7 +188,10 @@ const en = {
          invalid_action: "Invalid action",
          already_paid: "Order has been already paid",
          not_paid_yet: "Order is not paid yet",
-         unknown_reason: "An error has occurred. Please try again later..."
+         unknown_reason: "An error has occurred. Please try again later...",
+         //new
+         cannot_rate_before_payment: 'You cannot rate a shoutout before payment',
+         cannot_change_feedback_after_completion: 'You cannot change your feedback of a completed shoutout.'
       },
       success: {
          order_accepted: "Order has been accepted",
@@ -196,8 +199,10 @@ const en = {
          order_started: "Order has been started",
          order_completed: "Order has been completed",
          order_paid: "Payment was done successfully",
-         order_refunded: "Refunded an order"
-      }
+         order_refunded: "Refunded an order",
+         order_rated: "Your rating has been submitted."
+      },
+      feedback_guide: "You can submit your feedback after payment. You can edit your feedback before ordered shoutout is completed."
    },
    error: {
       default: "Oops! Something is wrong. Please try again later..."

@@ -5,7 +5,7 @@
                   containerClasses="px-4 container"
                   expand>
             <router-link slot="brand" class="navbar-brand" to="/">
-                <img src="img/brand/white.png"/>
+                <img src="img/brand/logo.png"/>
             </router-link>
 
             <template v-slot="{closeMenu}">
@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <router-link to="/">
-                                <img src="img/brand/green.png">
+                                <img src="img/brand/logo.png">
                             </router-link>
                         </div>
                         <div class="col-6 collapse-close">
@@ -64,8 +64,6 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-5 col-md-6">
                             <h1 class="text-white">Welcome!</h1>
-                            <p class="text-lead text-white">Use these awesome forms to login or create new account in
-                                your project for free.</p>
                         </div>
                     </div>
                 </div>

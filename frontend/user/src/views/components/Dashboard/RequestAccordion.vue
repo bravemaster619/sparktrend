@@ -90,7 +90,7 @@
                                  :download="post.filename"
                                  class="salesorder-list-download-post" target="_blank" @click="downloadPost">
                                  <img
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfiBxsJMTakVrUDAAACmElEQVRo3u2XP0gcQRSHf3ucFtHocRAklgYLwSDiJUUUJJWlWGrANJJChFiksRCChVWaoGAlGCHBQkvBSruAeiBiKRY2UQRFToyQ03wp9p2sxjPn/jkN7CsWdmb2fd/ODjNvpTj+7yBJ8j7xreyxR+v9CUwAMBEkRyKQwWPP9V4EQohYIBaIBWKBWCAWiAVigYcuQIph2v0mp51hUoH8mAdgrEjvDAAzRXrHAJgPNAOqlSSNMn23+p8k0xr1ZPA9Ay0c4MYiVaXOAFUs2lMHtAQSkGhkx5Kt8qQUAZ6wak/s0BgQL0nUkbWE2zT8S4AGtm10lroQ8JJENUuWdJ+22wRoY99GLlEdEl6SSBoMTugqJkAXJzZqJoKfVsYteZ7+mwToJ28jxkOHG2KQC0OMXBdgxHouGIwIL0n0cGagSRIFARJMWusZPRHiJYkOjgy2wBwAcyxYyxEdEeMliSZ2Dfjbc4VdmsqAlyTq2eR6bFJfJrwkUcvyFfwywfZ8HwqVTF1+gikq/eZxAkk812tJK85WkCRpBkI5Mu5ObmSAtFgBcqHu26Xhq8kBK7JF1Fl2gU4XXKiIAq0FX2HEh14VRx9FTm1q9Chk0k8nV7IAn/ReYRcU53x2PvzdnNCpJMlT8VKhodDxUlJDVHjuXeJpQhuSJE+l5+Q1K0IXQLNO3nPvEjeSWleHpJfesc47PqomZIGc8+PKvUtcF30AnJMJ/Z1vm44M5wD0ibQV0lv+T7Q74yvZsiI/LYlu247XaC4Lvpk1I3bbhsgXuYX2L33Vd2V1HBE7pYxe6Y3cuZ513hacauw3vJwxz9VlTi+HZYMf0lvgek5BnqpPL5TRswgXwI6yWtc3Z+8GgUuRlFIR4Y+d4whfLg5/8Qdiiv8HlTJ+cwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wNy0yN1QwOTo0OTo1NCswMjowMH0+KmoAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDctMjdUMDk6NDk6NTQrMDI6MDAMY5LWAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg=="
+                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfiBxsJMTakVrUDAAACmElEQVRo3u2XP0gcQRSHf3ucFtHocRAklgYLwSDiJUUUJJWlWGrANJJChFiksRCChVWaoGAlGCHBQkvBSruAeiBiKRY2UQRFToyQ03wp9p2sxjPn/jkN7CsWdmb2fd/ODjNvpTj+7yBJ8j7xreyxR+v9CUwAMBEkRyKQwWPP9V4EQohYIBaIBWKBWCAWiAVigYcuQIph2v0mp51hUoH8mAdgrEjvDAAzRXrHAJgPNAOqlSSNMn23+p8k0xr1ZPA9Ay0c4MYiVaXOAFUs2lMHtAQSkGhkx5Kt8qQUAZ6wak/s0BgQL0nUkbWE2zT8S4AGtm10lroQ8JJENUuWdJ+22wRoY99GLlEdEl6SSBoMTugqJkAXJzZqJoKfVsYteZ7+mwToJ24jxkOHG2KQC0OMXBdgxHouGIwIL0n0cGagSRIFARJMWusZPRHiJYkOjgy2wBwAcyxYyxEdEeMliSZ2Dfjbc4VdmsqAlyTq2eR6bFJfJrwkUcvyFfwywfZ8HwqVTF1+gikq/eZxAkk812tJK85WkCRpBkI5Mu5ObmSAtFgBcqHu26Xhq8kBK7JF1Fl2gU4XXKiIAq0FX2HEh14VRx9FTm1q9Chk0k8nV7IAn/ReYRcU53x2PvzdnNCpJMlT8VKhodDxUlJDVHjuXeJpQhuSJE+l5+Q1K0IXQLNO3nPvEjeSWleHpJfesc47PqomZIGc8+PKvUtcF30AnJMJ/Z1vm44M5wD0ibQV0lv+T7Q74yvZsiI/LYlu247XaC4Lvpk1I3bbhsgXuYX2L33Vd2V1HBE7pYxe6Y3cuZ513hacauw3vJwxz9VlTi+HZYMf0lvgek5BnqpPL5TRswgXwI6yWtc3Z+8GgUuRlFIR4Y+d4whfLg5/8Qdiiv8HlTJ+cwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wNy0yN1QwOTo0OTo1NCswMjowMH0+KmoAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDctMjdUMDk6NDk6NTQrMDI6MDAMY5LWAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg=="
                                     alt="download-icon">
                               </a>
                            </div>
@@ -99,6 +99,14 @@
                                            style="font-size: 14px;" :to="`/orders/${order._id}/checkout`">
                                  {{$t("Pay")}}
                               </router-link>
+                           </div>
+                           <div class="d-flex flex-column mt-2" v-if="getOrderPaymentStatus(order)===OrderStatus.PAYMENT.PAID">
+                              <button class="btn btn-danger btn-grad-effect btn-md w-100 mx-0" @click="() => { showRatingModal(order) }">
+                                 {{ getOrderShoutoutStatus(order) === OrderStatus.SHOUTOUT.COMPLETED && order.history.rated_at ? $t("View Feedback") :
+                                    (order.history.rated_at ? $t("Edit Feedback") : $t("Rate"))
+                                 }}
+                              </button>
+                              <small class="mt-2">{{$t("order.feedback_guide")}}</small>
                            </div>
                         </div>
                         <div class="col-12 col-md-7">
@@ -110,9 +118,9 @@
                                            :value="order.caption + ' #' + order.verification_code">
                                     </textarea>
                               </div>
-                              <button class="btn button-basic m-0 mt-3">
-                                 {{$t("Copy text")}}
-                              </button>
+<!--                              <button class="btn button-basic m-0 mt-3">-->
+<!--                                 {{$t("Copy text")}}-->
+<!--                              </button>-->
                               <div class="w-100 flex-1" v-if="!isEmpty(order.additional_info)">
                                  <div class="salesorder-list-date mt-4">{{$t("Additional Information")}}</div>
                                  <span style="word-break: break-word;">{{order.additional_info}}</span>
@@ -170,14 +178,23 @@
             v-model=page
          ></paginate>
       </div>
+      <rate-modal
+         v-if="ratedOrder"
+         :order="ratedOrder"
+         :show.sync="showingRatingModal"
+         @close="showingRatingModal=false"
+         @order:updated="onOrderUpdated"
+      />
    </div>
+
 </template>
 
 <script>
    import {BadgerAccordion, BadgerAccordionItem} from "vue-badger-accordion";
    import {OrderStatus, getOrderPaymentStatus, getOrderShoutoutStatus} from '../../../helpers/order'
    import httpService from '../../../services/http.service'
-
+   import RateModal from "../../dashboard/RateModal"
+   import StarRating from 'vue-star-rating'
    const moment = require('moment')
    const fileDownload = require('js-file-download')
    const OrderClass = {SHOUTOUT: {}, PAYMENT: {}}
@@ -198,8 +215,22 @@
       components: {
          BadgerAccordion,
          BadgerAccordionItem,
+         RateModal,
+         StarRating
          // RequestHeader,
          // RequestInfo
+      },
+      events: {
+         'order-updated': function(updatedOrder) {
+            this.orders.forEach((order, index) => {
+               if(order._id === updatedOrder._id) {
+                  this.orders[index] = updatedOrder
+               }
+            })
+         },
+         'close': function() {
+            this.hideRatingModal()
+         }
       },
       data() {
          return {
@@ -208,7 +239,17 @@
             page: 1,
             pageLength: 20,
             displayOrders: [],
-            icons: {opened: '<i class="ni ni-bold-up"></i>', closed: '<i class="ni ni-bold-down"></i>'}
+            icons: {opened: '<i class="ni ni-bold-up"></i>', closed: '<i class="ni ni-bold-down"></i>'},
+            ratedOrder: null,
+            showingRatingModal: false,
+            processingRate: false,
+            rating: {
+               communication: 0,
+               professionalism: 0,
+               recommendation: 0,
+               feedback: '',
+               leaveMessage: false
+            }
          }
       },
       props: {
@@ -218,7 +259,6 @@
          orders: function (newVal, oldVal) {
             const from = (this.page - 1) * this.pageLength
             const to = from + this.pageLength
-            console.log({from, to})
             this.displayOrders = newVal.slice(from, to)
          },
       },
@@ -241,7 +281,7 @@
             e.preventDefault()
             e.stopPropagation()
             const anchor = e.target
-            console.log(anchor)
+            window.console.log(anchor)
             let url = this.downloadUrl(anchor.getAttribute('href'))
             let filename = anchor.getAttribute('download')
             if (!filename) {
@@ -274,6 +314,45 @@
             const from = (this.page - 1) * this.pageLength
             const to = from + this.pageLength
             return {from, to}
+         },
+         showRatingModal: function(order) {
+            this.ratedOrder = order
+            this.showingRatingModal = true
+         },
+         hideRatingModal: function() {
+            this.ratedOrder = null
+            this.showingRatingModal = false
+         },
+         rateOrder: function() {
+            if(!this.ratedOrder) {
+               return false
+            }
+            this.processingRate = true
+            httpService.post(`/orders/${this.ratedOrder._id}/rate`, this.rating).then((res) => {
+               if(res.status === 200) {
+                  this.$toastr.success(this.$t("order.success.order_rated"))
+                  this.orders.forEach((order, index) => {
+                     if (order._id == res.data.data._id) {
+                        this.orders[index] = res.data.data
+                     }
+                  })
+               } else {
+                  this.$toastr.error(this.$t("error.default"))
+               }
+            }).catch(e => {
+               window.console.error(e)
+               this.$toastr.error(this.$t("error.default"))
+            }).finally(() => {
+               this.processingRate = false
+               this.hideRatingModal()
+            })
+         },
+         onOrderUpdated: function(updatedOrder) {
+            this.orders.forEach((order, index) => {
+               if(order._id === updatedOrder._id) {
+                  this.orders[index] = updatedOrder
+               }
+            })
          }
       },
       computed: {

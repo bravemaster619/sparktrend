@@ -119,7 +119,7 @@
             },
             error_msg(){
                 if(this.$store.state.auth.error_msg) {
-                    console.log(this.$store.state.auth.error_msg);
+                    window.console.log(this.$store.state.auth.error_msg);
                 }
                 return this.$store.state.auth.error_msg
             }

@@ -29,6 +29,7 @@
     "vue-loading-overlay": "^3.2.0",
     "vue-router": "^3.0.2",
     "vue-select": "^3.4.0",
+    "vue-star-rating": "^1.6.1",
     "vue-sweetalert2": "^3.0.1",
     "vue-tabs-component": "^1.5.0",
     "vue-toastr-2": "0.0.10",

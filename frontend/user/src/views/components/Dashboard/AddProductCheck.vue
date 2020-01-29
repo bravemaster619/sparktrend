@@ -137,7 +137,7 @@
                         }
                         this.account_valid = true
                 }).catch( (e) => {
-                    console.error(e)
+                    window.console.error(e)
                     this.$toastr.error(this.$t("instaaccount.error.invalid_account"))
                     this.loading = false;
                     this.error = true

@@ -125,7 +125,7 @@
                 this.loading = true;
                 this.$store.dispatch("auth/login", {email : this.email, password : this.password})
                     .then(() => {
-                        console.log("logged in");
+                        window.console.log("logged in");
                         this.loading = false;
                     });
             },

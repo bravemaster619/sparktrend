@@ -140,7 +140,7 @@
                                            :value="order.caption + ' #' + order.verification_code">
                               </textarea>
                               </div>
-                              <button class="btn button-basic m-0 mt-3">
+                              <button class="btn button-basic m-0 mt-3" @click="copyText(order)">
                                  {{$t("Copy text")}}
                               </button>
                               <div class="w-100 flex-1" v-if="!isEmpty(order.additional_info)">
@@ -271,7 +271,7 @@
             e.preventDefault()
             e.stopPropagation()
             const anchor = e.target
-            console.log(anchor)
+            window.console.log(anchor)
             let url = this.downloadUrl(anchor.getAttribute('href'))
             let filename = anchor.getAttribute('download')
             if (!filename) {
@@ -308,7 +308,7 @@
             }).then(result => {
                if (result.value) {
                   httpService.post(url).then(res => {
-                     console.log(res)
+                     window.console.log(res)
                      if (res.data) {
                         if (res.data.message) {
                            this.$toastr.success(this.$t(`order.success.${res.data.message}`))
@@ -317,7 +317,7 @@
                      }
                   }).catch(e => {
                      if (e.isAxiosError) {
-                        console.log(e.response)
+                        window.console.log(e.response)
                         let message = e.response.data.errors ? this.$t(`order.error.${e.response.data.errors}`) : this.$t('Something went wrong')
                         this.$toastr.error(this.$t(message))
                      } else {
@@ -335,8 +335,17 @@
          displayRange: function () {
             const from = (this.page - 1) * this.pageLength
             const to = from + this.pageLength
-            console.log({from, to})
+            window.console.log({from, to})
             return {from, to}
+         },
+         copyText: function(order) {
+            const str = order.caption + ' #' + order.verification_code
+            const el = document.createElement('textarea')
+            el.value = str
+            document.body.appendChild(el)
+            el.select()
+            document.execCommand('copy')
+            document.body.removeChild(el)
          }
       },
       computed: {

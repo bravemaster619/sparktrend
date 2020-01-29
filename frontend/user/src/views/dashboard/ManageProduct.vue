@@ -117,7 +117,7 @@
                this.$toastr.error(this.$t("error.default"), "", {timeOut: 3000})
             }
          }).catch(e => {
-            console.error(e)
+            window.console.error(e)
             this.$toastr.error(this.$t("error.default"), "", {timeOut: 3000})
          }).finally(() => {
             this.loading = false
