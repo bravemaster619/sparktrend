@@ -65,7 +65,7 @@ class OrdersController extends BaseController{
     }
     orderData.posts = []
     const filePath = `uploads/image/posts/${user._id.toString()}`
-    fs.mkdirSync(use('Helpers').publicPath(filePath))
+    fs.mkdirSync(use('Helpers').publicPath(filePath), {recursive: true})
     postFiles.moveAll(use('Helpers').publicPath(filePath), (post) => {
       let fileName = `${use('uuid').v1().replace(/-/g, '')}_${post.clientName}`
       orderData.posts.push({
