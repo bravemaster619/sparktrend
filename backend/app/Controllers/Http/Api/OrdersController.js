@@ -1,5 +1,5 @@
 'use strict'
-const User = use('App/Models/user')
+const User = use('App/Models/User')
 const Instaaccount = use('App/Models/Instaaccount')
 const Order = use('App/Models/Order')
 const Transaction = use('App/Models/Transaction')
