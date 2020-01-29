@@ -44,7 +44,7 @@ class InstaaccountsController extends BaseController {
     if(!isAdmin) {
       instaaccounts.rows.forEach(account => {
         account.username = account.username.slice(0,3) + '******';
-        account.rating = await this.getAverageRating(account)
+        // account.rating = await this.getAverageRating(account)
       })
     }
 
