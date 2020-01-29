@@ -98,6 +98,10 @@ class User extends Model {
     return this.hasMany('App/Models/Order', '_id', 'seller_id')
   }
 
+  instaaccounts() {
+    return this.hasMany('App/Models/Instaaccount', '_id', 'user_id')
+  }
+
 }
 
 module.exports = User

@@ -30,25 +30,9 @@ class BaseController {
     return Config.get('app.baseUrl')
   }
 
-  getSiteConfig() {
+  async getSiteConfig() {
 
     if (this.isDevelopment()) {
-      return {
-        "charge": {
-          "commission": 5 // percent
-        },
-        "seller": {
-          "minimum_followers": 0 // any instagram account is accepted
-        },
-        "order": {
-          "time_margin": {
-            "start_from": 10000, // order start_from must be at least 10s later from now
-            "accept": 300000, // seller must accept a shoutout in 300s
-            "start_time": 30 * 60 * 1000, // seller must start a shoutout in +/- 30 minutes from start_time
-          }
-        }
-      }
-    } else {
       return {
         "charge": {
           "commission": 5
@@ -61,9 +45,12 @@ class BaseController {
             "start_from": 2 * 24 * 3600 * 1000, // order start_from must be at least 2 days later from now
             "accept": 3 * 24 * 3600 * 1000, // seller must accept a shoutout in 3 days
             "start_time": 30 * 60 * 1000, // seller must start a shoutout in +/- 30 minutes from start_time
+            "complete": 24 * 3600 * 1000 // seller must report completion of a shoutout in 24 hours from deadline
           }
         }
       }
+    } else {
+      return await Config.findOne()
     }
 
   }

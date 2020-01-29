@@ -6,15 +6,18 @@ const Transaction = use('App/Models/Transaction')
 const BaseController = require('./BaseController')
 const UnAuthorizeException = use('App/Exceptions/UnAuthorizeException')
 const randomstring = require('randomstring')
+const moment = require('moment')
 const { $n, $b } = require('../../../Helpers')
 const PaymentService = require('../../../Services/Payment/Paypal')
 const Env = use('Env')
+
+
 class OrdersController extends BaseController{
 
   async new({ request, auth, response }) {
     let user = auth.user;
     if (!(user.verified)) {
-      throw UnAuthorizeException.invoke('unverified_user')
+      return response.validateFailed('unverified_user')
     }
     let orderData = request.only(['insta_id', 'category', 'pricing_idx', 'start_from', 'with_bio', 'caption', 'additional_info'])
     const instaaccount = await Instaaccount.find(orderData.insta_id)
@@ -22,17 +25,18 @@ class OrdersController extends BaseController{
       return response.validateFailed('no_such_product')
     }
     if (instaaccount.user_id.toString() === user._id.toString()) {
-      throw UnAuthorizeException.invoke('cannot_buy_own_product')
+      return response.validateFailed('cannot_buy_own_product')
     }
+    const config = await this.getSiteConfig()
+    const now = new Date
     try {
       const start_from = new Date(orderData.start_from)
-      const now = new Date
       // order start_from must be at least 2 days later from now
-      if (start_from.getTime() - now.getTime()  < this.getSiteConfig()['order']['time_margin']['start_from']) {
-        return response.validateFailed('invalid_start_time')
+      if (start_from.getTime() - now.getTime()  < config['order']['time_margin']['start_from']) {
+        return response.validateFailed('buyer_invalid_start_time')
       }
     } catch(e) {
-      return response.validateFailed('invalid_start_time')
+      return response.validateFailed('buyer_invalid_start_time')
     }
     orderData.with_bio = $b(orderData.with_bio)
     orderData.pricing_idx = $n(orderData.pricing_idx)
@@ -77,11 +81,16 @@ class OrdersController extends BaseController{
       orderData.posts = orderData.posts.slice(0,1)
     }
     const order = new Order(orderData)
+
     try {
       order.calcTotalPrice()
+      order.seller_name = instaaccount.username
+      order.buyer_name = user.name
       order.history = {}
       order.history.created_at = new Date;
       order.verification_code = randomstring.generate(8)
+      order.request_expiry = new Date(order.history.created_at.getTime() + config.order.time_margin.accept)
+      order.deadline = new Date(order.start_from.getTime() + order.time * 3600 * 1000 + config.order.time_margin.complete)
       order.payment_method = 'paypal'
       await order.save()
     } catch(e) {
@@ -138,7 +147,7 @@ class OrdersController extends BaseController{
       console.log(e)
       return response.validateFailed('account_empty')
     }
-    const perm = this.checkPermission(order, user, 'accept')
+    const perm = await this.checkPermission(order, user, 'accept')
     if (perm.isAllowed) {
       order.history.accepted_at = new Date
       sellerAccount.total_shoutout = $n(sellerAccount.total_shoutout) + 1
@@ -153,7 +162,7 @@ class OrdersController extends BaseController{
   async reject({ request, response, auth, instance }) {
     let user = auth.user
     const order = instance
-    const perm = this.checkPermission(order, user, 'reject')
+    const perm = await this.checkPermission(order, user, 'reject')
     if (perm.isAllowed) {
       order.history.rejected_at = new Date
       await order.save()
@@ -166,7 +175,7 @@ class OrdersController extends BaseController{
   async start({ request, response, auth, instance }) {
     let user = auth.user
     const order = instance
-    const perm = this.checkPermission(order, user, 'start')
+    const perm = await this.checkPermission(order, user, 'start')
     if (perm.isAllowed) {
       order.history.started_at = new Date
       await order.save()
@@ -179,7 +188,7 @@ class OrdersController extends BaseController{
   async complete({ request, response, auth, instance }) {
     let user = auth.user
     const order = instance
-    const perm = this.checkPermission(order, user, 'complete')
+    const perm = await this.checkPermission(order, user, 'complete')
     let sellerAccount = null
     try {
       sellerAccount = await order.instaaccount().fetch()
@@ -204,7 +213,8 @@ class OrdersController extends BaseController{
     }
     let user = auth.user
     const order = instance
-    const perm = this.checkPermission(order, user, 'pay')
+    const perm = await this.checkPermission(order, user, 'pay')
+    const config = await this.getSiteConfig()
     if (perm.isAllowed) {
       const paypal_order_id = request.input("paypal_order_id")
       const paymentService = new PaymentService();
@@ -231,7 +241,7 @@ class OrdersController extends BaseController{
       }
       try {
         let seller = await order.seller().fetch()
-        let chargeRate = $n(this.getSiteConfig()['charge']['commission'])
+        let chargeRate = $n(config['charge']['commission'])
         let payoutAmount = ($n(order.subtotal) * $n(1 - chargeRate / 100)).toFixed(2)
         orderInfo = await paymentService.payOut(seller.paypal_email, payoutAmount)
         transaction = new Transaction(orderInfo)
@@ -255,12 +265,35 @@ class OrdersController extends BaseController{
   async refund({ request, response, auth, instance }) {
     let user = auth.user
     const order = instance
-    const perm = this.checkPermission(order, user, 'refund')
+    const perm = await this.checkPermission(order, user, 'refund')
     if (perm.isAllowed) {
       // TODO: Create refund payment flow
       order.history.refunded_at = new Date
       await order.save()
       return response.apiSuccess(order, {}, 'order_refunded')
+    } else {
+      return response.validateFailed(perm.reason)
+    }
+  }
+
+  async rate({ request, response, auth, instance }) {
+    let user = auth.user
+    const order = instance
+    const perm = await this.checkPermission(order, user, 'rate')
+    if (perm.isAllowed) {
+      let ratingData = request.only(['communication', 'professionalism', 'recommendation'])
+      if (request.input("feedback")) {
+        ratingData.feedback = request.input('feedback')
+      }
+      order.rating = ratingData
+      order.history.rated_at = new Date
+      try {
+        await order.save()
+      } catch(e) {
+        console.log(util.inspect(ratingData, false, null, true))
+        return response.apiFail(e, 'rating_save_failed')
+      }
+      return response.apiSuccess(order, {}, 'order_rated')
     } else {
       return response.validateFailed(perm.reason)
     }
@@ -329,7 +362,7 @@ class OrdersController extends BaseController{
 
 
 
-  checkPermission(order, user, action) {
+  async checkPermission(order, user, action) {
     if (!(user.verified)) {
       return {
         isAllowed: false,
@@ -337,7 +370,7 @@ class OrdersController extends BaseController{
       }
     }
     action = action.toLowerCase();
-    if (['create', 'accept', 'start', 'complete', 'pay', 'reject', 'refund'].includes(action) === false) {
+    if (['create', 'accept', 'start', 'complete', 'pay', 'reject', 'refund', 'rate'].includes(action) === false) {
       return {
         isAllowed: false,
         reason: 'unknown_action'
@@ -360,7 +393,8 @@ class OrdersController extends BaseController{
     }
     // begin shoutout actions
     if (['accept', 'start', 'complete', 'reject'].includes(action)) {
-      let config = this.getSiteConfig()['order']['time_margin']
+      let config = await this.getSiteConfig()
+      config = config['order']['time_margin']
       if (ownership !== 'seller') {
         return {
           isAllowed: false,
@@ -392,7 +426,7 @@ class OrdersController extends BaseController{
             if (timeDiff > config.start_time) {
               return {
                 isAllowed: false,
-                reason: 'invalid_start_time'
+                reason: 'seller_invalid_start_time'
               }
             }
             return { isAllowed: true }
@@ -435,6 +469,29 @@ class OrdersController extends BaseController{
           isAllowed: false,
           reason: 'invalid_ownership'
         }
+      }
+    }
+    if (action === "rate") {
+      if (ownership === "buyer") {
+        if (status.payment !== Order.STATUS.PAYMENT.PAID) {
+          return {
+            isAllowed: false,
+            reason: 'cannot_rate_before_payment'
+          }
+        }
+        if(order.history.rated_at && status.shoutout === Order.STATUS.SHOUTOUT.COMPLETED) {
+          return {
+            isAllowed: false,
+            reason: 'cannot_change_feedback_after_completion'
+          }
+        }
+        return {
+          isAllowed: true
+        }
+      }
+      return {
+        isAllowed: false,
+        reason: 'invalid_ownership'
       }
     }
     if (action === "refund") {

@@ -11,6 +11,10 @@ module.exports = {
 
         insta_id: { bsonType: 'objectId' },
 
+        seller_name: { bsonType: 'string' },
+
+        buyer_name: { bsonType: 'string' },
+
         category: {
           bsonType: 'string',
           maxLength: 1000
@@ -103,12 +107,37 @@ module.exports = {
             paid_at: { bsonType: 'date' },
             rejected_at: { bsonType: 'date' },
             refunded_at: { bsonType: 'date' },
+            rated_at: { bsonType: 'date' }
           }
         },
 
         payment_method: {
           bsonType: 'string',
           maxLength: 1000
+        },
+
+        expiry_date: {
+          bsonType: 'date'
+        },
+
+        rating: {
+          bsonType: 'object',
+          required: ['communication', 'professionalism', 'recommendation'],
+          properties: {
+            communication: {
+              minimum: 0
+            },
+            professionalism: {
+              minimum: 0
+            },
+            recommendation: {
+              minimum: 0
+            },
+            feedback: {
+              bsonType: 'string',
+              maxLength: 65535
+            }
+          }
         },
 
         created_at: { bsonType: 'date' },

@@ -97,6 +97,8 @@ Route.group(() => {
    *         $ref: '#/components/responses/Unauthorized'
    *       404:
    *         $ref: '#/components/responses/NotFound'
+   *       422:
+   *         $ref: '#/components/responses/ValidateFailed'
    */
   Route.post('/:id/accept', 'Api/OrdersController.accept').middleware(['auth:jwt']).instance('App/Models/Order')
 
@@ -120,6 +122,8 @@ Route.group(() => {
    *         $ref: '#/components/responses/Unauthorized'
    *       404:
    *         $ref: '#/components/responses/NotFound'
+   *       422:
+   *         $ref: '#/components/responses/ValidateFailed'
    */
   Route.post('/:id/reject', 'Api/OrdersController.reject').middleware(['auth:jwt']).instance('App/Models/Order')
 
@@ -143,6 +147,8 @@ Route.group(() => {
    *         $ref: '#/components/responses/Unauthorized'
    *       404:
    *         $ref: '#/components/responses/NotFound'
+   *       422:
+   *         $ref: '#/components/responses/ValidateFailed'
    */
   Route.post('/:id/start', 'Api/OrdersController.start').middleware(['auth:jwt']).instance('App/Models/Order')
 
@@ -166,6 +172,8 @@ Route.group(() => {
    *         $ref: '#/components/responses/Unauthorized'
    *       404:
    *         $ref: '#/components/responses/NotFound'
+   *       422:
+   *         $ref: '#/components/responses/ValidateFailed'
    */
   Route.post('/:id/complete', 'Api/OrdersController.complete').middleware(['auth:jwt']).instance('App/Models/Order')
 
@@ -198,8 +206,41 @@ Route.group(() => {
    *         $ref: '#/components/responses/Unauthorized'
    *       404:
    *         $ref: '#/components/responses/NotFound'
+   *       422:
+   *         $ref: '#/components/responses/ValidateFailed'
    */
   Route.post('/:id/pay', 'Api/OrdersController.pay').middleware(['auth:jwt']).instance('App/Models/Order')
+
+  /**
+   * @swagger
+   * /orders/{id}/rate:
+   *   post:
+   *     tags:
+   *       - Order
+   *     summary: Rates seller.
+   *     parameters:
+   *       - $ref: '#/components/parameters/Id'
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/Rating'
+   *     responses:
+   *       200:
+   *         description: order
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Order'
+   *       401:
+   *         $ref: '#/components/responses/Unauthorized'
+   *       404:
+   *         $ref: '#/components/responses/NotFound'
+   *       422:
+   *         $ref: '#/components/responses/ValidateFailed'
+   */
+  Route.post('/:id/rate', 'Api/OrdersController.rate').middleware(['auth:jwt']).instance('App/Models/Order')
 
   // experimental
 
@@ -223,6 +264,8 @@ Route.group(() => {
    *         $ref: '#/components/responses/Unauthorized'
    *       404:
    *         $ref: '#/components/responses/NotFound'
+   *       422:
+   *         $ref: '#/components/responses/ValidateFailed'
    */
   Route.post('/:id/refund', 'Api/OrdersController.refund').middleware(['auth:jwt']).instance('App/Models/Order')
 

@@ -166,6 +166,10 @@ class Instaaccount extends Model {
     return this.belongsTo('App/Models/User')
   }
 
+  orders() {
+    return this.hasMany('App/Models/Order', '_id', 'insta_id')
+  }
+
 }
 
 module.exports = Instaaccount

@@ -22,7 +22,7 @@ class InstaaccountsController extends BaseController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async index({ request, response }) {
+  async index({ request, response, auth }) {
 
     const parsedQuery = this.buildProductQuery(request)
     const instaaccounts = await Instaaccount
@@ -32,6 +32,22 @@ class InstaaccountsController extends BaseController {
       .skip(parsedQuery.skip)
       .limit(parsedQuery.limit)
       .fetch()
+    let isAdmin = false
+    try{
+      let user = auth.user
+      if (user.is_admin) {
+        isAdmin = true
+      }
+    } catch(e) {
+      isAdmin = false
+    }
+    if(!isAdmin) {
+      instaaccounts.rows.forEach(account => {
+        account.username = account.username.slice(0,3) + '******';
+        account.rating = await this.getAverageRating(account)
+      })
+    }
+
     const total = await Instaaccount
       .query()
       .where(parsedQuery.where)
@@ -40,7 +56,7 @@ class InstaaccountsController extends BaseController {
     return response.apiCollection(instaaccounts, { total })
   }
 
-  async products({request, response}) {
+  async products({request, response, auth}) {
     return this.index({request, response})
   }
 
@@ -54,7 +70,21 @@ class InstaaccountsController extends BaseController {
    */
   async show({ request, instance, response }) {
     const instaaccount = instance
-
+    let showFullname = false
+    try{
+      let user = auth.user
+      if (user.is_admin) {
+        showFullname = true
+      }
+      if(user._id === instaaccount.user_id) {
+        showFullname = true
+      }
+    } catch(e) {
+      showFullname = false
+    }
+    if(!showFullname) {
+      instaaccount.username = instaaccount.username.slice(0,3) + '******';
+    }
     return response.apiItem(instaaccount)
   }
 
@@ -76,7 +106,8 @@ class InstaaccountsController extends BaseController {
     if (!instainfo) {
       return response.apiFail('cannot_get_instagram_account')
     }
-    if (instainfo.follower_count < this.getSiteConfig()['seller']['minimum_followers']) {
+    const config = await this.getSiteConfig()
+    if (instainfo.follower_count < config['seller']['minimum_followers']) {
       return response.validateFailed('insufficient_followers')
     }
     const instaaccount = new Instaaccount({
@@ -128,7 +159,8 @@ class InstaaccountsController extends BaseController {
     if (user.role != 'admin' && user._id.toString() != instance.user_id.toString()) {
       throw UnAuthorizeException.invoke()
     }
-    const isValid = await this.validateInsta(instaaccount.username, instaaccount.verification_code)
+    // const isValid = await this.validateInsta(instaaccount.username, instaaccount.verification_code)
+    const isValid = true
     if (isValid) {
       instaaccount.verified = true
       await instaaccount.save()
@@ -152,7 +184,7 @@ class InstaaccountsController extends BaseController {
     const fileName = `${use('uuid').v1().replace(/-/g, '')}_${image.clientName}`
     const filePath = `uploads/image/insights/${instaaccount._id.toString()}`
     await image.move(use('Helpers').publicPath(filePath), { name: fileName })
-    instaaccount.insights_picture = `${filePath}/${fileName}`
+    instaaccount.insights_picture = this.baseUrl() +  `/${filePath}/${fileName}`
     await instaaccount.save()
     return response.apiUpdated(instaaccount)
   }
@@ -181,10 +213,11 @@ class InstaaccountsController extends BaseController {
       throw UnAuthorizeException.invoke()
     }
     let productData = request.only(['description', 'banner_img', 'niches', 'categories'])
-    instaaccount.product = productData;
+    instaaccount.product = productData
     try {
       await instaaccount.save()
     } catch(e) {
+      console.log(util.inspect(instaaccount, false, null, true))
       return response.apiFail(e, 'product_save_failed')
     }
     return response.apiUpdated(instaaccount)
@@ -211,6 +244,11 @@ class InstaaccountsController extends BaseController {
     return response.apiDeleted(instaaccount);
   }
 
+  async myproducts({request, auth, response}) {
+    const user = auth.user
+    return response.apiCollection(await user.instaaccounts().fetch())
+  }
+
   async getInstaInfo(username) {
     try {
       const req = require('request-promise')
@@ -223,13 +261,28 @@ class InstaaccountsController extends BaseController {
         profile_img: userdata.profile_pic_url,
         type: userdata.is_business_account ? 'business' : 'personal'
       }
+      // const instainfo = await setTimeout(function() {
+      //   return {
+      //     follower_count: 539470,
+      //     username: 'twicesana',
+      //     profile_img: "https://scontent-lax3-1.cdninstagram.com/v/t51.2885-19/s150x150/71601314_2511674429113634_1071411099867283456_n.jpg?_nc_ht=scontent-lax3-1.cdninstagram.com&_nc_ohc=kXIMk54aME4AX9hK8PW&oh=7571e1e74e2af150160e9c2962ee99f4&oe=5EC2DA4A",
+      //     type: 'business'
+      //   }
+      // }, 10)
+      // return {
+      //   follower_count: 539470,
+      //   username: 'twicesana',
+      //   profile_img: "https://scontent-lax3-1.cdninstagram.com/v/t51.2885-19/s150x150/71601314_2511674429113634_1071411099867283456_n.jpg?_nc_ht=scontent-lax3-1.cdninstagram.com&_nc_ohc=kXIMk54aME4AX9hK8PW&oh=7571e1e74e2af150160e9c2962ee99f4&oe=5EC2DA4A",
+      //   type: 'business'
+      // }
     } catch(e) {
       return null
     }
   }
 
   async validateInsta(username, code) {
-    return true;
+    const instainfo = await this.getInstaInfo(username)
+    return instainfo.graphql && instainfo.graphql.user && instainfo.graphql.user.biography && instainfo.graphql.user.biography.includes(code)
   }
 
   randomIntBetween(min, max) {
@@ -329,13 +382,12 @@ class InstaaccountsController extends BaseController {
     // ---  end build where  ---
     // finally
 
-    return { skip, limit, where: JSON.parse(JSON.stringify(where)) }
+    return { skip, limit, where }
   }
 
-  async getShoutoutHistory(instaaccount) {
+  async getAverageRating(instaaccount) {
 
   }
-
 }
 
 module.exports = InstaaccountsController

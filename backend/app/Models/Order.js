@@ -38,9 +38,30 @@ const { $n } = require('../Helpers')
  *         posts:
  *           type: array
  *           items:
- *             type: string
- *             format: binary
-  *     Order:
+ *             type: object
+ *             properties:
+ *               filename:
+ *                 type: string
+ *               type:
+ *                 type: string
+ *               path:
+ *                 type: string
+ *     Rating:
+ *       type: object
+ *       required:
+ *         - communication
+ *         - professionalism
+ *         - recommendation
+ *       properties:
+ *         communication:
+ *           type: number
+ *         professionalism:
+ *           type: number
+ *         recommendation:
+ *           type: number
+ *         feedback:
+ *           type: string
+ *     Order:
  *       allOf:
  *         - $ref: '#/components/schemas/NewOrder'
  *         - type: object
@@ -68,6 +89,8 @@ const { $n } = require('../Helpers')
  *                   type: string
  *                 refunded_at:
  *                   type: string
+ *                 rated_at:
+ *                   type: string
  *             time:
  *               type: integer
  *             price:
@@ -84,6 +107,8 @@ const { $n } = require('../Helpers')
  *               type: string
  *             payment_method:
  *               type: string
+ *             rating:
+ *               $ref: '#/components/schemas/Rating'
  *             created_at:
  *               type: string
  *             updated_at:

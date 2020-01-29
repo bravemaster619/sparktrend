@@ -43,6 +43,26 @@ Route.group(() => {
 
   /**
    * @swagger
+   * /instaaccounts/myproducts:
+   *   get:
+   *     summary: show registered instagram accounts of a user
+   *     tags:
+   *       - Instaaccount
+   *     responses:
+   *       200:
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: array
+   *               items:
+   *                 $ref: '#/components/schemas/Instaaccount'
+   *
+   */
+  Route.get('/myproducts', 'Api/InstaaccountsController.myproducts').middleware(['auth:jwt'])
+
+
+  /**
+   * @swagger
    * /instaaccounts/{id}:
    *   get:
    *     tags:
