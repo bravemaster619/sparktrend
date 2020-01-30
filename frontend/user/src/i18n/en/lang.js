@@ -202,6 +202,7 @@ const en = {
          order_refunded: "Refunded an order",
          order_rated: "Your rating has been submitted."
       },
+      feedback_solicit: "Help us improve your experience at sparktrend.net by submitting your feedback of this service.",
       feedback_guide: "You can submit your feedback after payment. You can edit your feedback before ordered shoutout is completed."
    },
    error: {

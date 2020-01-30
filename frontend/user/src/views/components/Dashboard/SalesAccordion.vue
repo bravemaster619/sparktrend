@@ -130,6 +130,11 @@
                                  {{$t("Complete")}}
                               </button>
                            </div>
+                           <div class="d-flex flex-column mt-2" v-if="order.rating && order.history.rated_at">
+                              <button class="btn btn-danger btn-grad-effect btn-md w-100 mx-0" @click="() => { showRatingModal(order) }">
+                                 {{$t("View Feedback")}}
+                              </button>
+                           </div>
                         </div>
                         <div class="col-12 col-md-7">
                            <div class="d-flex flex-column">
@@ -190,6 +195,7 @@
          </badger-accordion-item>
 
       </badger-accordion>
+
       <div v-if="displayOrders.length">
          <paginate
             :paginate-count="pageLength"
@@ -201,6 +207,13 @@
             v-model=page
          ></paginate>
       </div>
+      <rate-modal
+         v-if="ratedOrder"
+         :order="ratedOrder"
+         :show.sync="showingRatingModal"
+         @close="showingRatingModal=false"
+         :readonly="true"
+      />
    </div>
 </template>
 
@@ -208,6 +221,7 @@
    import {BadgerAccordion, BadgerAccordionItem} from "vue-badger-accordion";
    import {OrderStatus, getOrderPaymentStatus, getOrderShoutoutStatus} from '../../../helpers/order'
    import httpService from '../../../services/http.service'
+   import RateModal from "../../dashboard/RateModal"
 
    const moment = require('moment')
    const fileDownload = require('js-file-download')
@@ -229,6 +243,7 @@
       components: {
          BadgerAccordion,
          BadgerAccordionItem,
+         RateModal
          // RequestHeader,
          // RequestInfo
       },
@@ -239,7 +254,9 @@
             page: 1,
             pageLength: 20,
             displayOrders: [],
-            icons: {opened: '<i class="ni ni-bold-up"></i>', closed: '<i class="ni ni-bold-down"></i>'}
+            icons: {opened: '<i class="ni ni-bold-up"></i>', closed: '<i class="ni ni-bold-down"></i>'},
+            ratedOrder: null,
+            showingRatingModal: false,
          }
       },
       props: {
@@ -346,6 +363,10 @@
             el.select()
             document.execCommand('copy')
             document.body.removeChild(el)
+         },
+         showRatingModal: function(order) {
+            this.ratedOrder = order
+            this.showingRatingModal = true
          }
       },
       computed: {

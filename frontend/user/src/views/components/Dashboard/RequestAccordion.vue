@@ -106,7 +106,7 @@
                                     (order.history.rated_at ? $t("Edit Feedback") : $t("Rate"))
                                  }}
                               </button>
-                              <small class="mt-2">{{$t("order.feedback_guide")}}</small>
+                              <small class="mt-2">{{$t("order.feedback_solicit")}}</small>
                            </div>
                         </div>
                         <div class="col-12 col-md-7">
@@ -220,18 +220,6 @@
          // RequestHeader,
          // RequestInfo
       },
-      events: {
-         'order-updated': function(updatedOrder) {
-            this.orders.forEach((order, index) => {
-               if(order._id === updatedOrder._id) {
-                  this.orders[index] = updatedOrder
-               }
-            })
-         },
-         'close': function() {
-            this.hideRatingModal()
-         }
-      },
       data() {
          return {
             OrderClass,
@@ -293,9 +281,9 @@
                })
                .catch(e => {
                   if (e.response && e.response.status == "404") {
-                     window.toastr("File not found", "Error", {timeOut: 3000})
+                     this.$toastr.error("File not found", "Error", {timeOut: 3000})
                   } else {
-                     window.toastr("Oops! Something is wrong. Please try again later...", "", {timeOut: 3000});
+                     this.$toastr.error("Oops! Something is wrong. Please try again later...", "", {timeOut: 3000});
                   }
                })
          },
@@ -336,6 +324,7 @@
                         this.orders[index] = res.data.data
                      }
                   })
+
                } else {
                   this.$toastr.error(this.$t("error.default"))
                }
@@ -350,7 +339,11 @@
          onOrderUpdated: function(updatedOrder) {
             this.orders.forEach((order, index) => {
                if(order._id === updatedOrder._id) {
+                  updatedOrder.instaaccount = order.instaaccount
                   this.orders[index] = updatedOrder
+                  const from = (this.page - 1) * this.pageLength
+                  const to = from + this.pageLength
+                  this.displayOrders = this.orders.slice(from, to)
                }
             })
          }

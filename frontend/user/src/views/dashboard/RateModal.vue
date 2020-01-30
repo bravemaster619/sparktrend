@@ -1,9 +1,9 @@
 <template>
    <modal :show="show" :showClose="false">
       <h6 slot="header" class="modal-title" id="modal-title-default">
-         {{order.history.rated_at ? $t("Rating on this shoutout") : $t("Help us improve your experience!")}}
+         {{order.history.rated_at ? $t("Rating on this shoutout") : $t("Your feedback of this service")}}
       </h6>
-      <p v-if="!order.history.rated_at">{{$t("Rate your influencer experience at sparktrend.net")}}</p>
+      <p v-if="!order.history.rated_at">{{$t("order.feedback_guide")}}</p>
 
       <div class="row">
          <div class="col-12 col-md-6">
@@ -89,6 +89,7 @@
       props: {
          show: Boolean,
          order: Object,
+         readonly: Boolean,
       },
       data() {
          return {
@@ -126,7 +127,7 @@
       },
       computed: {
          isReadOnly: function() {
-            return this.order.history.rated_at && getOrderShoutoutStatus(this.order) === OrderStatus.SHOUTOUT.COMPLETED
+            return this.readonly || this.order.history.rated_at && getOrderShoutoutStatus(this.order) === OrderStatus.SHOUTOUT.COMPLETED
          }
       },
       mounted() {
