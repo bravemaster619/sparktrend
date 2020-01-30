@@ -155,6 +155,8 @@ const Model = use('Model')
  *           type: integer
  *         completed_shoutout:
  *           type: integer
+ *         ratings:
+ *           type: object
  *         created_at:
  *           type: string
  *         updated_at:

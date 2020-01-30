@@ -60,6 +60,10 @@ module.exports = {
 
         product: ProductValidator,
 
+        rating: {
+          bsonType: ['object', 'null']
+        },
+
         created_at: { bsonType: 'date' },
 
         updated_at: { bsonType: 'date' }
