@@ -35,7 +35,17 @@ const safeBoolean = (val) => {
   return false;
 }
 
+const hideUsername = (username) => {
+  if(!username) {
+    username = ''
+  } else {
+    username = '' + username
+  }
+  return username.slice(0,3) + "*****"
+}
+
 module.exports = {
   $n: safeNumber,
-  $b: safeBoolean
+  $b: safeBoolean,
+  $h: hideUsername
 }

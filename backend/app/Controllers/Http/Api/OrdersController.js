@@ -7,7 +7,7 @@ const BaseController = require('./BaseController')
 const UnAuthorizeException = use('App/Exceptions/UnAuthorizeException')
 const randomstring = require('randomstring')
 const moment = require('moment')
-const { $n, $b } = require('../../../Helpers')
+const { $n, $b, $h } = require('../../../Helpers')
 const PaymentService = require('../../../Services/Payment/Paypal')
 const Env = use('Env')
 const fs = require('fs')
@@ -101,7 +101,6 @@ class OrdersController extends BaseController{
 
   async index({request, response, auth, decodeQuery}) {
     const orderType = request.input("type")
-
     let user = auth.user
     let orders = []
     let total = 0
@@ -122,6 +121,19 @@ class OrdersController extends BaseController{
         default: break
       }
       orders = await documentQueryBuilder.where(whereQuery).fetch()
+      orders = JSON.parse(JSON.stringify(orders))
+      orders.forEach(order => {
+        if (order.seller_id.toString() !== user._id.toString()) {
+          if(order.instaaccount && order.instaaccount.username) {
+            order.instaaccount.username = $h(order.instaaccount.username)
+          }
+        }
+        if(order.buyer_id.toString() !== user._id.toString()) {
+          if (order.rating && order.rating.feedback) {
+            order.rating.feedback = ''
+          }
+        }
+      })
       total = await countQueryBuilder.where(whereQuery).count()
       return response.apiCollection(orders, { total })
     } else {
@@ -287,6 +299,12 @@ class OrdersController extends BaseController{
       }
       order.rating = ratingData
       order.history.rated_at = new Date
+      const instaaccount = await order.instaaccount().first()
+      const ratings = instaaccount.ratings ? instaaccount.ratings : {}
+      ratingData.created_at = order.history.rated_at
+      ratings[order._id] = ratingData
+      instaaccount.ratings = ratings
+      await instaaccount.save()
       try {
         await order.save()
       } catch(e) {

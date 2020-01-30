@@ -6,7 +6,7 @@ const BaseController = require('./BaseController')
 const Instaaccount = use('App/Models/Instaaccount')
 const UnAuthorizeException = use('App/Exceptions/UnAuthorizeException')
 const randomstring = require('randomstring')
-const { $n } = require('../../../Helpers')
+const { $n, $h } = require('../../../Helpers')
 const util = require('util')
 /**
  *
@@ -43,8 +43,7 @@ class InstaaccountsController extends BaseController {
     }
     if(!isAdmin) {
       instaaccounts.rows.forEach(account => {
-        account.username = account.username.slice(0,3) + '******';
-        // account.rating = await this.getAverageRating(account)
+        account.username = $h(account.username)
       })
     }
 
@@ -383,10 +382,6 @@ class InstaaccountsController extends BaseController {
     // finally
 
     return { skip, limit, where }
-  }
-
-  async getAverageRating(instaaccount) {
-
   }
 }
 
