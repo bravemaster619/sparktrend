@@ -85,8 +85,9 @@ export const auth =  {
 
         logout({commit}){
             commit('logout');
-            authService.logout();
-            router.push("/");
+            authService.logout().finally(() => {
+                window.location.reload()
+            });
         },
         checkAuth({commit}, response){
             window.console.log(response);
@@ -127,8 +128,6 @@ export const auth =  {
         logout(state) {
             state.logged_in = false;
             state.user = null;
-            localStorage.removeItem("sparktrend-user");
-
             state.status = true;
             state.msg = "";
         },
