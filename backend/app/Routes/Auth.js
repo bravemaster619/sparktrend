@@ -37,7 +37,7 @@ Route.group('auth', () => {
   Route.post('/register', 'Api/AuthController.register')
     .validator('StoreUser')
 
-  
+
   /**
    * @swagger
    * /auth/login:
@@ -86,6 +86,55 @@ Route.group('auth', () => {
    *         $ref: '#/components/responses/Unauthorized'
    */
   Route.post('/login', 'Api/AuthController.login')
+
+  /**
+   * @swagger
+   * /auth/admin-login:
+   *   post:
+   *     operationId: auth-login
+   *     tags:
+   *       - Auth
+   *     summary: Login to the application
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               email:
+   *                 type: string
+   *                 required: true
+   *               password:
+   *                 type: string
+   *                 required: true
+   *     responses:
+   *       200:
+   *         description: login success
+   *         content:
+   *           application/json:
+   *             schema:
+   *               properties:
+   *                 status:
+   *                   type: number
+   *                 message:
+   *                   type: string
+   *                 type:
+   *                   type: string
+   *                   default: bearer
+   *                 token:
+   *                   type: string
+   *                 refreshToken:
+   *                   type: string
+   *                 user:
+   *                   type: object
+   *                   $ref: '#/components/schemas/User'
+   *       422:
+   *         $ref: '#/components/responses/ValidateFailed'
+   *       401:
+   *         $ref: '#/components/responses/Unauthorized'
+   */
+  Route.post('/admin-login', 'Api/AuthController.adminLogin')
 
   /**
    * @swagger
