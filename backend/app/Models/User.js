@@ -32,6 +32,10 @@ const Model = use('Model')
  *           type: string
  *         paypal_email:
  *           type: string
+ *         role:
+ *           type: string
+ *         is_admin:
+ *           type: boolean
  *     UpdateUser:
  *       type: object
  *       properties:
@@ -87,7 +91,10 @@ class User extends Model {
     if (this.role === 'admin') {
       return 'admin'
     }
-    return 'user'
+    if (this.instaaccounts().count() > 0) {
+      return 'seller'
+    }
+    return 'buyer'
   }
 
   purchases() {
