@@ -82,12 +82,33 @@ class AuthController extends BaseController {
     try {
       data = await auth.authenticator('jwt').withRefreshToken().attempt(email, password)
       data.user = await User.findBy({ email })
+      if(data.user.role === 'admin') {
+        data.user.is_admin = true
+      }
     } catch (error) {
-      console.log(error)
       throw LoginFailedException.invoke('Invalid email or password')
     }
     if (!data.user.verified) {
       // throw AccountNotVerifiedException.invoke('Email is not verified')
+    }
+    response.apiSuccess(data)
+  }
+
+  async adminLogin({ request, response, auth }) {
+    await this.validate(request.all(), { email: 'required', password: 'required' })
+    const email = punycode.toUnicode(request.input('email'))
+    const password = request.input('password')
+    // Attempt to login with email and password
+    let data = null
+    try {
+      data = await auth.authenticator('jwt').withRefreshToken().attempt(email, password)
+      data.user = await User.findBy({ email })
+      if (data.user.role !== 'admin') {
+        throw LoginFailedException.invoke('Invalid email or password')
+      }
+      data.user.is_admin = true
+    } catch( error ) {
+      throw LoginFailedException.invoke('Invalid email or password')
     }
     response.apiSuccess(data)
   }
@@ -123,9 +144,13 @@ class AuthController extends BaseController {
    *
    */
   async logout ({ request, response, auth }) {
-    await auth.logout()
+    const refreshToken = request.input('refreshToken')
+    if(!refreshToken) {
 
-    return response.send('success')
+    } else {
+      await auth.authenticator('jwt').revokeTokens([refreshToken], true)
+    }
+    return response.apiSuccess()
   }
 
   /**
