@@ -35,7 +35,7 @@ class InstaaccountsController extends BaseController {
     let isAdmin = false
     try{
       let user = auth.user
-      if (user.is_admin) {
+      if (user.role === 'admin') {
         isAdmin = true
       }
     } catch(e) {
@@ -72,7 +72,7 @@ class InstaaccountsController extends BaseController {
     let showFullname = false
     try{
       let user = auth.user
-      if (user.is_admin) {
+      if (user.role === 'admin') {
         showFullname = true
       }
       if(user._id === instaaccount.user_id) {
