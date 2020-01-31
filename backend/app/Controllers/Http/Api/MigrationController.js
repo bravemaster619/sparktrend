@@ -63,6 +63,19 @@ class MigrationController extends BaseController {
     const db = await Database.connect('mongodb')
     // ------------------ BEGIN USER SEED ----------------------
     await db.collection('users').remove({})
+    const admin = await db.collection('users').insert({
+      name: 'Shaheen Almutairi',
+      email: 'magic-pro-898@hotmail.com',
+      password: await Hash.make('Aadmin898'),
+      country: 'Italy',
+      gender: 'male',
+      locale: 'ar',
+      role: 'admin',
+      verified: true,
+      created_at: new Date,
+      updated_at: new Date
+    })
+    console.log('admin user inserted')
     const user1 = await db.collection('users').insert({
       name: 'bravemaster',
       email: 'bravemaster619@hotmail.com',
