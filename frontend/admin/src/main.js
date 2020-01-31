@@ -20,10 +20,14 @@ import App from './App.vue'
 import router from './router'
 import './registerServiceWorker'
 import ArgonDashboard from './plugins/argon-dashboard'
+import VueNoty from 'vuejs-noty'
+import 'vuejs-noty/dist/vuejs-noty.css'
 
 Vue.config.productionTip = false
 
 Vue.use(ArgonDashboard)
+Vue.use(VueNoty)
+
 new Vue({
   router,
   render: h => h(App)
