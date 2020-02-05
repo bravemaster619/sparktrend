@@ -361,8 +361,10 @@ Route.group('auth', () => {
    *         $ref: '#/components/responses/Unauthorized'
    */
   Route.post('/password', 'Api/AuthController.password').middleware('auth:jwt')
+
+  Route.get('/verify', 'Api/AuthController.verify').as('verification')
 }).prefix('/api/auth')
 
 Route.get('auth/reset', 'Api/AuthController.getReset').as('reset')
 Route.post('auth/reset', 'Api/AuthController.postReset')
-Route.get('auth/verify', 'Api/AuthController.verify').as('verification')
+// Route.get('auth/verify', 'Api/AuthController.verify').as('verification')

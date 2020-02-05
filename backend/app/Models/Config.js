@@ -40,7 +40,8 @@ const { $n } = require('../Helpers')
  *                   type: integer
  */
 class Config extends Model {
-  static get table() {
+  static get collection() {
     return 'config'
   }
 }
+module.exports = Config

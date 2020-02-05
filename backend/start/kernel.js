@@ -37,7 +37,8 @@ const globalMiddleware = [
 |
 */
 const namedMiddleware = {
-  auth: 'Adonis/Middleware/Auth'
+  auth: 'Adonis/Middleware/Auth',
+  authAdmin: 'App/Middleware/AuthAdmin'
   // instance: 'App/Middleware/Instance'
 }
 

@@ -110,9 +110,6 @@ const Model = use('Model')
  *                       type: number
  *     AdminEditInstaaccount:
  *       type: object
- *       required:
- *         - allowed
- *         - verified
  *       properties:
  *         allowed:
  *           type: boolean
@@ -120,6 +117,8 @@ const Model = use('Model')
  *           type: boolean
  *         demographics:
  *           $ref: '#/components/schemas/Demographics'
+ *         product:
+ *           $ref: '#/components/schemas/Product'
  *     Instaaccount:
  *       type: object
  *       required:

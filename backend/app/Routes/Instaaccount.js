@@ -9,7 +9,7 @@ Route.group(() => {
    *   get:
    *     tags:
    *       - Instaaccount
-   *     summary: Get instaaccounts
+   *     summary: Get all instaaccounts
    *     responses:
    *       200:
    *         description: instaaccounts
@@ -21,6 +21,25 @@ Route.group(() => {
    *                 $ref: '#/components/schemas/Instaaccount'
    */
   Route.get('/', 'Api/InstaaccountsController.index')
+
+  /**
+   * @swagger
+   * /instaaccounts/adminlist:
+   *   get:
+   *     tags:
+   *       - Admin
+   *     summary: List all instaaccounts for admin dashboard
+   *     responses:
+   *       200:
+   *         description: instaaccount
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Instaaccount'
+   *       401:
+   *         $ref: '#/components/responses/Unauthorized'
+   */
+  Route.get('/adminlist', 'Api/InstaaccountsController.adminList').middleware(['authAdmin:jwt'])
 
   /**
    * @swagger
@@ -174,39 +193,6 @@ Route.group(() => {
    */
   Route.post('/:id/upload-insights', 'Api/InstaaccountsController.uploadInsights').middleware(['auth:jwt']).instance('App/Models/Instaaccount')
 
-  /**
-   * @swagger
-   * /instaaccounts/{id}/adminedit:
-   *   put:
-   *     tags:
-   *       - Instaaccount
-   *     summary: Admin edit to verified instagram accounts
-   *     parameters:
-   *       - $ref: '#/components/parameters/Id'
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             $ref: '#/components/schemas/AdminEditInstaaccount'
-   *     responses:
-   *       200:
-   *         description: instaaccount
-   *         content:
-   *           application/json:
-   *               schema:
-   *                 $ref: '#/components/schemas/Instaaccount'
-   *       404:
-   *         $ref: '#/components/responses/NotFound'
-   *       401:
-   *         $ref: '#/components/responses/Unauthorized'
-   *       403:
-   *         $ref: '#/components/responses/Forbidden'
-   *       422:
-   *         $ref: '#/components/responses/ValidateFailed'
-   */
-  Route.put('/:id/adminedit', 'Api/InstaaccountsController.adminEdit').middleware(['auth:jwt']).instance('App/Models/Instaaccount')
-
 
 
   /**
@@ -289,4 +275,68 @@ Route.group(() => {
    *         $ref: '#/components/responses/Forbidden'
    */
   Route.delete('/:id/product', 'Api/InstaaccountsController.deleteProduct').middleware(['auth:jwt']).instance('App/Models/Instaaccount')
+
+
+
+  /**
+   * @swagger
+   * /instaaccounts/{id}/adminshow:
+   *   get:
+   *     tags:
+   *       - Admin
+   *     summary: Get instaaccount info for admin dashboard
+   *     parameters:
+   *       - $ref: '#/components/parameters/Id'
+   *     responses:
+   *       200:
+   *         description: instaaccount
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Instaaccount'
+   *       404:
+   *         $ref: '#/components/responses/NotFound'
+   *       401:
+   *         $ref: '#/components/responses/Unauthorized'
+   *       403:
+   *         $ref: '#/components/responses/Forbidden'
+   *       422:
+   *         $ref: '#/components/responses/ValidateFailed'
+   */
+  Route.get('/:id/adminshow', 'Api/InstaaccountsController.adminShow').middleware(['authAdmin:jwt']).instance('App/Models/Instaaccount')
+
+  /**
+   * @swagger
+   * /instaaccounts/{id}/adminedit:
+   *   put:
+   *     tags:
+   *       - Admin
+   *     summary: Admin edit to verified instagram accounts
+   *     parameters:
+   *       - $ref: '#/components/parameters/Id'
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/AdminEditInstaaccount'
+   *     responses:
+   *       200:
+   *         description: instaaccount
+   *         content:
+   *           application/json:
+   *               schema:
+   *                 $ref: '#/components/schemas/Instaaccount'
+   *       404:
+   *         $ref: '#/components/responses/NotFound'
+   *       401:
+   *         $ref: '#/components/responses/Unauthorized'
+   *       403:
+   *         $ref: '#/components/responses/Forbidden'
+   *       422:
+   *         $ref: '#/components/responses/ValidateFailed'
+   */
+  Route.put('/:id/adminedit', 'Api/InstaaccountsController.adminEdit').middleware(['authAdmin:jwt']).instance('App/Models/Instaaccount')
+
+
 }).prefix('/api/instaaccounts')

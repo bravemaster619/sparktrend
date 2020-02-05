@@ -15,8 +15,8 @@ Route.group('user', () => {
    * /users:
    *   get:
    *     tags:
-   *       - User
-   *     summary: Get users
+   *       - Admin
+   *     summary: Get all users
    *     parameters:
    *       - $ref: '#/components/parameters/ListQuery'
    *     responses:
@@ -28,8 +28,10 @@ Route.group('user', () => {
    *               type: array
    *               items:
    *                   $ref: '#/components/schemas/User'
+   *       403:
+   *         $ref: '#/components/responses/Forbidden'
    */
-   Route.get('/', 'Api/UsersController.index')
+   Route.get('/', 'Api/UsersController.index').middleware(['auth:jwt'])
 
   /**
    * \@swagger
@@ -37,6 +39,7 @@ Route.group('user', () => {
    *   post:
    *     tags:
    *       - User
+   *       - Admin
    *     summary: Create user
    *     requestBody:
    *       required: true
@@ -51,6 +54,8 @@ Route.group('user', () => {
    *           application/json:
    *             schema:
    *               $ref: '#/components/schemas/User'
+   *       403:
+   *         $ref: '#/components/responses/Forbidden'
    */
   // Route.post('/', 'Api/UsersController.store')
 
@@ -76,6 +81,7 @@ Route.group('user', () => {
    */
   Route.get('/:id', 'Api/UsersController.show')
     .instance('App/Models/User')
+    .middleware(['auth:jwt'])
 
   /**
    * @swagger

@@ -8,6 +8,7 @@ const User = use('App/Models/User')
 // const Validator = use('Validator')
 const UnAuthorizeException = use('App/Exceptions/UnAuthorizeException')
 // const Config = use('Config')
+const { $n } = require('../../../Helpers')
 /**
  *
  * @class UsersController
@@ -21,9 +22,28 @@ class UsersController extends BaseController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async index ({ request, response, decodeQuery }) {
-    const users = await User.query(decodeQuery().query).where({role: 'user'}).fetch()
-    const total = await User.query(decodeQuery().countQuery).where({role: 'user'}).count()
+  async index ({ request, response, auth }) {
+    const user = auth.user
+    if (user.role !== 'admin') {
+      throw new UnAuthorizeException
+    }
+    const parsedQuery = this.buildAdminUserQuery(request)
+    const users = await User.query()
+      .where(parsedQuery.where)
+      .skip(parsedQuery.skip)
+      .limit(parsedQuery.limit)
+      .fetch()
+    for (let user of users.rows) {
+      let instaaccountCount = await user.instaaccounts().count()
+      if (instaaccountCount) {
+        user.type = 'seller'
+      } else {
+        user.type = 'buyer'
+      }
+    }
+    const total = await User.query()
+      .where(parsedQuery.where)
+      .count()
     return response.apiCollection(users, { total })
   }
 
@@ -62,10 +82,12 @@ class UsersController extends BaseController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async show ({ request, response, instance, decodeQuery }) {
-    const user = instance
-    // await user.related(decodeQuery().with).load()
-    return response.apiItem(user)
+  async show ({ request, response, instance, auth }) {
+    const user = auth.user
+    if (user.role !== 'admin' && user._id !== instance._id) {
+      throw UnAuthorizeException.invoke()
+    }
+    return response.apiItem(instance)
   }
 
   /**
@@ -140,7 +162,19 @@ class UsersController extends BaseController {
     return response.apiCollection(images)
   }
 
-  async
+
+  buildAdminUserQuery(request) {
+    const length = 10 // page length is 20
+
+    let page = $n(request.input("page"), 1)
+    if (page < 1) page = 1
+
+    const skip = (page - 1) * length
+    const limit = length
+    const where = { role: 'user' }
+    return { skip, limit, where }
+  }
+
 }
 
 module.exports = UsersController

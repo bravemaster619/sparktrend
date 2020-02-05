@@ -3,6 +3,14 @@ const safeNumber = (num, defaultValue = undefined, allowNegative = false) => {
     num = 0;
   }
   num = Number(num)
+  if (isNaN(num)) {
+    if (defaultValue === undefined) {
+      console.log(num)
+      throw new Error('Given argument is NaN')
+    } else {
+      return defaultValue
+    }
+  }
   if (num === Infinity) {
     if (defaultValue === undefined) {
       console.log(num)

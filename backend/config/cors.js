@@ -17,7 +17,7 @@ module.exports = {
   |
   */
   origin: (currentOrigin) => {
-    return ['http://localhost:8080','http://localhost:8081', 'http://127.0.0.1:3333'].includes(currentOrigin)
+    return true
   },
 
   /*

@@ -51,12 +51,12 @@ class AuthController extends BaseController {
     }
     const mailData = {
       user,
-      baseUrl: this.baseUrl()
+      baseUrl: use('Env').get('FRONTEND_URL')
     };
-    Mail.send('emails.verification', mailData, (message) => {
+    Mail.send('emails.welcome', mailData, (message) => {
       message.to(user.email, user.name)
       message.from(Config.get('mail.sender'))
-      message.subject('Please Verify Your Email Address')
+      message.subject('Welcome to Sparktrend!')
     }).catch(e => {
 
     })
@@ -232,7 +232,7 @@ class AuthController extends BaseController {
     response.apiSuccess(null, 'Email sent successfully')
     const mailData = {
       user,
-      baseUrl: this.baseUrl()
+      baseUrl: use('Env').get('FRONTEND_URL')
     }
     await Mail.send('emails.verification', mailData, (message) => {
       message.to(user.email, user.name)
@@ -258,7 +258,7 @@ class AuthController extends BaseController {
     user.unset('verificationToken')
     await user.save()
     await session.flash({ message: 'Account verified successfully' })
-    response.redirect('/')
+    return response.apiSuccess('Account verified successfully')
   }
 
   /**

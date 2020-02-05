@@ -51,6 +51,7 @@ const Model = use('Model')
  */
 
 class User extends Model {
+
   static boot () {
     super.boot()
 
@@ -85,16 +86,6 @@ class User extends Model {
 
   images () {
     return this.morphMany('App/Models/Image', 'imageable_type', 'imageable_id')
-  }
-
-  type () {
-    if (this.role === 'admin') {
-      return 'admin'
-    }
-    if (this.instaaccounts().count() > 0) {
-      return 'seller'
-    }
-    return 'buyer'
   }
 
   purchases() {
