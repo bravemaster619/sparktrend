@@ -79,7 +79,7 @@
                   </div>
                   <div class="py-2">
                      <div class="row">
-                        <div class="col-12 col-md-5">
+                        <div class="col-12 col-md-5 images clearfix" v-viewer>
                            <div class="salesorder-list-date mb-2">Attachment</div>
                            <div class="salesorder-list-image-product mb-2" v-for="(post,index) in order.posts"
                                 :key="index">
@@ -87,13 +87,13 @@
                                    :src="post.path" :alt="post.filename" v-if="post.type==='image'">
                               <video class="img-fluid salesorder-list-img-product z-depth-1 mb-1"
                                      :src="post.path" v-if="post.type==='video'"></video>
-                              <a data-toggle="tooltip" :title="$t('Download Attachment(s)')" :href="post.path"
-                                 :download="post.filename"
-                                 class="salesorder-list-download-post" target="_blank" @click="downloadPost">
-                                 <img
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfiBxsJMTakVrUDAAACmElEQVRo3u2XP0gcQRSHf3ucFtHocRAklgYLwSDiJUUUJJWlWGrANJJChFiksRCChVWaoGAlGCHBQkvBSruAeiBiKRY2UQRFToyQ03wp9p2sxjPn/jkN7CsWdmb2fd/ODjNvpTj+7yBJ8j7xreyxR+v9CUwAMBEkRyKQwWPP9V4EQohYIBaIBWKBWCAWiAVigYcuQIph2v0mp51hUoH8mAdgrEjvDAAzRXrHAJgPNAOqlSSNMn23+p8k0xr1ZPA9Ay0c4MYiVaXOAFUs2lMHtAQSkGhkx5Kt8qQUAZ6wak/s0BgQL0nUkbWE2zT8S4AGtm10lroQ8JJENUuWdJ+22wRoY99GLlEdEl6SSBoMTugqJkAXJzZqJoKfVsYteZ7+mwToJ28jxkOHG2KQC0OMXBdgxHouGIwIL0n0cGagSRIFARJMWusZPRHiJYkOjgy2wBwAcyxYyxEdEeMliSZ2Dfjbc4VdmsqAlyTq2eR6bFJfJrwkUcvyFfwywfZ8HwqVTF1+gikq/eZxAkk812tJK85WkCRpBkI5Mu5ObmSAtFgBcqHu26Xhq8kBK7JF1Fl2gU4XXKiIAq0FX2HEh14VRx9FTm1q9Chk0k8nV7IAn/ReYRcU53x2PvzdnNCpJMlT8VKhodDxUlJDVHjuXeJpQhuSJE+l5+Q1K0IXQLNO3nPvEjeSWleHpJfesc47PqomZIGc8+PKvUtcF30AnJMJ/Z1vm44M5wD0ibQV0lv+T7Q74yvZsiI/LYlu247XaC4Lvpk1I3bbhsgXuYX2L33Vd2V1HBE7pYxe6Y3cuZ513hacauw3vJwxz9VlTi+HZYMf0lvgek5BnqpPL5TRswgXwI6yWtc3Z+8GgUuRlFIR4Y+d4whfLg5/8Qdiiv8HlTJ+cwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wNy0yN1QwOTo0OTo1NCswMjowMH0+KmoAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDctMjdUMDk6NDk6NTQrMDI6MDAMY5LWAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg=="
-                                    alt="download-icon">
-                              </a>
+<!--                              <a data-toggle="tooltip" :title="$t('Download Attachment(s)')" :href="post.path"-->
+<!--                                 :download="post.filename"-->
+<!--                                 class="salesorder-list-download-post" target="_blank" @click="downloadPost">-->
+<!--                                 <img-->
+<!--                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfiBxsJMTakVrUDAAACmElEQVRo3u2XP0gcQRSHf3ucFtHocRAklgYLwSDiJUUUJJWlWGrANJJChFiksRCChVWaoGAlGCHBQkvBSruAeiBiKRY2UQRFToyQ03wp9p2sxjPn/jkN7CsWdmb2fd/ODjNvpTj+7yBJ8j7xreyxR+v9CUwAMBEkRyKQwWPP9V4EQohYIBaIBWKBWCAWiAVigYcuQIph2v0mp51hUoH8mAdgrEjvDAAzRXrHAJgPNAOqlSSNMn23+p8k0xr1ZPA9Ay0c4MYiVaXOAFUs2lMHtAQSkGhkx5Kt8qQUAZ6wak/s0BgQL0nUkbWE2zT8S4AGtm10lroQ8JJENUuWdJ+22wRoY99GLlEdEl6SSBoMTugqJkAXJzZqJoKfVsYteZ7+mwToJ28jxkOHG2KQC0OMXBdgxHouGIwIL0n0cGagSRIFARJMWusZPRHiJYkOjgy2wBwAcyxYyxEdEeMliSZ2Dfjbc4VdmsqAlyTq2eR6bFJfJrwkUcvyFfwywfZ8HwqVTF1+gikq/eZxAkk812tJK85WkCRpBkI5Mu5ObmSAtFgBcqHu26Xhq8kBK7JF1Fl2gU4XXKiIAq0FX2HEh14VRx9FTm1q9Chk0k8nV7IAn/ReYRcU53x2PvzdnNCpJMlT8VKhodDxUlJDVHjuXeJpQhuSJE+l5+Q1K0IXQLNO3nPvEjeSWleHpJfesc47PqomZIGc8+PKvUtcF30AnJMJ/Z1vm44M5wD0ibQV0lv+T7Q74yvZsiI/LYlu247XaC4Lvpk1I3bbhsgXuYX2L33Vd2V1HBE7pYxe6Y3cuZ513hacauw3vJwxz9VlTi+HZYMf0lvgek5BnqpPL5TRswgXwI6yWtc3Z+8GgUuRlFIR4Y+d4whfLg5/8Qdiiv8HlTJ+cwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wNy0yN1QwOTo0OTo1NCswMjowMH0+KmoAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDctMjdUMDk6NDk6NTQrMDI6MDAMY5LWAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg=="-->
+<!--                                    alt="download-icon">-->
+<!--                              </a>-->
                            </div>
                            <div class="d-flex mt-2" v-if="getOrderShoutoutStatus(order)===OrderStatus.SHOUTOUT.CREATED">
                               <button class="btn btn-primary btn-grad-effect btn-md  w-100"
@@ -226,6 +226,10 @@
    const moment = require('moment')
    const fileDownload = require('js-file-download')
    const OrderClass = {SHOUTOUT: {}, PAYMENT: {}}
+   import VueViewer from 'v-viewer'
+   import Vue from 'vue'
+   import 'viewerjs/dist/viewer.css'
+   Vue.use(VueViewer)
    window.toastr = require('toastr')
    OrderClass.SHOUTOUT[OrderStatus.SHOUTOUT.NOT_CREATED] = 'default'
    OrderClass.SHOUTOUT[OrderStatus.SHOUTOUT.CREATED] = 'primary'

@@ -100,6 +100,9 @@ export default {
       defaultPagesToDisplay: 5
     };
   },
+  mounted() {
+    window.vuetemp= this
+  },
   methods: {
     range(min, max) {
       let arr = [];

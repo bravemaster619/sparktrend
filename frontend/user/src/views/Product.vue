@@ -4,7 +4,7 @@
          <div class="row vid-parent">
             <loading
                :active="loading"
-               :is-full-page="true"
+               :is-full-page="false"
                loader="dots"
                color="#5e72e4"
             ></loading>
@@ -54,7 +54,7 @@
                   </div>
                   <div class="col-12 product-detail-body">
                      <p v-if="instaaccount.total_shoutout">{{$t("Shoutout completed: ")}}
-                        {{$t("shoutout_history", [instaaccount.total_shoutout, instaaccount.completed_shoutout])}}</p>
+                        {{$t("shoutout_history", [$n(instaaccount.total_shoutout), $n(instaaccount.completed_shoutout)])}}</p>
                      <p v-else>{{$t("Has not completed a shoutout yet.")}}</p>
                      <pre>{{instaaccount.product.description}}</pre>
                   </div>
@@ -209,7 +209,6 @@
    import flatPicker from "vue-flatpickr-component";
    import "flatpickr/dist/flatpickr.css";
    import StarRating from 'vue-star-rating'
-
    window.toastr = require('toastr')
    const moment = require('moment')
    Vue.use(VueToastr2);
@@ -252,6 +251,34 @@
          }
       },
       methods: {
+         $n: function(num, defaultValue = undefined, allowNegative = false) {
+            if (!num) {
+               num = 0;
+            }
+            num = Number(num)
+            if (isNaN(num)) {
+               if (defaultValue === undefined) {
+                  throw new Error('Given argument is NaN')
+               } else {
+                  return defaultValue
+               }
+            }
+            if (num === Infinity) {
+               if (defaultValue === undefined) {
+                  throw new Error('Given argument is infinity')
+               } else {
+                  return defaultValue
+               }
+            }
+            if (!allowNegative && num < 0) {
+               if (defaultValue === undefined) {
+                  throw new Error('Given argument is negative')
+               } else {
+                  return defaultValue
+               }
+            }
+            return num
+         },
          getChartData: function (category) {
             let data = this.instaaccount.demographics[category]
             let chartData = {

@@ -21,12 +21,19 @@ import router from './router'
 import './registerServiceWorker'
 import ArgonDashboard from './plugins/argon-dashboard'
 import VueNoty from 'vuejs-noty'
+import VueSweetalert2 from "vue-sweetalert2"
 import 'vuejs-noty/dist/vuejs-noty.css'
-
+import 'vue-loading-overlay/dist/vue-loading.css'
+import 'sweetalert2/dist/sweetalert2.min.css'
 Vue.config.productionTip = false
 
 Vue.use(ArgonDashboard)
-Vue.use(VueNoty)
+Vue.use(VueNoty, {
+  timeout: 3000,
+  progressBar: true
+})
+Vue.use(VueSweetalert2)
+Vue.use(require('vue-moment'))
 
 new Vue({
   router,

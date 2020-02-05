@@ -6,7 +6,7 @@
                   :show-toggle-button="false"
                   expand>
             <router-link slot="brand" class="navbar-brand" to="/">
-                <img src="img/brand/logo.png"/>
+                <img src="/img/brand/logo.png"/>
             </router-link>
 
             <template v-slot="{closeMenu}">
@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <router-link to="/">
-                                <img src="img/brand/logo.png">
+                                <img src="/img/brand/logo.png">
                             </router-link>
                         </div>
                         <div class="col-6 collapse-close">

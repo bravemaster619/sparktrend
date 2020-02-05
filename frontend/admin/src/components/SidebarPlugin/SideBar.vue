@@ -27,7 +27,7 @@
                         <a slot="title" class="nav-link" href="#" role="button">
                             <div class="media align-items-center">
                               <span class="avatar avatar-sm rounded-circle">
-                                <img alt="Image placeholder" src="img/theme/team-1-800x800.jpg">
+                                <img alt="Image placeholder" src="/img/theme/team-1-800x800.jpg">
                               </span>
                             </div>
                         </a>
@@ -79,31 +79,6 @@
                     <slot name="links">
                     </slot>
                 </ul>
-                <!--Divider-->
-                <hr class="my-3">
-                <!--Heading-->
-                <h6 class="navbar-heading text-muted">Documentation</h6>
-                <!--Navigation-->
-                <ul class="navbar-nav mb-md-3">
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="https://demos.creative-tim.com/vue-argon-dashboard/documentation">
-                            <i class="ni ni-spaceship"></i> Getting started
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="https://demos.creative-tim.com/vue-argon-dashboard/documentation/foundation/colors.html">
-                            <i class="ni ni-palette"></i> Foundation
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="https://demos.creative-tim.com/vue-argon-dashboard/documentation/components/alerts.html">
-                            <i class="ni ni-ui-04"></i> Components
-                        </a>
-                    </li>
-                </ul>
             </div>
             </div>
     </nav>
@@ -119,7 +94,7 @@
     props: {
       logo: {
         type: String,
-        default: 'img/brand/logo.png',
+        default: '/img/brand/logo.png',
         description: 'Sidebar app logo'
       },
       autoClose: {

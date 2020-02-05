@@ -14,12 +14,8 @@
           }"
         />
         <sidebar-item :link="{name: 'Users', icon: 'ni ni-circle-08 text-red', path: '/users'}"/>
-        <sidebar-item :link="{name: 'Icons', icon: 'ni ni-planet text-blue', path: '/icons'}"/>
-        <sidebar-item :link="{name: 'Maps', icon: 'ni ni-pin-3 text-orange', path: '/maps'}"/>
-        <sidebar-item :link="{name: 'User Profile', icon: 'ni ni-single-02 text-yellow', path: '/profile'}"/>
-
-        <sidebar-item :link="{name: 'Login', icon: 'ni ni-key-25 text-info', path: '/login'}"/>
-        <sidebar-item :link="{name: 'Register', icon: 'ni ni-circle-08 text-pink', path: '/register'}"/>
+        <sidebar-item :link="{name: 'Products', icon: 'ni ni-cart text-blue', path: '/products'}"/>
+        <sidebar-item :link="{name: 'Settings', icon: 'ni ni-settings text-green', path: '/settings'}"/>
 
       </template>
     </side-bar>

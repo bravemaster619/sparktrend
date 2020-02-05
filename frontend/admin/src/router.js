@@ -26,25 +26,20 @@ export const router = new Router({
           name: 'users',
           component: () => import(/* webpackChunkName: "demo" */ './views/Users.vue')
         },
-        // {
-        //   path: '/users',
-        //   name: 'users',
-        //   component: () => import('./views/')
-        // },
         {
-          path: '/icons',
-          name: 'icons',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Icons.vue')
+          path: '/products',
+          name: 'products',
+          component: () => import(/* webpackChunkName: "demo" */ './views/Products.vue')
         },
         {
-          path: '/profile',
-          name: 'profile',
-          component: () => import(/* webpackChunkName: "demo" */ './views/UserProfile.vue')
+          path: '/products/:id',
+          name: 'edit product',
+          component: () => import('./views/EditProduct.vue')
         },
         {
-          path: '/maps',
-          name: 'maps',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Maps.vue')
+          path: '/settings',
+          name: 'settings',
+          component: () => import(/* webpackChunkName: "demo" */ './views/Settings.vue')
         },
 
       ]

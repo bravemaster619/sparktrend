@@ -62,7 +62,7 @@
       <div class="container-fluid mt--7">
          <div class="row">
             <div class="col">
-               <users-table title="Users"></users-table>
+               <products-table title="Products"></products-table>
             </div>
          </div>
       </div>
@@ -70,11 +70,11 @@
    </div>
 </template>
 <script>
-   import UsersTable from './Tables/UsersTable'
+   import ProductsTable from './Tables/ProductsTable'
    export default {
-      name: 'users',
+      name: 'products',
       components: {
-         UsersTable
+         ProductsTable
       }
    };
 </script>
