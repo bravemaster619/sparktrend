@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="d-inline">{{$t("My Accounts")}}</h5>
+            <h5 class="d-inline">{{$t("My Products")}}</h5>
             <RouterLink class="btn button-primary btn-grad-effect" to="/addproduct">{{$t("Add Account")}}</RouterLink>
         </div>
         <div class="row vld-parent px-3">

@@ -37,6 +37,21 @@ export const router = new Router({
           component: () => import('./views/EditProduct.vue')
         },
         {
+          path: '/users/:id',
+          name: 'edit user',
+          component: () => import('./views/EditUser.vue')
+        },
+        {
+          path: '/orders',
+          name: 'orders',
+          component: () => import('./views/Orders.vue')
+        },
+        {
+          path: '/orders/:id',
+          name: 'edit orders',
+          component: () => import('./views/EditOrder.vue')
+        },
+        {
           path: '/settings',
           name: 'settings',
           component: () => import(/* webpackChunkName: "demo" */ './views/Settings.vue')

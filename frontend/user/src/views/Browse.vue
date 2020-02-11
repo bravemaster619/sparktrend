@@ -99,6 +99,7 @@
                                 <input class="form-control"
                                        :placeholder="$t('Search for instagram username here...')"
                                        v-model="filter.username"
+                                       v-debounce:300ms.lock="showSearchHints"
                                        type="text">
                                 <div class="input-group-append">
                                         <span class="input-group-text p-0" @click="showResult">
@@ -107,6 +108,10 @@
                                 </div>
                             </div>
                         </div>
+                        <search-hint
+                           v-if="searchHints.length"
+                           :hints="searchHints"
+                        />
                     </div>
                 </div>
             </div>
@@ -154,6 +159,10 @@
    import httpService from '../services/http.service'
    import Loading from 'vue-loading-overlay'
    import 'vue-loading-overlay/dist/vue-loading.css';
+   import Vue from 'vue'
+   import vueDebounce from 'vue-debounce'
+   import SearchHint from "./components/SearchHints";
+   Vue.use(vueDebounce)
 
    const defaultState = {
       UsdCircle,
@@ -170,7 +179,7 @@
          gender_selected: 'All',
          country_selected: [],
          username: '',
-      }
+      },
    }
    export default {
       name: 'browse',
@@ -197,10 +206,11 @@
                },
                gender_selected: ['All', 'Male', 'Female'].includes(this.$route.query.g) ? this.$route.query.g : 'All',
                country_selected: this.$route.query.c ? this.$route.query.c.split(":") : [],
-            }
+            },
+             searchHints: []
          }
       },
-      components: { ProductItem, Loading },
+      components: {SearchHint, ProductItem, Loading },
       computed: {
          canShowFilter() {
             return !this.isMd || this.showMdFilters;
@@ -274,13 +284,28 @@
          },
          onPageNavigate(pageNum) {
             location.href = this.$route.path + this.queryBuilder
+         },
+         showSearchHints() {
+             if(this.filter.username) {
+                 httpService.get(`/instaaccounts` + this.queryBuilder).then((res) => {
+                     if(res.data.data && res.data.data.length) {
+                         this.searchHints = res.data.data.slice(0,5)
+                     } else {
+                         this.searchHints = []
+                     }
+                 }).catch(e => {
+                     this.searchHints = []
+                 })
+             } else {
+                 this.searchHints = []
+             }
+
          }
       },
       created() {
          window.addEventListener('resize', this.onResize)
       },
       mounted() {
-         window.vuetemp = this
          if (this.$route.query.n) {
             const qn = this.$route.query.n.split(":")
             this.niches.forEach(niche => {

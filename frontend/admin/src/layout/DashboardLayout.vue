@@ -13,9 +13,10 @@
             path: '/dashboard'
           }"
         />
-        <sidebar-item :link="{name: 'Users', icon: 'ni ni-circle-08 text-red', path: '/users'}"/>
+        <sidebar-item :link="{name: 'Users', icon: 'ni ni-circle-08 text-green', path: '/users'}"/>
         <sidebar-item :link="{name: 'Products', icon: 'ni ni-cart text-blue', path: '/products'}"/>
-        <sidebar-item :link="{name: 'Settings', icon: 'ni ni-settings text-green', path: '/settings'}"/>
+        <sidebar-item :link="{name: 'Orders', icon: 'ni ni-tag text-red', path: '/orders'}"/>
+        <sidebar-item :link="{name: 'Settings', icon: 'ni ni-settings text-default', path: '/settings'}"/>
 
       </template>
     </side-bar>

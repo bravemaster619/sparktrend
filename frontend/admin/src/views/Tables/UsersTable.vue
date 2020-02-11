@@ -26,8 +26,8 @@
                      v-if="tableData.length > 0">
             <template slot="columns">
                <th>Name</th>
+               <th>Products</th>
                <th>Email</th>
-               <th>Type</th>
                <th>Since</th>
                <th>Paypal Email</th>
                <th>Status</th>
@@ -37,15 +37,21 @@
                <th scope="row">
                   <div class="media align-items-center">
                      <div class="media-body">
-                        <span class="name mb-0 text-sm">{{row.name}}</span>
+                        <router-link :to="`/users/${row._id}`" class="name mb-0 text-sm">{{row.name}}</router-link>
                      </div>
                   </div>
                </th>
+               <td>
+                  <template>
+                     <div>
+                        <router-link v-for="(instaaccount, index) in row.instaaccounts.slice(0,3)" :key="index" :to="`/products/${instaaccount._id}`">
+                           <img :src="instaaccount.profile_img" height="36" :alt="`${instaaccount.username}`" class="img-circle mr-1">
+                        </router-link>
+                     </div>
+                  </template>
+               </td>
                <td class="budget">
                   {{row.email}}
-               </td>
-               <td>
-                  {{row.type}}
                </td>
                <td>
                   <badge class="badge-dot mr-4">
@@ -70,9 +76,9 @@
                      </a>
 
                      <template>
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" :href="`/users/${row._id}`">Edit</a>
+                        <a class="dropdown-item" href="#">Message</a>
+                        <a class="dropdown-item" href="#">Delete</a>
                      </template>
                   </base-dropdown>
                </td>

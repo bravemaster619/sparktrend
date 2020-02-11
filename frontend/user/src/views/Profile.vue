@@ -62,7 +62,11 @@
                type="text"
                readonly>
             </base-input>
-            <button type="button" class="btn btn-primary w-100 mt-3">{{$t("Update Profile")}}</button>
+            <template>
+               <button type="button" class="btn btn-primary w-100 mt-3" v-if="saving" disabled>{{$t("Updating...")}}</button>
+               <button type="button" class="btn btn-primary w-100 mt-3" v-else @click="saveProfile">{{$t("Update Profile")}}</button>
+            </template>
+            <button type="button" class="btn btn-default w-100 mt-3" @click="historyBack">{{$t("Back")}}</button>
          </form>
       </div>
 
@@ -80,6 +84,7 @@
       data() {
          return {
             loading: true,
+            saving: false,
             user: null,
             requestSending: false,
             genders: [
@@ -421,6 +426,9 @@
          }
       },
       methods: {
+         historyBack: function() {
+           window.history.back()
+         },
          updateData: function () {
             this.loading = true
             httpService.get('/auth/me').then(res => {
@@ -439,6 +447,25 @@
                this.$toastr.error(this.$t('error.default'))
             }).finally(() => {
                this.requestSending = false
+            })
+         },
+         saveProfile: function() {
+            this.$swal({
+               title: this.$t("Are you sure?"),
+               showCancelButton: true
+            }).then(result => {
+               if (!result.value) {
+                  return
+               }
+               this.saving = true
+               httpService.put(`/users/${this.user._id}`, this.user).then(res => {
+                  this.user = res.data.data
+                  this.$toastr.success(this.$t("Updated successfully!"))
+               }).catch(e => {
+                  this.$toastr.error(this.$t('error.default'))
+               }).finally(() => {
+                  this.saving = false
+               })
             })
          }
       },

@@ -25,47 +25,42 @@
                      :data="tableData"
                      v-if="tableData.length > 0">
             <template slot="columns">
-               <th>Instagram Account</th>
-               <th>User's Name</th>
+               <th>Buyer</th>
+                 <th>Product</th>
                <th>Price</th>
-               <th>Since</th>
-               <th>Shoutouts</th>
+               <th>Category</th>
+               <th>Time</th>
+               <th>Order Date</th>
+               <th>Start Date</th>
                <th>Status</th>
                <th></th>
             </template>
             <template slot-scope="{row}">
-               <th scope="row">
-                  <div class="media align-items-center">
-                     <a :href="`https://instagram.com/${row.username}`" class="avatar rounded-circle mr-3">
-                        <img :alt="`${row.username} profile image`" :src="row.profile_img"/>
-                     </a>
-                     <div class="media-body">
-                        <router-link :to="`/products/${row._id}`" class="name mb-0 text-sm">{{row.username}}</router-link>
-                     </div>
-                  </div>
-               </th>
-               <td class="budget">
-                  {{ row.user ? row.user.name : 'User not found' }}
+               <td>
+                  <router-link :to="`/users/${row.buyer_id}`">{{row.buyer_name}}</router-link>
                </td>
                <td>
-                  {{priceRange(row)}}
+                  <router-link :to="`/products/${row.insta_id}`">@{{row.seller_name}}</router-link>
                </td>
                <td>
-                  <badge class="badge-dot mr-4">
-                     {{moment(row.created_at).format("YYYY-MM-DD")}}
-                  </badge>
+                  $ {{row.total}}
+               </td>
+               <td>
+                  {{row.category}}
+               </td>
+               <td>
+                  {{row.time}}
+               </td>
+               <td>
+                  {{moment(row.created_at).format("YYYY-MM-DD HH:mm")}}
                </td>
 
                <td>
-                  <div class="d-flex align-items-center">
-                     {{ shoutOutHistory(row) }}
-                  </div>
+                  {{moment(row.start_from).format("YYYY-MM-DD")}}
                </td>
                <td class="text-uppercase">
-                  <span class="badge badge-info mr-2" v-if="row.verified">Verified</span>
-                  <span class="badge badge-danger mr-2" v-else>Unverified</span>
-                  <span class="badge badge-success" v-if="row.allowed">Allowed</span>
-                  <span class="badge badge-warning" v-else>Waiting</span>
+                  <span class="badge mr-2" :class="`badge-${paymentStatusClasses[getPaymentStatus(row)]}`">{{getPaymentStatus(row)}}</span>
+                  <span class="badge" :class="`badge-${shoutoutStatusClasses[getOrderStatus(row)]}`">{{getOrderStatus(row)}}</span>
                </td>
                <td class="text-right">
                   <base-dropdown class="dropdown"
@@ -76,7 +71,7 @@
                      </a>
 
                      <template>
-                        <router-link class="dropdown-item" :to="`/products/${row._id}`">Edit</router-link>
+                        <router-link class="dropdown-item" :to="`/orders/${row._id}`">View</router-link>
                         <a class="dropdown-item" href="#">Delete</a>
                      </template>
                   </base-dropdown>
@@ -110,7 +105,7 @@
    import moment from 'moment'
 
    export default {
-      name: 'products-table',
+      name: 'orders-table',
       props: {
          type: {
             type: String
@@ -126,7 +121,20 @@
             loading: true,
             total: 0,
             perPage: 10,
-            currentPage: 1
+            currentPage: 1,
+            paymentStatusClasses: {
+               paid: 'success',
+               'not paid': 'default',
+               refunded: 'danger'
+            },
+            shoutoutStatusClasses: {
+               request: 'default',
+               accepted: 'info',
+               started: 'primary',
+               completed: 'success',
+               expired: 'danger',
+               rejected: 'danger'
+            }
          }
       },
       mounted() {
@@ -138,12 +146,12 @@
       methods: {
          moment,
          updateData: function (page = 1) {
-            return httpService.get(`instaaccounts/adminlist?page==${page}`).then(res => {
+            return httpService.get(`orders?page=${page}`).then(res => {
                this.tableData = res.data.data
                this.total = res.data.meta.total
             }).catch(e => {
                window.console.error(e)
-               this.$noty.error("Cannot get products data")
+               this.$noty.error("Cannot get orders data")
             })
          },
          onPageChange: function(page) {
@@ -153,40 +161,29 @@
                this.currentPage = page
             })
          },
-         priceRange: function(instaaccount) {
-            if (!instaaccount || !instaaccount.product || !instaaccount.product.categories || !instaaccount.product.categories.length) {
-               return "N/A"
+         getPaymentStatus: function(order) {
+            if(order.history.paid_at) {
+               return 'paid'
             }
-            let firstPricing = instaaccount.product.categories[0].pricing
-            if (!firstPricing || !firstPricing.length) {
-               return "N/A"
+            if(order.history.refunded_at) {
+               return 'refunded'
             }
-            let minPrice = firstPricing[0].price
-            let maxPrice = firstPricing[0].price + firstPricing[0].bio_price
-            instaaccount.product.categories.forEach(c => {
-               if (c.pricing) {
-                  c.pricing.forEach(p => {
-                     if (p.price < minPrice) {
-                        minPrice = p.price
-                     }
-                     if (p.price + p.bio_price > maxPrice) {
-                        maxPrice = p.price + p.bio_price
-                     }
-                  })
-               }
-            })
-            return `$${minPrice} ~ $${maxPrice}`
+            return 'not paid'
          },
-         shoutOutHistory: function(instaaccount) {
-            let total = 0
-            let completed = 0
-            if (instaaccount.total_shoutout) {
-               total = parseInt(instaaccount.total_shoutout)
+         getOrderStatus: function(order) {
+            if(order.history.accepted_at) {
+               return 'accepted'
             }
-            if (instaaccount.completed_shoutout) {
-               completed = parseInt(instaaccount.completed_shoutout)
+            if(order.history.started_at) {
+               return 'started'
             }
-            return `${total} / ${completed}`
+            if(order.history.expired_at) {
+               return 'expired'
+            }
+            if(order.history.completed_at) {
+               return 'completed'
+            }
+            return 'request'
          }
       },
       computed: {

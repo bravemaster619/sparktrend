@@ -59,6 +59,24 @@ export const router = new Router({
          }
       },
       {
+         path: '/buyerguide',
+         name: 'buyerguide',
+         components: {
+            header: AppHeader,
+            default: BuyerGuide,
+            footer: AppFooter
+         }
+      },
+      {
+         path: '/sellerguide',
+         name: 'sellerguide',
+         components: {
+            header: AppHeader,
+            default: SellerGuide,
+            footer: AppFooter
+         }
+      },
+      {
          path: '/',
          name: 'main',
          components: {
@@ -135,16 +153,7 @@ export const router = new Router({
                name: 'policy',
                component: PrivacyPolicy
             },
-            {
-               path: '/buyerguide',
-               name: 'buyerguide',
-               component: BuyerGuide
-            },
-            {
-               path: '/sellerguide',
-               name: 'sellerguide',
-               component: SellerGuide
-            },
+
             {
                path: '/addproduct',
                name: 'addproduct',
@@ -190,7 +199,6 @@ export const router = new Router({
             }
          ]
       },
-
    ],
    scrollBehavior: to => {
       if (to.hash) {

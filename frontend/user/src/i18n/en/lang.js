@@ -160,6 +160,21 @@ const en = {
    "Paypal E-mail (optional)": "Paypal E-mail (optional)",
    "Referral Code (optional)": "Referral Code (optional)",
    "unique validation failed on email": "That email is already in use. Please use another one.",
+   "Please enter an instagram account": "Please enter an instagram account",
+   "Next": "Next",
+   "Start selling shoutouts at Sparktrend": "Start selling shoutouts at Sparktrend",
+   "Start buying shoutouts at Sparktrend": "Start buying shoutouts at Sparktrend",
+   "Sign up Now!": "Sign up Now!",
+   "Pay": "Pay",
+   "How it Works": "How it Works",
+   "For Buyers": "For Buyers",
+   "For Sellers": "For Sellers",
+   "Rating": "Rating",
+   "Niches": "Niches",
+   "Schedule": "Schedule",
+   "Username": "Username",
+   "PayPal E-mail (optional)": "PayPal E-mail (optional)",
+
    home: {
       main_legend: "Sparktrend is an online marketplace to buy and sell Instagram shoutouts.",
       targeted_influencers_desc: "We group subscribed influencers based on their overall insights, such as the top country location of their audience, age range, gender, active followers time and niche in order to make sure that buyers find the right influencers for their brands.",
@@ -213,8 +228,6 @@ const en = {
    error: {
       default: "Oops! Something is wrong. Please try again later..."
    },
-
-
    instaaccount: {
       status: {
          verified: 'Verified',
@@ -235,6 +248,33 @@ const en = {
       success: {
          insights_uploaded: "Insight picture uploaded",
          product_saved: "Product saved"
+      }
+   },
+   guide: {
+      seller: {
+         one: "Add your account by going to Dashboard > My Products > Add Account.",
+         two: "Input your Instagram Username and press Check Instagram (you need to have at least 10K followers and must be a business account). Afterward, click next.",
+         three: "To have your Instagram account confirmed and ready to sell, put the unique code on your Instagram bio and then press verify.",
+         four: "Upload screenshots of your insights (gender, age range, top country location and active time). You may skip this if you have just turned on your business profile because it might take a week to get the insights. Note that if you don’t have insights yet, we can’t confirm you as a verified seller which means you have to wait to sell at Sparktrend yet.",
+         five: "Afterwards, fill out details of your product and set the price for all the types of shoutout you want to sell and then click Add Product.",
+         six: "Now that you're all set, your product has been created. Please wait for our Executive Admin to verify your product in 24 hours. Afterward, you will be able to share your products and wait for someone to buy it.",
+         seven: {
+            q: "I make a sales! Someone just purchases one of my products! What should I do?",
+            a: "Simply go to order, and go to Dashboard > My Sales and go to request section. You can choose whether you want to accept or reject. You have 36 hours to take action before the request is automatically rejected by the system."
+         },
+         eight: {
+            q: "I make a sales! Someone just purchases one of my products! What should I do?",
+            a: "If you accept the request, the shout will be moved to accepted, and you can proceed to post the promotions when the posting time come."
+         },
+         nine: "After the posting time comes, download the picture and caption, and then post it, and please be sure to include unique code for the caption. After you post it, click on the start button. After the post time is fulfilled, you can click on submit button and it’s done."
+      },
+      buyer: {
+         one: "Go to [Browse] and select which shout you want to buy.",
+         two: "Once you've selected, you can also decide what kind of shout and when is the best time for the shout. Click [Buy Now] to proceed.",
+         three: "Upload the image you want to be 'shout' and specify the date, caption as well as additional information. And click [Order Shoutout].",
+         four: "To check the status of you post, go to orders in the [Purchased Shouts] tab",
+         five: "You will be redirected to transaction review, once you make sure it's correct, you can process the payment via paypal.",
+         six: "To check the status of your post, go to dashboard in the Dashboard > My Purchases tab."
       }
    }
 }

@@ -108,7 +108,16 @@ class OrdersController extends BaseController{
     let countQueryBuilder = Order.query(decodeQuery().countQuery)
     let whereQuery = {}
     if (user.role === "admin") {
-      // TODO: add some query to whereQuery
+      const pageLength = 20
+      let page = $n(request.input("page"))
+      if (page < 1) {
+        page = 1
+      }
+      const skip = (page - 1) * pageLength
+      documentQueryBuilder = documentQueryBuilder.where(whereQuery).skip(skip).limit(pageLength)
+      orders = await documentQueryBuilder.fetch()
+      total = await countQueryBuilder.count()
+      return response.apiCollection(orders, { total })
     } else if (user.role === "user") {
       whereQuery = { $or: [{ buyer_id: user._id }, { seller_id: user._id }] }
       switch(orderType) {

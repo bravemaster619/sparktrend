@@ -8,7 +8,7 @@ const User = use('App/Models/User')
 // const Validator = use('Validator')
 const UnAuthorizeException = use('App/Exceptions/UnAuthorizeException')
 // const Config = use('Config')
-const { $n } = require('../../../Helpers')
+const { $n, $b } = require('../../../Helpers')
 /**
  *
  * @class UsersController
@@ -29,18 +29,11 @@ class UsersController extends BaseController {
     }
     const parsedQuery = this.buildAdminUserQuery(request)
     const users = await User.query()
+      .with('instaaccounts')
       .where(parsedQuery.where)
       .skip(parsedQuery.skip)
       .limit(parsedQuery.limit)
       .fetch()
-    for (let user of users.rows) {
-      let instaaccountCount = await user.instaaccounts().count()
-      if (instaaccountCount) {
-        user.type = 'seller'
-      } else {
-        user.type = 'buyer'
-      }
-    }
     const total = await User.query()
       .where(parsedQuery.where)
       .count()
@@ -98,13 +91,18 @@ class UsersController extends BaseController {
    * @param {Request} ctx.request
    */
   async update ({ request, response, params, instance, auth }) {
-    const user = instance
-    if (String(auth.user._id) !== String(user._id)) {
+    const user = auth.user
+    if (instance._id.toString() !== user._id.toString() && user.role !== 'admin') {
       throw UnAuthorizeException.invoke()
     }
-    user.merge(request.only(['name', 'locale']))
-    await user.save()
-    return response.apiUpdated(user)
+    let userData = ['name', 'locale', 'paypal_email', 'gender', 'country']
+    if(user.role === 'admin') {
+      userData = [...userData, 'email', 'verified']
+    }
+    instance.merge(request.only(userData))
+    instance.verified = $b(instance.verified)
+    await instance.save()
+    return response.apiUpdated(instance)
   }
 
   /**

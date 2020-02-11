@@ -8,8 +8,8 @@
             :is-full-page="false"
             loader="dots"
             color="#5e72e4"/>
-         <div class="row" v-if="config">
-            <div class="col-12">
+         <div class="row justify-content-center" v-if="config">
+            <div class="col-12 col-lg-10">
                <div class="card-wapper">
                   <div class="card shadow bg-secondary">
                      <div class="card-header">

@@ -49,12 +49,12 @@
                         <li class="mb-2">
                             <router-link class="btn-link text-primary" to="/browse">{{$t("Browse")}}</router-link>
                         </li>
-                        <li class="mb-2">
-                            <router-link class="btn-link text-primary" to="/invite">{{$t("Refer a Friend")}}</router-link>
-                        </li>
-                        <li class="mb-2">
-                            <router-link class="btn-link text-primary" to="/affiliate">{{$t("Affiliate")}}</router-link>
-                        </li>
+<!--                        <li class="mb-2">-->
+<!--                            <router-link class="btn-link text-primary" to="/invite">{{$t("Refer a Friend")}}</router-link>-->
+<!--                        </li>-->
+<!--                        <li class="mb-2">-->
+<!--                            <router-link class="btn-link text-primary" to="/affiliate">{{$t("Affiliate")}}</router-link>-->
+<!--                        </li>-->
                     </ul>
                 </div>
             </div>

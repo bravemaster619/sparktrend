@@ -9,7 +9,7 @@ class UpdateUser extends BaseValidator {
       name: 'min:2|max:100',
       email: `email|unique:users,email,_id,${userId}`,
       country: 'required|min:3|max:100',
-      gender: 'required|in:0,1',
+      gender: 'required|in:male,female',
       paypal_email: 'min:3|max:255',
       locale: 'in:en,ar'
     }

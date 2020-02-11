@@ -1184,3 +1184,74 @@ form.form-verifyproduct{
 .cursor-pointer {
   cursor: pointer;
 }
+.search-hint {
+  position: absolute;
+  margin-top: -1rem;
+  z-index: 99;
+  background: #fefefe;
+  border: 1px solid #e7e7e7;
+  border-top: 0;
+  display: block;
+  width: calc(100% - 30px);
+
+  .search-hint-item {
+    font-size: 0.875rem;
+    color: rgba(0,0,0,0.7);
+
+    &:hover {
+      background-color: rgba(0,0,0,0.1);
+    }
+    img {
+      height: 64px;
+    }
+
+  }
+}
+.guide-page {
+  margin-top: 96px;
+  align-items: center;
+  font-size: 1.125rem;
+  p {
+    font-size: 1.125rem;
+  }
+  .py-72 {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+  h1 {
+    font-size: 1.75rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  .text-italy {
+    font-style: italic;
+  }
+  .bg-primary-light {
+    background-color: #ced4ff;
+  }
+  .h-33vh {
+    height: 33vh;
+  }
+  .h-50vh {
+    height: 50vh;
+  }
+  @for $i from 1 through 10 {
+    .step-#{$i} {
+      padding-left: 64px;
+      &:before {
+        content: '#{$i}';
+        color: #5e72e4;
+        font-size: 5rem;
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        text-align: left;
+        line-height: 4rem;
+        font-weight: 700;
+      }
+    }
+  }
+
+}

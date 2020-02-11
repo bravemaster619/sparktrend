@@ -54,7 +54,8 @@
                   </div>
                   <div class="col-12 product-detail-body">
                      <p v-if="instaaccount.total_shoutout">{{$t("Shoutout completed: ")}}
-                        {{$t("shoutout_history", [$n(instaaccount.total_shoutout), $n(instaaccount.completed_shoutout)])}}</p>
+                        {{$t("shoutout_history", [$num(instaaccount.total_shoutout),
+                        $num(instaaccount.completed_shoutout)])}}</p>
                      <p v-else>{{$t("Has not completed a shoutout yet.")}}</p>
                      <pre>{{instaaccount.product.description}}</pre>
                   </div>
@@ -251,7 +252,7 @@
          }
       },
       methods: {
-         $n: function(num, defaultValue = undefined, allowNegative = false) {
+         $num: function(num, defaultValue = undefined, allowNegative = false) {
             if (!num) {
                num = 0;
             }
