@@ -134,7 +134,7 @@
                                  <input type="text" class="form-control" readonly :value="order.bio_url">
                               </div>
                               <div class="w-100 flex-1" v-if="!isEmpty(order.swipe_up_url)">
-                                 <div class="salesorder-list-date mt-4">Story URL</div>
+                                 <div class="salesorder-list-date mt-4">Swipe up URL</div>
                                  <input type="text" class="form-control" readonly :value="order.swipe_up_url">
                               </div>
                               <div class="my-4">

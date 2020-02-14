@@ -43,3 +43,8 @@ export const $b = (val) => {
 export const historyBack = function() {
    window.history.back()
 }
+
+export const numberFormat = function(num, locale="en-US") {
+   const numberFormatter = new Intl.NumberFormat(locale)
+   return numberFormatter.format(num)
+}

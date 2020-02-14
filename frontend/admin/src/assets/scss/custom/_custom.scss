@@ -16,3 +16,26 @@
 .img-circle {
   border-radius: 100%;
 }
+@media (min-width: 768px) {
+  .border-sm-top {
+    border-top: none;
+  }
+  .border-md-left {
+    border-left: 1px solid #dee2e6;
+  }
+}
+
+@media (max-width: 768px) {
+  .border-sm-top {
+    border-top: 1px solid #dee2e6;
+  }
+  .border-md-left {
+    border-left: none;
+  }
+}
+.post-image {
+  max-height: 192px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+}

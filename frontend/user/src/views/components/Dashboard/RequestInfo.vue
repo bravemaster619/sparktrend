@@ -67,7 +67,7 @@
                             <input type="text" class="form-control" readonly v-model="item.bio_url">
                         </div>
                         <div class="w-100 flex-1" v-if="!isEmpty(item.story_url)">
-                            <div class="salesorder-list-date mt-4">Story URL</div>
+                            <div class="salesorder-list-date mt-4">Swipe up URL</div>
                             <input type="text" class="form-control" readonly v-model="item.story_url">
                         </div>
                         <div class="my-4">
