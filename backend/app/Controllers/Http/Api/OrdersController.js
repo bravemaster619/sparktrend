@@ -155,7 +155,32 @@ class OrdersController extends BaseController{
     if (user.role !== "admin" && user._id.toString() !== instance.buyer_id.toString() && user._id.toString() !== instance.seller_id.toString()) {
       throw UnAuthorizeException.invoke()
     }
-    return response.apiItem(instance)
+    if (user.role === "admin") {
+      const buyer = await instance.buyer().fetch()
+      const seller = await instance.seller().fetch()
+      const instaaccount = await instance.instaaccount().fetch()
+      const order = JSON.parse(JSON.stringify(instance))
+      order.buyer = buyer
+      order.seller = seller
+      order.instaaccount = instaaccount
+      if(order.buyer) {
+        order.buyer.total_purchase = await Order.where({
+          "history.rejected_at": null,
+          "history.accepted_at": {$exists: true},
+          "buyer_id": buyer._id
+        }).count()
+      }
+      if(order.seller) {
+        order.seller.total_sales = await Order.where({
+          "history.rejected_at": null,
+          "history.accepted_at": {$exists: true}
+        }).count()
+      }
+      return response.apiItem(order)
+    } else {
+      return response.apiItem(instance)
+    }
+
   }
 
   async accept({ request, response, auth, instance }) {
