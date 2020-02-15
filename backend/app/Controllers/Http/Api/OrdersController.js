@@ -11,6 +11,8 @@ const { $n, $b, $h } = require('../../../Helpers')
 const PaymentService = require('../../../Services/Payment/Paypal')
 const Env = use('Env')
 const fs = require('fs')
+const Mail = use('Mail')
+const Config = use('Config')
 
 class OrdersController extends BaseController{
 
@@ -26,6 +28,10 @@ class OrdersController extends BaseController{
     }
     if (instaaccount.user_id.toString() === user._id.toString()) {
       return response.validateFailed('cannot_buy_own_product')
+    }
+    const seller = await instaaccount.user().fetch()
+    if (!seller || !seller.verified) {
+      return response.validateFailed('no_such_seller')
     }
     const config = await this.getSiteConfig()
     const now = new Date
@@ -95,6 +101,22 @@ class OrdersController extends BaseController{
       await order.save()
     } catch(e) {
       return response.apiFail(e)
+    }
+    try {
+      const config = await this.getSiteConfig()
+      let acceptDeadline = config['order']['time_margin']
+      acceptDeadline = moment.duration(acceptDeadline).humanize()
+      const mailData = {
+        order, user, seller, acceptDeadline,
+        baseUrl: use('Env').get('FRONTEND_URL'),
+      }
+      Mail.send('emails.new_order', mailData, (message) => {
+        message.to(seller.email, seller.name)
+        message.from(Config.get('mail.sender'))
+        message.subject('A new order has been requested!')
+      })
+    } catch(e) {
+      console.error(e)
     }
     return response.apiItem(order)
   }
