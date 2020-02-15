@@ -556,7 +556,6 @@
                     }
                 }
             }).catch(e => {
-               console.log(e.response)
                let res = e.response
                if (res.data.errors && res.data.errors.length) {
                   let message = res.data.errors[0].message
