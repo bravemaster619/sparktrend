@@ -4,7 +4,7 @@
             <h2 class="text-primary">
                 <span class="text-cement-grey">$</span>{{amount.toFixed(2)}}
             </h2>
-            <div class="dashboard-home-title text-uppercase">{{title}}</div>
+            <div class="dashboard-home-title text-center text-uppercase">{{title}}</div>
         </div>
     </div>
 </template>

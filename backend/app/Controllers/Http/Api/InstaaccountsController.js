@@ -272,6 +272,21 @@ class InstaaccountsController extends BaseController {
     return response.apiDeleted(instaaccount)
   }
 
+  async related({ request, instance, response }) {
+    let instaaccounts = []
+    if(instance.product) {
+      instaaccounts = Instaaccount.where({
+        verified: true,
+        allowed: true,
+        product: { $exists: true },
+        "product.niches": instance.product.niches
+      }).orderBy({
+        completed_shoutout: -1
+      }).limit(3).fetch()
+    }
+    return response.apiCollection(instaaccounts)
+  }
+
   async myproducts ({ request, auth, response }) {
     const user = auth.user
     return response.apiCollection(await user.instaaccounts().fetch())

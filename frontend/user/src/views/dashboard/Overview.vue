@@ -8,7 +8,7 @@
     ></loading>
 
     <div class="col-12">
-        <h6 class="dashboard-home-title text-uppercase">{{$t("Status")}}</h6>
+        <h6 class="dashboard-home-title text-center text-lg-left text-uppercase">{{$t("Status")}}</h6>
     </div>
     <div class="col-sm-6 col-12 mt-3 mt-sm-0">
         <status-card :title="$t('This Month Sales')" :amount="monthlySale"></status-card>
@@ -32,7 +32,7 @@
         </success-rate-chart>
     </div>
     <div class="mt-3 col-12">
-        <h6 class="text-uppercase">{{$t("upcoming schedule")}}</h6>
+        <h6 class="dashboard-home-title text-center text-lg-left  text-uppercase">{{$t("upcoming schedule")}}</h6>
         <div class="d-flex flex-column card card-transparent">
             <table class="table table-striped">
                 <thead>

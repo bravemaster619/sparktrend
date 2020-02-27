@@ -33,6 +33,7 @@ class UsersController extends BaseController {
       .where(parsedQuery.where)
       .skip(parsedQuery.skip)
       .limit(parsedQuery.limit)
+      .orderBy({created_at: -1})
       .fetch()
     const total = await User.query()
       .where(parsedQuery.where)
@@ -80,6 +81,11 @@ class UsersController extends BaseController {
     if (user.role !== 'admin' && user._id !== instance._id) {
       throw UnAuthorizeException.invoke()
     }
+    if(user.role === 'admin') {
+      let role = instance.role
+      instance = JSON.parse(JSON.stringify(instance))
+      instance.role = role
+    }
     return response.apiItem(instance)
   }
 
@@ -98,10 +104,18 @@ class UsersController extends BaseController {
     let userData = ['name', 'locale', 'paypal_email', 'gender', 'country']
     if(user.role === 'admin') {
       userData = [...userData, 'email', 'verified']
+      if(user._id !== instance._id && request.input("password")) {
+        userData.push('password')
+      }
     }
     instance.merge(request.only(userData))
     instance.verified = $b(instance.verified)
     await instance.save()
+    if(user.role === 'admin') {
+      let role = instance.role
+      instance = JSON.parse(JSON.stringify(instance))
+      instance.role = role
+    }
     return response.apiUpdated(instance)
   }
 

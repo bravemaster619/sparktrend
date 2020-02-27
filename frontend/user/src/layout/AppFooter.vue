@@ -7,8 +7,7 @@
                         <img alt="logo" src="/img/brand/logo.png" class="footer-logo">
                     </div>
                     <div class="mt-4">
-                        <p>&copy; Copyright {{year}} Xinrong Software Co. Ltd.</p>
-                        <p>Ji Lin Da Jie, Changyi Qu, Jilin Shi, Jilin Sheng, China, 132000</p>
+                        <p>&copy; Copyright {{year}} Sparktrend.net</p>
                         <p><a class="text-primary" href="mailto:sparktrend@hotmail.net">sparktrend@hotmail.net</a></p>
                     </div>
                 </div>

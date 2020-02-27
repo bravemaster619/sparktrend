@@ -8,7 +8,7 @@
                loader="dots"
                color="#5e72e4"
             ></loading>
-            <div class="col-md-9" v-if="instaaccount">
+            <div class="col-12 col-md-9" v-if="instaaccount">
                <div class="row product-detail">
                   <div class="col-12 product-detail-header">
                      <div class="d-flex flex-md-row flex-column">
@@ -21,7 +21,7 @@
                            <div class="my-auto">
                               <div class="row mb-2">
                                  <div class="col py-0">
-                                    <h4 class="my-auto pl-0 pl-md-2">@{{instaaccount.username}}</h4>
+                                    <h4 class="my-auto pl-0 pl-md-2 text-center text-lg-left">@{{instaaccount.username}}</h4>
                                  </div>
                               </div>
                               <div class="row">
@@ -158,8 +158,9 @@
                   </modal>
                </div>
             </div>
-            <div class="col-md-3 d-block">
-               {{$t("Related Page")}}
+            <div class="col-12 col-md-3 d-block">
+               <h6 class="mt-4">{{$t("Related Page")}}</h6>
+               <related-page />
             </div>
          </div>
       </div>
@@ -210,12 +211,14 @@
    import flatPicker from "vue-flatpickr-component";
    import "flatpickr/dist/flatpickr.css";
    import StarRating from 'vue-star-rating'
+   import RelatedPage from "./components/RelatedPage";
    window.toastr = require('toastr')
    const moment = require('moment')
    Vue.use(VueToastr2);
 
    export default {
       components: {
+         RelatedPage,
          flatPicker, MultipleFileUpload, DemographicChart, Modal, CategoryInfoCarousel, BFormFile, Loading, StarRating
       },
       data() {

@@ -1,6 +1,6 @@
 <template>
     <div class="shoutout">
-        <h6 class="dashboard-home-title text-uppercase">{{$t(title)}}</h6>
+        <h6 class="dashboard-home-title text-center text-lg-left  text-uppercase">{{$t(title)}}</h6>
         <div class="d-flex flex-column card card-transparent">
             <h2 class="text-primary">{{total_info.started}}</h2>
             <div class="dashboard-home-title text-uppercase">{{$t("Pending Outgoing")}}</div>

@@ -25,8 +25,9 @@
                      :data="tableData"
                      v-if="tableData.length > 0">
             <template slot="columns">
+               <th>ID</th>
                <th>Buyer</th>
-                 <th>Product</th>
+               <th>Product</th>
                <th>Price</th>
                <th>Category</th>
                <th>Time</th>
@@ -36,6 +37,9 @@
                <th></th>
             </template>
             <template slot-scope="{row}">
+               <td>
+                  <router-link :to="`/orders/${row._id}`">{{row._id}}</router-link>
+               </td>
                <td>
                   <router-link :to="`/users/${row.buyer_id}`">{{row.buyer_name}}</router-link>
                </td>

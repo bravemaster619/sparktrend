@@ -27,7 +27,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-5 d-flex order-0 order-md-1 justify-content-center">
-                                <img src="img/header-banner-image.png" class="img-fluid">
+                                <img src="img/header-banner-image.jpg" class="img-fluid">
                             </div>
                         </div>
 
@@ -68,7 +68,7 @@
                                 <div class="col-12 col-md-4 d-flex flex-column">
                                     <div class="row">
                                         <div class="col-12">
-                                            <img class="mx-auto landing-icon" src="img/img-landing-verified.png"
+                                            <img class="mx-auto landing-icon" src="img/img-landing-verified.jpeg"
                                                  alt="img-landing-target">
                                         </div>
                                         <div class="col-12 mt-3">
@@ -91,17 +91,17 @@
                         <div class="col-12 col-md-10">
                             <div class="row">
                                 <div class="col-12 col-sm-6">
-                                    <img class="mx-auto landing-icon" src="img/img-landing-advantages.png"
+                                    <img class="mx-auto landing-icon" src="img/img-landing-advantages.jpeg"
                                          alt="img-landing-target">
                                 </div>
                                 <div class="d-flex flex-column justify-content-center col-12 col-sm-6 text-center text-sm-left mt-sm-3">
-                                    <h3>{{$t("Sparktrend for Sellers")}}</h3>
+                                    <h3>{{$t("SparkTrend for Influencers")}}</h3>
                                     <div class="px-4">
-                                        <ul class="list-unstyled text-left ml-4 ml-md-0 landing-list">
-                                            <li>{{$t("Making it safe and sure for sellers to do transactions")}}</li>
-                                            <li>{{$t("Low and transparent fee")}}</li>
-                                            <li>{{$t("Secure payment")}}}</li>
-                                            <li>{{$t("A place for sellers to find the right buyers")}}</li>
+                                        <ul class="list-unstyled text-left ml-2 landing-list">
+                                            <li>{{$t("SparkTrend will provide the influencer with a clear detailed order requierment to provide a professional service")}}</li>
+                                            <li>{{$t("SparkTrend will guarantee a safe and Secure transaction")}}</li>
+                                            <li>{{$t("SparkTrend will help influencers find more brands to pay for their posts")}}</li>
+                                            <li>{{$t("SparkTrend provides an Easy to use dashboard to manage all the sales and Ad process for the influencers")}}</li>
                                             <li>{{$t("User-friendly dashboard for sellers to easily process and manage sales")}}</li>
                                         </ul>
                                     </div>
@@ -117,9 +117,9 @@
                         <div class="col-10">
                             <div class="card text-center mx-auto">
                                 <div class="d-flex">
-                                    <img src="img/img-landing-joinus.png" alt="img-join-us" class="mx-auto landing-icon d-none d-md-block">
+                                    <img src="img/img-landing-joinus.jpeg" alt="img-join-us" class="mx-auto landing-icon d-none d-md-block">
                                     <div class="d-flex flex-column justify-content-center">
-                                        <h3>{{$t("Ready to Leverage your business to the next level?")}}</h3>
+                                        <h3>{{$t("Are you ready to take your business to the next level?")}}</h3>
                                         <div class="d-flex justify-content-center mt-2">
                                             <router-link class="btn btn-1 btn-outline-success" aria-current="false" to="/register">{{$t("Sign Up")}}
                                             </router-link>

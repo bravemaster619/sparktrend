@@ -36,7 +36,7 @@
     import {Tabs , Tab} from 'vue-tabs-component'
     import SalesAccordion from '../components/Dashboard/SalesAccordion';
     import NoData from '../components/Dashboard/NoData';
-    import {OrderStatus, getOrderShoutoutStatus, getOrderPaymentStatus} from '../../helpers/order'
+    import {OrderStatus, getOrderShoutoutStatus } from '../../helpers/order'
     import Loading from 'vue-loading-overlay'
     import 'vue-loading-overlay/dist/vue-loading.css';
     import httpService from "../../services/http.service"

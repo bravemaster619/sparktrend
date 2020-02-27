@@ -4,7 +4,7 @@
             <pie-chart :chart-data="datacollection"></pie-chart>
         </div>
         <h2 class="text-primary">{{success_rate}}%</h2>
-        <div class="dashboard-home-title text-uppercase">{{$t("Success rate")}}</div>
+        <h6 class="dashboard-home-title text-center text-uppercase">{{$t("Success rate")}}</h6>
     </div>
 </template>
 

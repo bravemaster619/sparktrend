@@ -130,6 +130,16 @@ class OrdersController extends BaseController{
     let countQueryBuilder = Order.query(decodeQuery().countQuery)
     let whereQuery = {}
     if (user.role === "admin") {
+      switch(orderType) {
+        case 'purchase':
+          whereQuery = { buyer_id: user._id }
+          break;
+        case 'sales':
+          whereQuery = { seller_id: user._id }
+          break;
+        default:
+          break;
+      }
       const pageLength = 20
       let page = $n(request.input("page"))
       if (page < 1) {

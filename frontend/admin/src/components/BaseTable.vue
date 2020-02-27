@@ -1,5 +1,5 @@
 <template>
-  <table class="table tablesorter" :class="tableClass">
+  <table class="table tablesorter vertical-align-middle align-items-center" :class="tableClass">
     <thead :class="theadClasses">
       <tr>
         <slot name="columns" :columns="columns">

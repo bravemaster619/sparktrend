@@ -54,4 +54,6 @@ Route.group('statistics', () => {
    */
   Route.get('/dashboard', 'Api/StatisticController.dashboard').middleware(['auth:jwt'])
 
+  Route.get('/admin-dashboard', 'Api/StatisticController.adminDashboard').middleware(['authAdmin:jwt'])
+
 }).prefix('/api/statistics')

@@ -18,13 +18,13 @@ const en = {
    "Targeted Influencers": "Targeted Influencers",
    "Secure Transaction": "Secure Transaction",
    "Easy to Use": "Easy to Use",
-   "Sparktrend for Sellers": "Sparktrend for Sellers",
-   "Making it safe and sure for sellers to do transactions": "Making it safe and sure for sellers to do transactions",
-   "Low and transparent fee": "Low and transparent fee",
-   "Secure payment": "Secure payment",
-   "A place for sellers to find the right buyers": "A place for sellers to find the right buyers",
+   "SparkTrend for Influencers": "SparkTrend for Influencers",
+   "SparkTrend will provide the influencer with a clear detailed order requierment to provide a professional service": "SparkTrend will provide the influencer with a clear detailed order requierment to provide a professional service",
+   "SparkTrend will guarantee a safe and Secure transaction": "SparkTrend will guarantee a safe and Secure transaction",
+   "SparkTrend will help influencers find more brands to pay for their posts": "SparkTrend will help influencers find more brands to pay for their posts",
+   "SparkTrend provides an Easy to use dashboard to manage all the sales and Ad process for the influencers": "SparkTrend provides an Easy to use dashboard to manage all the sales and Ad process for the influencers",
    "User-friendly dashboard for sellers to easily process and manage sales": "User-friendly dashboard for sellers to easily process and manage sales",
-   "Ready to Leverage your business to the next level?": "Ready to Leverage your business to the next level?",
+   "Are you ready to take your business to the next level?": "Are you ready to take your business to the next level?",
    "Sign Up": "Sign Up",
    "Sitemap": "Sitemap",
    "Home": "Home",
@@ -174,12 +174,12 @@ const en = {
    "Schedule": "Schedule",
    "Username": "Username",
    "PayPal E-mail (optional)": "PayPal E-mail (optional)",
-
+   "Has not completed a shoutout yet.": "Has not completed a shoutout yet.",
    home: {
-      main_legend: "Sparktrend is an online marketplace to buy and sell Instagram shoutouts.",
-      targeted_influencers_desc: "We group subscribed influencers based on their overall insights, such as the top country location of their audience, age range, gender, active followers time and niche in order to make sure that buyers find the right influencers for their brands.",
-      secure_transaction_desc: "Sparktrend will handle the payment and keep your money safe with us until your campaign has been completed by the influencer.",
-      easy2_use_desc: "We make sure that everything is as user-friendly as possible so it will be easier for you to manage your campaign and transaction."
+      main_legend: "SparkTrend is an online marketplace to sell and buy advertisement posts on Instagram",
+      targeted_influencers_desc: "Our system algorithm allow SparkTrend to gather statistics of registered influencers accounts. These information include number of followers, Niche, Gender, Age, And country location of their audience. Based on this information the the influencer is then grouped into categories to make it easy for buyers to find the perfect influencer to advertise their brand.",
+      secure_transaction_desc: "SparkTrend will deal with the payment  process and make sure your money is kept in a safe place until your campaign is completed by the influencer.",
+      easy2_use_desc: "SparkTrend will make sure to provide the easiest and least complicated platform for their users to simplify the management of transactions and advertisement campaign."
    },
    shoutout_history: "{1} out of {0}",
    demograph_chart: {

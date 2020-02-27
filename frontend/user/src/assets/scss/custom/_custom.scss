@@ -961,7 +961,12 @@ form.form-verifyproduct{
   }
 }
 .product-item {
+  word-break: break-all;
   font-size: 0.875rem;
+  & > a {
+    overflow: hidden;
+    height: 100%;
+  }
   a:hover {
     -webkit-box-shadow: 3px 3px 5px 2px rgba(173,173,173,1);
     -moz-box-shadow: 3px 3px 5px 2px rgba(173,173,173,1);
@@ -1084,7 +1089,7 @@ form.form-verifyproduct{
   bottom: 100px;
   width: 100%;
   justify-content: center;
-  z-index: 9999;
+  z-index: 10;
   right: 0;
   .filters-button {
     border-radius: 14px;
@@ -1254,4 +1259,30 @@ form.form-verifyproduct{
     }
   }
 
+}
+.related-page-item-container {
+  .related-item {
+    img {
+      max-height: 72px;
+    }
+  }
+
+}
+@media(min-width: 992px) {
+  .related-page-item-container > div {
+    width: 100%;
+  }
+  .related-item {
+    &:not(:last-child) {
+      border-bottom: 1px solid #dfdfdf;
+    }
+  }
+}
+@media(max-width: 991px) {
+  .related-page-item-container {
+    overflow-x: scroll;
+    .related-item {
+      min-width: 96px;
+    }
+  }
 }

@@ -89,7 +89,6 @@ Route.group(() => {
    *     summary: Returns Instaaccount
    *     parameters:
    *       - $ref: '#/components/parameters/Id'
-   *       - $ref: '#/components/parameters/SingleQuery'
    *     responses:
    *       200:
    *         description: instaaccount
@@ -100,8 +99,31 @@ Route.group(() => {
    *       404:
    *         $ref: '#/components/responses/NotFound'
    */
-
   Route.get('/:id', 'Api/InstaaccountsController.show').instance('App/Models/Instaaccount')
+
+  /**
+   * @swagger
+   * /instaaccounts/{id}/related:
+   *   get:
+   *     tags:
+   *       - Instaaccount
+   *     summary: Returns array of Instaaccounts similar to an account
+   *     parameters:
+   *       - $ref: '#/components/parameters/Id'
+   *     responses:
+   *       200:
+   *         description: instaaccount
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: array
+   *               items:
+   *                 $ref: '#/components/schemas/Instaaccount'
+   *       404:
+   *         $ref: '#/components/responses/NotFound'
+   */
+  Route.get('/:id/related', 'Api/InstaaccountsController.related').instance('App/Models/Instaaccount')
+
   /**
    * @swagger
    * /instaaccounts/new:
@@ -192,8 +214,6 @@ Route.group(() => {
    *         $ref: '#/components/responses/ValidateFailed'
    */
   Route.post('/:id/upload-insights', 'Api/InstaaccountsController.uploadInsights').middleware(['auth:jwt']).instance('App/Models/Instaaccount')
-
-
 
   /**
    * @swagger

@@ -57,6 +57,24 @@
                                  </select>
                               </div>
                            </div>
+                           <template v-if="user.role !== 'admin'">
+                              <div class="col-12 col-md-6">
+                                 <div class="form-group has-label">
+                                    <label class="form-control-label">
+                                       Password
+                                    </label>
+                                    <input class="form-control" v-model="model.password" type="password" placeholder="************" @change="passwordChanged=true">
+                                 </div>
+                              </div>
+                              <div class="col-12 col-md-6" v-if="passwordChanged">
+                                 <div class="form-group has-label">
+                                    <label class="form-control-label">
+                                       Password Confirmation
+                                    </label>
+                                    <input class="form-control" v-model="model.password_confirm"  type="password">
+                                 </div>
+                              </div>
+                           </template>
                            <div class="col-12 col-md-6">
                               <div class="form-group has-label">
                                  <label class="form-control-label">
@@ -65,7 +83,7 @@
                                  <input class="form-control" v-model="user.paypal_email" type="text">
                               </div>
                            </div>
-                           <div class="col-12 col-md-6">
+                           <div class="col-12 col-md-6" v-if="user.role !== 'admin'">
                               <div class="form-group has-label">
                                  <label class="form-control-label">
                                     Verified
@@ -105,6 +123,11 @@
             loading: true,
             saving: false,
             user: null,
+            passwordChanged: false,
+            model: {
+               password: '',
+               password_confirm: ''
+            },
             genders: [
                {value: "0", text: 'Select Gender'},
                {value: "male", text: 'Male'},
@@ -427,6 +450,18 @@
                showCancelButton: true
             }).then(result => {
                if (result.value) {
+                  if(this.passwordChanged) {
+                     if(!this.model.password) {
+                        return this.$noty.error("Please input a valid password!")
+                     }
+                     if(this.model.password != this.model.password_confirm) {
+                        return this.$noty.error("Password mismatch!")
+                     }
+                     if(this.model.password.length < 6) {
+                        return this.$noty.error("Password is too short!")
+                     }
+                     this.user.password = this.model.password
+                  }
                   this.saving = true
                   httpService.put(`/users/${this.$route.params.id}`, this.user).then(res => {
                      this.$noty.success("User saved")

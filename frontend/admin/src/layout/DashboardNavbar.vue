@@ -10,10 +10,10 @@
             <base-dropdown class="nav-link pr-0">
                <div class="media align-items-center" slot="title">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="/img/theme/team-4-800x800.jpg">
+                  <img :alt="`${user.name} profile picture`" src="https://cdn5.f-cdn.com/ppic/137400809/logo/14207205/1SmL7/profile_logo_.jpg">
                 </span>
                   <div class="media-body ml-2 d-none d-lg-block">
-                     <span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+                     <span class="mb-0 text-sm  font-weight-bold">{{user.name}}</span>
                   </div>
                </div>
 
@@ -21,21 +21,9 @@
                   <div class=" dropdown-header noti-title">
                      <h6 class="text-overflow m-0">Welcome!</h6>
                   </div>
-                  <router-link to="/profile" class="dropdown-item">
+                  <router-link :to="`/users/${user._id}`" class="dropdown-item">
                      <i class="ni ni-single-02"></i>
                      <span>My profile</span>
-                  </router-link>
-                  <router-link to="/profile" class="dropdown-item">
-                     <i class="ni ni-settings-gear-65"></i>
-                     <span>Settings</span>
-                  </router-link>
-                  <router-link to="/profile" class="dropdown-item">
-                     <i class="ni ni-calendar-grid-58"></i>
-                     <span>Activity</span>
-                  </router-link>
-                  <router-link to="/profile" class="dropdown-item">
-                     <i class="ni ni-support-16"></i>
-                     <span>Support</span>
                   </router-link>
                   <div class="dropdown-divider"></div>
                   <router-link to="/logout" class="dropdown-item">
@@ -49,6 +37,7 @@
    </base-nav>
 </template>
 <script>
+   import { currentCredential } from '../services/auth'
    export default {
       data() {
          return {
@@ -57,7 +46,14 @@
             searchQuery: ''
          };
       },
+      computed: {
+         user: function() {
+            let userinfo = currentCredential()
+            return userinfo.user
+         }
+      },
       methods: {
+
          toggleSidebar() {
             this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
          },

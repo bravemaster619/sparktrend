@@ -55,7 +55,7 @@
                </td>
                <td>
                   <badge class="badge-dot mr-4">
-                     {{row.created_at}}
+                     {{row.created_at | moment("YYYY-MM-DD")}}
                   </badge>
                </td>
 
