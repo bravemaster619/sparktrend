@@ -151,7 +151,7 @@
                         <base-button type="link" class="mr-auto text-uppercase"
                                      @click="modalStatus.buyNow=false">{{$t("Close")}}
                         </base-button>
-                        <base-button type="primary" class="text-uppercase btn-grad-effect" @click="onOrder">
+                        <base-button type="primary" class="text-uppercase btn-grad-effect" @click="onOrder" :disabled="!processing">
                            {{$t("Order Shoutout")}}
                         </base-button>
                      </template>
@@ -224,6 +224,7 @@
       data() {
          return {
             loading: true,
+            processing: false,
             instaaccount: null,
             maxFileCount: 1,
             chartOptions: {
@@ -341,7 +342,7 @@
             if (this.selectedPricing) {
                this.modalStatus.buyNow = true
             } else {
-               this.$toastr.error("Please choose any of the category and time to continue", "", {timeOut: 3000});
+               this.$toastr.error(this.$t("Please choose any of the category and time to continue"), "", {timeOut: 3000});
                return
             }
 
@@ -448,6 +449,8 @@
                         if (e.response.data && e.response.data.errors) {
                            messageKey = this.$te(`order.error.${e.response.data.errors}`) ? `order.error.${e.response.data.errors}` : 'error.default'
                            this.$toastr.error(this.$t(messageKey))
+                        } else {
+                           this.$toastr.error(this.$t('error.default'))
                         }
                         window.console.error(e)
                      })

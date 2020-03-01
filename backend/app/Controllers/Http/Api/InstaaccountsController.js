@@ -8,7 +8,7 @@ const UnAuthorizeException = use('App/Exceptions/UnAuthorizeException')
 const randomstring = require('randomstring')
 const { $n, $h } = require('../../../Helpers')
 const util = require('util')
-
+const Drive = use('Drive')
 /**
  *
  * @class InstaaccountsController
@@ -189,6 +189,9 @@ class InstaaccountsController extends BaseController {
     const filePath = `uploads/image/insights/${instaaccount._id.toString()}`
     await image.move(use('Helpers').publicPath(filePath), { name: fileName })
     instaaccount.insights_picture = this.baseUrl() + `/${filePath}/${fileName}`
+    const s3Url = await Drive.disk('s3').put(filePath, Drive.disk('local').getStream(filePath))
+    instaaccount.insights_picture = s3Url
+    await Drive.disk('local').delete(filePath)
     await instaaccount.save()
     return response.apiUpdated(instaaccount)
   }

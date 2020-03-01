@@ -23,10 +23,11 @@ const providers = [
   '@adonisjs/vow/providers/VowProvider',
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/ally/providers/AllyProvider',
+  '@adonisjs/drive/providers/DriveProvider',
   'lucid-mongo/providers/LucidMongoProvider',
   Helpers.appRoot('app/Providers/ExtendValidatorProvider'),
   Helpers.appRoot('app/Providers/ExtendResponseProvider'),
-  Helpers.appRoot('app/Providers/BindInstanceProvider')
+  Helpers.appRoot('app/Providers/BindInstanceProvider'),
 ]
 
 /*

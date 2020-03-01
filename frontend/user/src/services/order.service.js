@@ -1,10 +1,10 @@
 import { config } from '../config'
-import Axios from 'axios'
+import httpService from './http.service'
 
-function confirmPayment(order_id, paypal_order_id) {
-   return httpService.post(`order/${order_id}/pay`, { paypal_order_id })
+function confirmPayment(orderId, paypalOrderId) {
+   return httpService.post(`orders/${orderId}/pay`, { paypal_order_id: paypalOrderId })
 }
 
-export const orderService = {
+export default {
    confirmPayment
 }

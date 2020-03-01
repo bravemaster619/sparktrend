@@ -9,10 +9,12 @@ const randomstring = require('randomstring')
 const moment = require('moment')
 const { $n, $b, $h } = require('../../../Helpers')
 const PaymentService = require('../../../Services/Payment/Paypal')
+const AmazonS3Service = require('../../../Services/FileUpload/AmazonS3')
 const Env = use('Env')
-const fs = require('fs')
 const Mail = use('Mail')
 const Config = use('Config')
+const Drive = use('Drive')
+const fs = require('fs')
 
 class OrdersController extends BaseController{
 
@@ -24,6 +26,8 @@ class OrdersController extends BaseController{
     let orderData = request.only(['insta_id', 'category', 'pricing_idx', 'start_from', 'with_bio', 'caption', 'additional_info'])
     const instaaccount = await Instaaccount.find(orderData.insta_id)
     if (!instaaccount || !instaaccount.allowed || !instaaccount.product) {
+      console.log(instaaccount.allowed)
+      console.log(instaaccount.product)
       return response.validateFailed('no_such_product')
     }
     if (instaaccount.user_id.toString() === user._id.toString()) {
@@ -59,30 +63,46 @@ class OrdersController extends BaseController{
     orderData.buyer_id = user._id
     orderData.seller_id = instaaccount.user_id
     orderData.start_from = new Date(orderData.start_from)
+
     // upload images
-    const postFiles = (request.file('posts', {
+    const postFiles = request.file('posts', {
       types: ['image', 'video'],
       size: '5mb',
       maxSize: '5mb',
       allowedExtensions: ['jpg', 'png', 'jpeg', 'mp4', 'gif']
-    }))
+    })
     if (!postFiles) {
       return response.validateFailed('empty_posts')
     }
     orderData.posts = []
+
     const filePath = `uploads/image/posts/${user._id.toString()}`
     fs.mkdirSync(use('Helpers').publicPath(filePath), {recursive: true})
-    postFiles.moveAll(use('Helpers').publicPath(filePath), (post) => {
+    const uploadedInfo = []
+    await postFiles.moveAll(use('Helpers').publicPath(filePath), (post) => {
       let fileName = `${use('uuid').v1().replace(/-/g, '')}_${post.clientName}`
       orderData.posts.push({
         filename: post.clientName,
         type: post.type,
         path: `${Env.get('APP_URL')}/${filePath}/${fileName}`
       })
+      uploadedInfo.push({
+        fileName,
+        path: `${filePath}/${fileName}`
+      })
       return {
         name: fileName
       }
     })
+
+    let idx = 0
+    for(const fileInfo of uploadedInfo) {
+      const s3Url = await Drive.disk('s3').put(fileInfo.path, Drive.disk('local').getStream(fileInfo.path))
+      orderData.posts[idx].path = s3Url
+      await Drive.disk('local').delete(fileInfo.path)
+      idx++
+    }
+
     if (orderData.type === "Single") {
       orderData.posts = orderData.posts.slice(0,1)
     }
@@ -287,7 +307,7 @@ class OrdersController extends BaseController{
 
   async pay({ request, response, auth, instance }) {
     if (!(request.input("paypal_order_id"))) {
-      throw api.validateFailed("empty_paypal_order_id")
+      return response.validateFailed(perm.reason)
     }
     let user = auth.user
     const order = instance

@@ -314,15 +314,13 @@
       },
       computed: {
          getAverageRating: function() {
-            if (this.order.instaaccount.ratings) {
-               let totalRatingCount = 0;
+            if (this.order.rating) {
                let totalRating = 0;
-               for (let key in this.order.instaaccount.ratings) {
-                  ['communication', 'professionalism', 'recommendation'].forEach(ratingKey => {
-                     totalRatingCount++;
-                     totalRating += this.instaaccount.ratings[key][ratingKey] || 0
-                  })
-               }
+               let totalRatingCount = 0;
+               ['communication', 'professionalism', 'recommendation'].forEach(ratingKey => {
+                  totalRatingCount++;
+                  totalRating += this.order.rating[ratingKey] || 0
+               })
                if (totalRatingCount > 0) {
                   return totalRating / totalRatingCount
                } else {

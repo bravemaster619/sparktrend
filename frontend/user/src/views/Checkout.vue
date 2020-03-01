@@ -63,18 +63,23 @@
                             <div class="price-total mt-2">
                                 <dl class="d-flex justify-content-between">
                                     <dt>{{$t("Grand Total")}}:</dt>
-                                    <dd>${{order.price.toFixed(2)}}</dd>
+                                    <dd>${{order.total.toFixed(2)}}</dd>
                                 </dl>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 mt-3">
-                    <div class="card p-0">
+                    <div class="card p-0"  v-if="order && (!order.history || !order.history.paid_at)">
                         <div class="card-body">
                             <h6>{{$t("Pay With:")}}</h6>
                         </div>
                         <div id="paypal_button" class="p-3"></div>
+                    </div>
+                    <div class="card p-0">
+                        <div class="card-body">
+                            <p>{{$t("Order has been paid.")}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -86,12 +91,12 @@
 
 </template>
 <script>
-   import Axios from 'axios'
    import httpService from "../services/http.service"
+   import orderService from "../services/order.service"
    import Loading from 'vue-loading-overlay'
    const moment = require('moment')
-   const orderService = require('../services/order.service')
-   const addPayPalButton = function() {
+
+   const addPayPalButton = function(order, cb) {
        let paypalScript = document.createElement('script')
        paypalScript.setAttribute('src', 'https://www.paypal.com/sdk/js?client-id=AZmZ06MLlFUMW3b9gBGbH2X5_vhUNlAATnqumGA1ajxixMmHpPz_8MBfqq4J2uAqcKbHjoI1yxHy0Bzx')
        paypalScript.onload = function() {
@@ -100,7 +105,7 @@
                    return actions.order.create({
                        purchase_units: [{
                            amount: {
-                               value: self.order.total,
+                               value: parseFloat(order.total),
                                currency_code: "USD"
                            }
                        }]
@@ -108,11 +113,8 @@
                },
                onApprove: function(data, actions) {
                    return actions.order.capture().then(function(details) {
-                       orderService.confirmPayment(self.order['_id'], details.id).then(resp => {
-                           if (resp.status === 200) {
-
-                           }
-                       })
+                       console.log(details)
+                       cb(orderService.confirmPayment(order['_id'], details.id))
                    })
                }
            }).render(document.getElementById('paypal_button'));
@@ -134,13 +136,38 @@
              return new moment(this.order.start_from).local().format("YYYY-MM-DD hh:mm:ss (Z)")
           }
        },
+       methods: {
+           payCallback: function(prom) {
+               prom.then(({resp}) => {
+                   if(resp.status == "200") {
+                       this.$toastr.success(this.$t("order.success.order_paid"))
+                       this.order = resp.data
+                   } else {
+                       let messageKey = 'error.default'
+                       if(resp.data && resp.data.errors) {
+                           messageKey = this.$te(`order.error.${e.response.data.errors}`) ? `order.error.${e.response.data.errors}` : 'error.default'
+                       }
+                       this.$toastr.error(this.$t(messageKey))
+                   }
+               }).catch(e => {
+                   let messageKey = 'error.default'
+                   if (e.response.data && e.response.data.errors) {
+                       messageKey = this.$te(`order.error.${e.response.data.errors}`) ? `order.error.${e.response.data.errors}` : 'error.default'
+                   }
+                   this.$toastr.error(this.$t(messageKey))
+                   window.console.error(e)
+               })
+           }
+       },
        mounted() {
           httpService.get('orders/' + this.$route.params.id)
              .then(res => {
                 if (res.status === 200 && res.data && res.data.data) {
                     this.order = res.data.data
                     this.loading = false
-                    addPayPalButton()
+                    if(this.order && (!this.order.history || !this.order.history.paid_at)) {
+                        addPayPalButton(this.order, this.payCallback)
+                    }
                 } else {
                    this.$router.push({ name: '500' })
                 }
