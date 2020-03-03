@@ -140,7 +140,6 @@
                prom.then(({data}) => {
                    if(data.status == "200") {
                        this.$toastr.success(this.$t("order.success.order_paid"))
-                       console.log(data)
                        this.order = data.data
                    } else {
                        let messageKey = 'error.default'
@@ -150,7 +149,6 @@
                        this.$toastr.error(this.$t(messageKey))
                    }
                }).catch(e => {
-                   console.log(e)
                    let messageKey = 'error.default'
                    if (e.response.data && e.response.data.errors) {
                        messageKey = this.$te(`order.error.${e.response.data.errors}`) ? `order.error.${e.response.data.errors}` : 'error.default'
