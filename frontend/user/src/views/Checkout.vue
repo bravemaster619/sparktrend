@@ -76,7 +76,7 @@
                         </div>
                         <div id="paypal_button" class="p-3"></div>
                     </div>
-                    <div class="card p-0">
+                    <div class="card p-0" v-else>
                         <div class="card-body">
                             <p>{{$t("Order has been paid.")}}</p>
                         </div>
@@ -113,7 +113,6 @@
                },
                onApprove: function(data, actions) {
                    return actions.order.capture().then(function(details) {
-                       console.log(details)
                        cb(orderService.confirmPayment(order['_id'], details.id))
                    })
                }
@@ -138,18 +137,20 @@
        },
        methods: {
            payCallback: function(prom) {
-               prom.then(({resp}) => {
-                   if(resp.status == "200") {
+               prom.then(({data}) => {
+                   if(data.status == "200") {
                        this.$toastr.success(this.$t("order.success.order_paid"))
-                       this.order = resp.data
+                       console.log(data)
+                       this.order = data.data
                    } else {
                        let messageKey = 'error.default'
-                       if(resp.data && resp.data.errors) {
-                           messageKey = this.$te(`order.error.${e.response.data.errors}`) ? `order.error.${e.response.data.errors}` : 'error.default'
+                       if(data.data && data.data.errors) {
+                           messageKey = this.$te(`order.error.${data.data.errors}`) ? `order.error.${data.data.errors}` : 'error.default'
                        }
                        this.$toastr.error(this.$t(messageKey))
                    }
                }).catch(e => {
+                   console.log(e)
                    let messageKey = 'error.default'
                    if (e.response.data && e.response.data.errors) {
                        messageKey = this.$te(`order.error.${e.response.data.errors}`) ? `order.error.${e.response.data.errors}` : 'error.default'

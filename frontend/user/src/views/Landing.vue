@@ -27,7 +27,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-5 d-flex order-0 order-md-1 justify-content-center">
-                                <img src="img/header-banner-image.jpg" class="img-fluid">
+                                <img src="img/header-banner-image.png" class="img-fluid">
                             </div>
                         </div>
 
@@ -117,8 +117,7 @@
                         <div class="col-10">
                             <div class="card text-center mx-auto">
                                 <div class="d-flex">
-                                    <img src="img/img-landing-joinus.jpeg" alt="img-join-us" class="mx-auto landing-icon d-none d-md-block">
-                                    <div class="d-flex flex-column justify-content-center">
+                                    <div class="d-flex flex-column justify-content-center w-100">
                                         <h3>{{$t("Are you ready to take your business to the next level?")}}</h3>
                                         <div class="d-flex justify-content-center mt-2">
                                             <router-link class="btn btn-1 btn-outline-success" aria-current="false" to="/register">{{$t("Sign Up")}}

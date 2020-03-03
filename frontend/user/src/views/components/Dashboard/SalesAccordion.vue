@@ -171,7 +171,7 @@
                                     <div class="flex-1">{{order.category}}</div>
                                     <div class="price">$ {{order.price.toFixed(2)}}</div>
                                  </div>
-                                 <div class="d-flex">
+                                 <div class="d-flex" v-if="order.with_bio">
                                     <div class="flex-1">{{$t("Bio Price")}}</div>
                                     <div class="price">$ {{order.bio_price.toFixed(2)}}</div>
                                  </div>

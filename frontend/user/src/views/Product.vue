@@ -109,6 +109,7 @@
                      <h6 slot="header" class="modal-title" id="modal-title-default">{{$t("Confirm")}}</h6>
 
                      <label class="col-form-label">{{$t("Your Post")}}</label>
+                     <small class="d-block">* {{$t("Must be smaller than 20mb.")}}</small>
                      <small class="d-block text-danger" v-if="error.post">{{$t(error.post)}}</small>
                      <multiple-file-upload :max-file-count="this.maxFileCount"
                                            @files-changed="onFilesChanged"></multiple-file-upload>
@@ -151,8 +152,11 @@
                         <base-button type="link" class="mr-auto text-uppercase"
                                      @click="modalStatus.buyNow=false">{{$t("Close")}}
                         </base-button>
-                        <base-button type="primary" class="text-uppercase btn-grad-effect" @click="onOrder" :disabled="!processing">
+                        <base-button type="primary" class="text-uppercase btn-grad-effect" @click="onOrder" v-if="!processing">
                            {{$t("Order Shoutout")}}
+                        </base-button>
+                        <base-button v-else type="primary" class="text-uppercase btn-grad-effect" disabled>
+                           {{$t("Processing...")}}
                         </base-button>
                      </template>
                   </modal>
@@ -357,6 +361,7 @@
                showCancelButton: true
             }).then(result => {
                if (result.value) {
+                  this.processing = true
                   let formData = new FormData();
                   let self = this
 
@@ -453,6 +458,9 @@
                            this.$toastr.error(this.$t('error.default'))
                         }
                         window.console.error(e)
+                     })
+                     .finally(() => {
+                        this.processing = false
                      })
                }
             })

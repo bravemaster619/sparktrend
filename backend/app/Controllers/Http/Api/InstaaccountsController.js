@@ -189,9 +189,9 @@ class InstaaccountsController extends BaseController {
     const filePath = `uploads/image/insights/${instaaccount._id.toString()}`
     await image.move(use('Helpers').publicPath(filePath), { name: fileName })
     instaaccount.insights_picture = this.baseUrl() + `/${filePath}/${fileName}`
-    const s3Url = await Drive.disk('s3').put(filePath, Drive.disk('local').getStream(filePath))
+    const s3Url = await Drive.disk('s3').put(`${filePath}/${fileName}`, Drive.disk('local').getStream(`${filePath}/${fileName}`))
     instaaccount.insights_picture = s3Url
-    await Drive.disk('local').delete(filePath)
+    await Drive.disk('local').delete(`${filePath}/${fileName}`)
     await instaaccount.save()
     return response.apiUpdated(instaaccount)
   }

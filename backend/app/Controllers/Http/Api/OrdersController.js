@@ -9,7 +9,6 @@ const randomstring = require('randomstring')
 const moment = require('moment')
 const { $n, $b, $h } = require('../../../Helpers')
 const PaymentService = require('../../../Services/Payment/Paypal')
-const AmazonS3Service = require('../../../Services/FileUpload/AmazonS3')
 const Env = use('Env')
 const Mail = use('Mail')
 const Config = use('Config')
@@ -67,8 +66,8 @@ class OrdersController extends BaseController{
     // upload images
     const postFiles = request.file('posts', {
       types: ['image', 'video'],
-      size: '5mb',
-      maxSize: '5mb',
+      size: '20mb',
+      maxSize: '20mb',
       allowedExtensions: ['jpg', 'png', 'jpeg', 'mp4', 'gif']
     })
     if (!postFiles) {
@@ -94,7 +93,6 @@ class OrdersController extends BaseController{
         name: fileName
       }
     })
-
     let idx = 0
     for(const fileInfo of uploadedInfo) {
       const s3Url = await Drive.disk('s3').put(fileInfo.path, Drive.disk('local').getStream(fileInfo.path))

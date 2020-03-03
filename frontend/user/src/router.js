@@ -76,15 +76,7 @@ export const router = new Router({
             footer: AppFooter
          }
       },
-      {
-         path: '/404',
-         name: '404',
-         components: {
-            header: AppHeader,
-            footer: AppFooter,
-            default: PageNotFound
-         }
-      },
+
       {
          path: '/',
          name: 'main',
@@ -192,23 +184,23 @@ export const router = new Router({
               name: 'verify',
               component: Verify,
             },
-
+            {
+               path: '/404',
+               name: '404',
+               component: PageNotFound
+            },
             {
                path: '/500',
                name: '500',
                component: ServerError
             },
-
+            {
+               path: '*',
+               component: PageNotFound
+            }
          ]
       },
-      {
-         path: '*',
-         components: {
-            header: AppHeader,
-            footer: AppFooter,
-            default: PageNotFound
-         }
-      }
+
    ],
    scrollBehavior: to => {
       if (to.hash) {
