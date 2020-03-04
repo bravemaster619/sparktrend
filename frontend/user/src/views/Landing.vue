@@ -27,7 +27,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-5 d-flex order-0 order-md-1 justify-content-center">
-                                <img src="img/header-banner-image.png" class="img-fluid">
+                                <img src="img/header-banner-image.png" class="img-fluid header-banner">
                             </div>
                         </div>
 
