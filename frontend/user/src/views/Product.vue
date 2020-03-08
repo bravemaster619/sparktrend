@@ -192,7 +192,7 @@
                <demographic-chart :data-collection="getChartData('gender')"></demographic-chart>
             </div>
             <div class="col-12 col-md-6">
-               <h6 class="mt-2">{{$t("Location")}}</h6>
+               <h6 class="mt-2">{{$t("Gender")}}</h6>
                <p>{{$t("demograph_chart.gender_desc")}}</p>
             </div>
          </div>

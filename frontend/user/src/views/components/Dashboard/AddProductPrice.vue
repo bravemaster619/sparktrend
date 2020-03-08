@@ -12,7 +12,7 @@
          </div>
          <div class="row price-info mb-4">
             <div class="col-12">
-               <h5 class="mt-3 mb-4">Select Niche</h5>
+               <h5 class="mt-3 mb-4">{{$t("Select Niche")}}</h5>
             </div>
             <div class="col-12">
                <div class="row">
@@ -32,7 +32,7 @@
          </div>
          <div class="row price-info mb-4">
             <div class="col-12">
-               <h5 class="mt-3 mb-4">Single Post</h5>
+               <h5 class="mt-3 mb-4">{{$t("Single Post")}}</h5>
             </div>
             <div class="col-md-8">
 
@@ -40,8 +40,8 @@
                   <div class="row mb-3">
                      <div class="w-26 mr-3">
                         <select class="form-control" v-model="single_price_model.time">
-                           <option value="12">12 hours</option>
-                           <option value="24">24 hours</option>
+                           <option value="12">12 {{$t("hours")}}</option>
+                           <option value="24">24 {{$t("hours")}}</option>
                         </select>
                      </div>
                      <div class="w-26 mr-3">
@@ -83,14 +83,14 @@
             <div class="col-md-4 mt-1">
                <div class="row">
                   <p>
-                     Single post is simple post of 1 picture and a caption.
+                     {{$t("Single post is simple post of 1 picture and a caption.")}}
                   </p>
                </div>
             </div>
          </div>
          <div class="row price-info mb-4">
             <div class="col-12">
-               <h5 class="mt-3 mb-4">Mutiple Post</h5>
+               <h5 class="mt-3 mb-4">{{$t("Multiple Post")}}</h5>
             </div>
             <div class="col-md-8">
 
@@ -143,14 +143,14 @@
             <div class="col-md-4 mt-1">
                <div class="row">
                   <p>
-                     Multiple post is simple post of multiple pictures and a caption.
+                     {{$t("Multiple post is simple post of multiple pictures and a caption.")}}
                   </p>
                </div>
             </div>
          </div>
          <div class="row price-info mb-4">
             <div class="col-12">
-               <h5 class="mt-3 mb-4">Story</h5>
+               <h5 class="mt-3 mb-4">{{$t("Story")}}</h5>
             </div>
             <div class="col-md-8">
 
@@ -201,7 +201,7 @@
             <div class="col-md-4 mt-1">
                <div class="row">
                   <p>
-                     Story post is a series of pictures and captions.
+                     {{$t("Story post is a series of pictures and captions.")}}
                   </p>
                </div>
             </div>

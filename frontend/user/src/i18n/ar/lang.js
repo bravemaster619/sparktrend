@@ -131,50 +131,67 @@ const ar = {
    "Forgot password?": "نسيت كلمة المرور؟",
    "Create new account": "اضافة حساب جديد",
    // new translations
-   "Oops!": "Oops!",
-   "Looks like there's nothing here...": "Looks like there's nothing here...",
-   "Start Date": "Start Date",
-   "Duration": "Duration",
-   "hour(s)": "hour(s)",
-   "Category Type": "Category Type",
-   "Download Attachment(s)": "Download Attachment(s)",
-   "Start": "Start",
-   "Copy text": "Copy text",
-   "Payment Details": "Payment Details",
-   "Payment Method": "Payment Method",
-   "Bio Price": "Bio Price",
-   "Grand Total": "Grand Total",
-   "Check Instagram": "Check Instagram",
-   "Please provide your name and profile of your instagram that will help us verifying your instagram account": "Please provide your name and profile of your instagram that will help us verifying your instagram account",
-   "Instagram Account": "Instagram Account",
-   "Validate Instagram": "Validate Instagram",
-   "Please add the code below into your Instagram bio and then click validate.": "Please add the code below into your Instagram bio and then click validate.",
-   "Verify Instagram": "Verify Instagram",
-   "Back": "Back",
-   "Add Product": "Add Product",
-   "Describe Your Page": "Describe Your Page",
-   "Please select niche. Buyers can find your product by niche.": "Please select niche. Buyers can find your product by niche.",
-   "finish": "finish",
+   "Oops!": "عذراً",
+   "Looks like there's nothing here...": "يبدو انه لا يوجد شيء هنا...",
+   "Start Date": "تاريخ البدء",
+   "Duration": "المدة الزمنية",
+   "hour(s)": "عدد الساعات",
+   "Category Type": "نوع الفئة",
+   "Download Attachment(s)": "تحميل المرفقات",
+   "Start": "ابداء",
+   "Copy text": "نسخ النص",
+   "Payment Details": "بيانات الدفع",
+   "Payment Method": "طريقة الدفع",
+   "Bio Price": "سعر النص",
+   "Grand Total": "المبلغ الإجمالي",
+   "Check Instagram": "التحقق من الحساب",
+   "Please provide your name and profile of your instagram that will help us verifying your instagram account": "الرجاء تزويدنا باسمك واسم الحساب لمساعدتنا في التحقق من حساب الإنستقرام",
+   "Instagram Account": "حساب الإنستقرام",
+   "Validate Instagram": "تحقق من الحساب",
+   "Please add the code below into your Instagram bio and then click validate.": "الرجاء اضافة الرمز الموجود بالأسفل إلى قسم السيرة الذاتية ثم الضغط على تحقق من الحساب",
+   "Verify Instagram": "التحقق من الحساب",
+   "Back": "العودة",
+   "Add Product": "اضافة منتج",
+   "Describe Your Page": "قم بوصف صفحتك",
+   "Please select niche. Buyers can find your product by niche.": "الرجاء اختيار تخصص الصفحة لكي يستطيع المشتري من اختيار المؤثر حسب التخصص.",
+   "finish": "الانتهاء",
    // new
-   "Full Name": "Full Name",
-   "Paypal E-mail (optional)": "Paypal E-mail (optional)",
-   "Referral Code (optional)": "Referral Code (optional)",
-   "unique validation failed on email": "That email is already in use. Please use another one.",
-   "Please enter an instagram account": "Please enter an instagram account",
-   "Next": "Next",
-   "Start selling shoutouts at Sparktrend": "Start selling shoutouts at Sparktrend",
-   "Start buying shoutouts at Sparktrend": "Start buying shoutouts at Sparktrend",
-   "Sign up Now!": "Sign up Now!",
-   "Pay": "Pay",
-   "How it Works": "How it Works",
-   "For Buyers": "For Buyers",
-   "For Sellers": "For Sellers",
-   "Rating": "Rating",
-   "Niches": "Niches",
-   "Schedule": "Schedule",
-   "Username": "Username",
-   "PayPal E-mail (optional)": "PayPal E-mail (optional)",
-   "Has not completed a shoutout yet.": "Has not completed a shoutout yet.",
+   "Full Name": "الاسم كامل",
+   "Paypal E-mail (optional)": "ايميل حساب ال PayPal (اختياري)",
+   "Referral Code (optional)": "كود الاحالة (اختياري)",
+   "unique validation failed on email": "‎البريد الإلكتروني المدخل لقد تم تسجيله من قبل. ‎فضلًا قم بتجربة بريد إلكتروني اخر.",
+   "Please enter an instagram account": "الرجاء ادخال اسم حساب الإنستقرام",
+   "Next": "التالي",
+   "Start selling shoutouts at Sparktrend": "ابداء بيع الإعلانات عبر سبارك ترند",
+   "Start buying shoutouts at Sparktrend": "ابداء في شراء الإعلانات عبر سبارك ترند",
+   "Sign up Now!": "سجل الان!",
+   "Pay": "ادفع",
+   "How it Works": "ما هو سبارك ترند",
+   "For Buyers": "للمشترين",
+   "For Sellers": "للبائعين",
+   "Rating": "التقيم",
+   "Niches": "التخصص",
+   "Schedule": "الجدول",
+   "Username": "اسم المستخدم",
+   "PayPal E-mail (optional)": "البريد الالكتروني ل PayPal (اختياري)",
+   "Has not completed a shoutout yet.": "لم يكمل أي اعلان بعد",
+   "Must be smaller than 20mb.": "يجب ان يكون اصغر من 20MB",
+   "Rate": "التقيم",
+   "Edit Feedback": "تعديل رأيك بالمنتج ",
+   "Are you sure?": "هل أنت متأكد?",
+   "Do you really want to order this shoutout?": "هل أنت متاكد من طلب هذا الإعلان؟ ",
+   "Processing...": "جاري اتمام العملية",
+   "Price Detail": "تفاصيل السعر",
+   "Pay With:": "ادفع بأستعمال:",
+   "Sorry the page not found": "عذراً لم نجد الصفحة",
+   "The link you followed probably broken, or the page has been removed": "الرابط الذي تبعته قد يكون خاطئ، ام قد تكون الصفحة محذوفة ",
+   "Select Niche": "Select Niche",
+   "Single Post": "Single Post",
+   "hours": "hours",
+   "Single post is simple post of 1 picture and a caption.": "Single post is simple post of 1 picture and a caption.",
+   "Multiple Post": "Multiple Post",
+   "Multiple post is simple post of multiple pictures and a caption.": "Multiple post is simple post of multiple pictures and a caption.",
+   "Story post is a series of pictures and captions.": "Story post is a series of pictures and captions.",
    home: {
       main_legend: "سبارك ترند هو اول منصة إلكترونية لبيع وشراء إعلانات الإنستقرام .",
       targeted_influencers_desc: "نحن نقسم المؤثرين المسجلين إلى مجموعات إسنادًا على احصائيات الحساب. على سبيل المثال اعلى الدول متابعة، الفئة العمرية، الجنس، عدد المتابعين، وحتى نوع الحساب ",
@@ -210,8 +227,8 @@ const ar = {
          not_paid_yet: "لم يتم الدفع لهذا الطلب",
          unknown_reason: "لقط حصل خطاء. الرجاء المحاولة مرة أخرى في وقت لاحق",
          //new
-         cannot_rate_before_payment: 'You cannot rate a shoutout before payment',
-         cannot_change_feedback_after_completion: 'You cannot change your feedback of a completed shoutout.'
+         cannot_rate_before_payment: "لا يمكنك تقيم الإعلان قبل الشراء",
+         cannot_change_feedback_after_completion: "لا يمكنك تعديل رأيك بالخدمة بعد اكتمال الطلب وانتهائه "
       },
       success: {
          order_accepted: "تم قبول الطلب!",
@@ -220,65 +237,64 @@ const ar = {
          order_completed: "تم إنهاء الطلب",
          order_paid: "تمت عملية الدفع بنجاح!",
          order_refunded: "استرداد المال للطلب",
-         order_rated: "Your rating has been submitted."
+         order_rated: "تم استلام تقيمك بنجاح"
       },
-      feedback_solicit: "Help us improve your experience at sparktrend.net by submitting your feedback of this service.",
-      feedback_guide: "You can submit your feedback after payment. You can edit your feedback before ordered shoutout is completed."
+      feedback_solicit: "ساعدنا في تحسين خدمتك في سبارك ترند بتسليم تقيمك",
+      feedback_guide: " يمكنك تسليم تقيمك للمنتج بعد الدفع. يمكنك تعديل تقيمك قبل اكتمال الإعلان"
    },
    error: {
       default: "حدث خطاء ما. الرجاء المحاولة مرة أخرى في وقت لاحق"
    },
    instaaccount: {
       status: {
-         verified: 'Verified',
-         unverified: 'Not Verified',
-         in_progress: 'In Progress'
+         verified: 'تم التوثيق',
+         unverified: 'لم يتم التوثيق',
+         in_progress: 'جاري التوثيق'
       },
       error: {
-         invalid_account: "Invalid account",
-         instagram_already_exists: "Instagram account already exists",
-         cannot_get_instagram_account: "Cannot get account information.",
-         insufficient_followers: "Insufficient followers",
-         insta_verification_failed: "Verification failed",
-         product_save_failed: "Product save failed",
-         invalid_data: "Invalid data",
-         verification_failed: "Verification failed.",
-         insights_upload_failed: "Image upload failed"
+         invalid_account: "الحساب غير موجود",
+         instagram_already_exists: "هذا الحساب موجود من السابق",
+         cannot_get_instagram_account: "لا نستطيع ايجاد بيانات حسابك",
+         insufficient_followers: "عدد المتابعين اقل من المطلوب",
+         insta_verification_failed: "لم يتم التوثيق بنجاح",
+         product_save_failed: "لم يتم حفظ المنتج بنجاح",
+         invalid_data: "بيانات خاطئة",
+         verification_failed: "لقد فشل التوثيق.",
+         insights_upload_failed: "لم يتم رفع الصورة بنجاح"
       },
       success: {
-         insights_uploaded: "Insight picture uploaded",
-         product_saved: "Product saved"
+         insights_uploaded: "تم رفع الإحصائيات بنجاح",
+         product_saved: "تم حفظ المنتج بنجاح"
       }
    },
    guide: {
       seller: {
-         one: "Add your account by going to Dashboard > My Products > Add Account.",
-         two: "Input your Instagram Username and press Check Instagram (you need to have at least 10K followers and must be a business account). Afterward, click next.",
-         three: "To have your Instagram account confirmed and ready to sell, put the unique code on your Instagram bio and then press verify.",
-         four: "Upload screenshots of your insights (gender, age range, top country location and active time). You may skip this if you have just turned on your business profile because it might take a week to get the insights. Note that if you don’t have insights yet, we can’t confirm you as a verified seller which means you have to wait to sell at Sparktrend yet.",
-         five: "Afterwards, fill out details of your product and set the price for all the types of shoutout you want to sell and then click Add Product.",
-         six: "Now that you're all set, your product has been created. Please wait for our Executive Admin to verify your product in 24 hours. Afterward, you will be able to share your products and wait for someone to buy it.",
+         one: "أضف الحساب عبر الذهاب الى لوحة المستخدم > منتجاتي > اضافة حساب جديد.",
+         two: "ادخل الاسم المستعار لحساب الإنستقرام ومن ثم أضغط تأكيد. (يجب ان يكون لديك على الاقل ١٠،٠٠٠ متابع في حسابك وان يكون حساب تجاري). ومن ثم اضغط التالي.) ",
+         three: "لكي يتم توثيق حسابك وتستطيع البدء ببيع الإعلانات، الرجاء اضافة الرمز التالي إلى خانة السيرة الذاتية لكي يتم توثيق حسابك ",
+         four: "قم بتحميل لقطات من احصائياتك (الجنس ، الفئة العمرية ، أفضل موقع للبلد والوقت النشط).  يمكنك تخطي هذا إذا كنت قد قمت للتو بتشغيل ملفك الشخصي للنشاط التجاري لأن الأمر قد يستغرق أسبوعًا للحصول على إحصاءات.  لاحظ أنه إذا لم يكن لديك احصائيات بعد ، فلا يمكننا تأكيد أنك بائع معتمد ، مما يعني أنه عليك الانتظار للبيع في سبارك ترند حتى الآن.",
+         five: " بعد ذلك ، قم بملء تفاصيل منتجك وحدد السعر لجميع أنواع الاعلانات التي تريد بيعها ، ثم انقر فوقإضافة منتج",
+         six: "الآن وبعد أن أصبحت جاهزًا تمامًا ، تم إنشاء منتجك.  الرجاء الانتظار حتى يتحقق المسؤول التنفيذي لدينا من صحة منتجك خلال 24 ساعة.  بعد ذلك ، ستتمكن من مشاركة منتجاتك والانتظار حتى يقوم شخص ما بشرائها.",
          seven: {
-            q: "I make a sales! Someone just purchases one of my products! What should I do?",
-            a: "Simply go to order, and go to Dashboard > My Sales and go to request section. You can choose whether you want to accept or reject. You have 36 hours to take action before the request is automatically rejected by the system."
+            q: "لقد قمت ببيع!  شخص اشترى للتو واحدة من المنتجات الخاصة بي!  ماذا يجب أن أفعل؟",
+            a: "ما عليك سوى الانتقال إلى الطلب ، والانتقال إلى لوحة التحكم، ثم مبيعاتي، ومن ثم الانتقال إلى قسم الطلب.  يمكنك اختيار ما إذا كنت تريد القبول أو الرفض.  لديك 36 ساعة لاتخاذ إجراء قبل رفض الطلب تلقائيًا من قبل النظام."
          },
          eight: {
-            q: "I make a sales! Someone just purchases one of my products! What should I do?",
-            a: "If you accept the request, the shout will be moved to accepted, and you can proceed to post the promotions when the posting time come."
+            q: "لقد قمت ببيع!  شخص اشترى للتو واحدة من المنتجات الخاصة بي!  ماذا يجب أن أفعل؟",
+            a: "إذا قبلت الطلب ، سيتم نقل الاعلان إلى القبول ، ويمكنك المتابعة لنشر العروض الترويجية عندما يحين وقت النشر."
          },
-         nine: "After the posting time comes, download the picture and caption, and then post it, and please be sure to include unique code for the caption. After you post it, click on the start button. After the post time is fulfilled, you can click on submit button and it’s done."
+         nine: "بعد أن يأتي وقت النشر ، قم بتنزيل الصورة والتعليق عليها ، ثم نشرها ، ويرجى التأكد من اضافة الرمز الفريد الى مقتبس النشر.  بعد نشرها ، انقر على زر البداية.  بعد انتهاء وقت النشر ، يمكنك النقر فوق زر إرسال ويتم ذلك."
       },
       buyer: {
-         one: "Go to [Browse] and select which shout you want to buy.",
-         two: "Once you've selected, you can also decide what kind of shout and when is the best time for the shout. Click [Buy Now] to proceed.",
-         three: "Upload the image you want to be 'shout' and specify the date, caption as well as additional information. And click [Order Shoutout].",
-         four: "To check the status of you post, go to orders in the [Purchased Shouts] tab",
-         five: "You will be redirected to transaction review, once you make sure it's correct, you can process the payment via paypal.",
-         six: "To check the status of your post, go to dashboard in the Dashboard > My Purchases tab."
+         one: "اذهب الى (تصفح) واختر احد المؤثرين للإعلان لديه.",
+         two: "بمجرد اختيارك ، يمكنك أيضًا تحديد نوع الإعلان ومتى يكون أفضل وقت للإعلان.  انقر فوق [طلب الإعلان] للمتابعة.",
+         three: "قم بتحميل الصورة التي تريد أن تكون المنشور وحدد التاريخ والتعليق بالإضافة إلى معلومات إضافية.  وانقر فوق [طلب الإعلان]",
+         four: "للتحقق من حالة النشر ، انتقل إلى خانة الاعلانات المدفوعة",
+         five: "سيتم إعادة توجيهك إلى مراجعة المعاملة ، بمجرد التأكد من صحتها ، يمكنك معالجة الدفع عبر بي بال (PayPal)",
+         six: "للتحقق من حالة المنشور الخاص بك ، انتقل إلى لوحة التحكم > مشترياتي."
       }
    }
 }
-
 ar.order_status = {shoutout: {}, payment: {}}
 ar.order_status.shoutout[OrderStatus.SHOUTOUT.NOT_CREATED] = 'الطلب لم ينشاء'
 ar.order_status.shoutout[OrderStatus.SHOUTOUT.CREATED] = 'طلب'

@@ -175,6 +175,23 @@ const en = {
    "Username": "Username",
    "PayPal E-mail (optional)": "PayPal E-mail (optional)",
    "Has not completed a shoutout yet.": "Has not completed a shoutout yet.",
+   "Must be smaller than 20mb.": "Must be smaller than 20mb.",
+   "Rate": "Rate",
+   "Edit Feedback": "Edit Feedback",
+   "Are you sure?": "Are you sure?",
+   "Do you really want to order this shoutout?": "Do you really want to order this shoutout?",
+   "Processing...": "Processing...",
+   "Price Detail": "Price Detail",
+   "Pay With:": "Pay With:",
+   "Sorry the page not found": "Sorry the page not found",
+   "The link you followed probably broken, or the page has been removed": "The link you followed probably broken, or the page has been removed",
+   "Select Niche": "Select Niche",
+   "Single Post": "Single Post",
+   "hours": "hours",
+   "Single post is simple post of 1 picture and a caption.": "Single post is simple post of 1 picture and a caption.",
+   "Multiple Post": "Multiple Post",
+   "Multiple post is simple post of multiple pictures and a caption.": "Multiple post is simple post of multiple pictures and a caption.",
+   "Story post is a series of pictures and captions.": "Story post is a series of pictures and captions.",
    home: {
       main_legend: "SparkTrend is an online marketplace to sell and buy advertisement posts on Instagram",
       targeted_influencers_desc: "Our system algorithm allow SparkTrend to gather statistics of registered influencers accounts. These information include number of followers, Niche, Gender, Age, And country location of their audience. Based on this information the the influencer is then grouped into categories to make it easy for buyers to find the perfect influencer to advertise their brand.",
@@ -278,7 +295,6 @@ const en = {
       }
    }
 }
-
 en.order_status = {shoutout: {}, payment: {}}
 en.order_status.shoutout[OrderStatus.SHOUTOUT.NOT_CREATED] = 'Not created'
 en.order_status.shoutout[OrderStatus.SHOUTOUT.CREATED] = 'Request'
