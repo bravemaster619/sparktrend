@@ -269,29 +269,29 @@ const en = {
    },
    guide: {
       seller: {
-         one: "Add your account by going to Dashboard > My Products > Add Account.",
-         two: "Input your Instagram Username and press Check Instagram (you need to have at least 10K followers and must be a business account). Afterward, click next.",
-         three: "To have your Instagram account confirmed and ready to sell, put the unique code on your Instagram bio and then press verify.",
-         four: "Upload screenshots of your insights (gender, age range, top country location and active time). You may skip this if you have just turned on your business profile because it might take a week to get the insights. Note that if you don’t have insights yet, we can’t confirm you as a verified seller which means you have to wait to sell at Sparktrend yet.",
-         five: "Afterwards, fill out details of your product and set the price for all the types of shoutout you want to sell and then click Add Product.",
+         one: "Add an account by going to Dashboard > My Products > Add Account.",
+         two: "Enter your Instagram Username then press “Check Instagram” (You need to have a minimum of 10,000 followers and need to be a business account). then, click next.",
+         three: "To verify your Instagram account and be able to sell on sparktrend.net, add the special code given to your Instagram bio then click verify.",
+         four: "Upload screenshots of your account statistics (gender, age range, top country location and active time). You can skip this step if you have just turned your business profile on. It might take a week to get the statistics of your account. Please keep in mind that we can’t confirm your account and allow your account to make sales unless the statistics are submitted and reviewed.",
+         five: "Next, provide all the required details of your services and their prices that you want to provide, then click “add product”",
          six: "Now that you're all set, your product has been created. Please wait for our Executive Admin to verify your product in 24 hours. Afterward, you will be able to share your products and wait for someone to buy it.",
          seven: {
-            q: "I make a sales! Someone just purchases one of my products! What should I do?",
-            a: "Simply go to order, and go to Dashboard > My Sales and go to request section. You can choose whether you want to accept or reject. You have 36 hours to take action before the request is automatically rejected by the system."
+            q: "I made a sale! Someone just purchased one of my services! What should I do?",
+            a: "Simply go to your order page > Dashboard > My Sales, then go to request section. You can either choose to accept or reject the order. The system will automatically reject the order in 36 hours if you don’t take action."
          },
          eight: {
-            q: "I make a sales! Someone just purchases one of my products! What should I do?",
-            a: "If you accept the request, the shout will be moved to accepted, and you can proceed to post the promotions when the posting time come."
+            q: "I made a sale! Someone just purchased one of my services! What should I do?",
+            a: "If you decide to accept the request, the order will be moved to the “accepted” tab. Next you can continue by posting the promotion to your Instagram account."
          },
-         nine: "After the posting time comes, download the picture and caption, and then post it, and please be sure to include unique code for the caption. After you post it, click on the start button. After the post time is fulfilled, you can click on submit button and it’s done."
+         nine: "When the posting time is due, download the given picture(s) and caption, then post it. Please make sure to include the “special code” for the caption. After you make a post, click on the “start” button. After the post time is completed, click on the “submit” button and it’s done."
       },
       buyer: {
-         one: "Go to [Browse] and select which shout you want to buy.",
-         two: "Once you've selected, you can also decide what kind of shout and when is the best time for the shout. Click [Buy Now] to proceed.",
-         three: "Upload the image you want to be 'shout' and specify the date, caption as well as additional information. And click [Order Shoutout].",
-         four: "To check the status of you post, go to orders in the [Purchased Shouts] tab",
-         five: "You will be redirected to transaction review, once you make sure it's correct, you can process the payment via paypal.",
-         six: "To check the status of your post, go to dashboard in the Dashboard > My Purchases tab."
+         one: "Start by going to “Browse” and select the perfect influencer for your brand.",
+         two: "Once you find your influencer, choose the type and the duration of the post. Click “Buy Now” to continue.",
+         three: "tNext, upload the images and fill the required fields given. Then click “Order Shoutout”.",
+         four: "To check the status of your order, go to “orders” in the “Purchased Shouts” tab",
+         five: "Now you will be redirected to the order review. once checked for all the correct options, please continue to the payment via PayPal",
+         six: "To check the status of your order, go to “orders” in the “Purchased Shouts” tab"
       }
    }
 }
