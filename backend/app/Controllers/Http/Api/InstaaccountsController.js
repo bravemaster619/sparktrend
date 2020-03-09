@@ -159,12 +159,10 @@ class InstaaccountsController extends BaseController {
   async validateInstagram ({ request, auth, response, instance }) {
     const user = auth.user
     let instaaccount = instance
-
     if (user.role != 'admin' && user._id.toString() != instance.user_id.toString()) {
       throw UnAuthorizeException.invoke()
     }
-    // const isValid = await this.validateInsta(instaaccount.username, instaaccount.verification_code)
-    const isValid = true
+    const isValid = await this.validateInsta(instaaccount.username, instaaccount.verification_code)
     if (isValid) {
       instaaccount.verified = true
       await instaaccount.save()
