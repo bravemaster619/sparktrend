@@ -288,7 +288,7 @@ const en = {
       buyer: {
          one: "Start by going to “Browse” and select the perfect influencer for your brand.",
          two: "Once you find your influencer, choose the type and the duration of the post. Click “Buy Now” to continue.",
-         three: "tNext, upload the images and fill the required fields given. Then click “Order Shoutout”.",
+         three: "Next, upload the images and fill the required fields given. Then click “Order Shoutout”.",
          four: "To check the status of your order, go to “orders” in the “Purchased Shouts” tab",
          five: "Now you will be redirected to the order review. once checked for all the correct options, please continue to the payment via PayPal",
          six: "To check the status of your order, go to “orders” in the “Purchased Shouts” tab"

@@ -9,7 +9,7 @@
         <div class="row bg-primary-light align-items-center justify-content-center py-72 px-4">
             <div class="container">
                 <div class="row ">
-                    <div class="col-12 col-lg-6 step-1 mb-4">{{$t("guide.seller.one")}}</div>
+                    <div class="col-12 col-lg-6 step-1 mb-4">{{$t("guide.buyer.one")}}</div>
                     <div class="col-12 col-lg-6">
                         <img class="w-100" src="/img/guide/buyer-1.png" alt="buyer guide step 1">
                     </div>
