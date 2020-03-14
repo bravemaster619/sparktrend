@@ -29,9 +29,9 @@ export default {
       url = absolute ? url : baseUrl(url)
       return Axios.put(url, data, {headers: Object.assign(header,authHeader())})
    },
-   delete: (url, data, header = {}, absolute=false) => {
+   delete: (url, header = {}, absolute=false) => {
       url = absolute ? url : baseUrl(url)
-      return Axios.post(url, data, {headers: Object.assign(header,authHeader())})
+      return Axios.delete(url, {headers: Object.assign(header,authHeader())})
    }
 
 }
