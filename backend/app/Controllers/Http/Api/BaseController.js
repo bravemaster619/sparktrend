@@ -52,7 +52,6 @@ class BaseController {
     } else {
       return await Config.first()
     }
-
   }
 }
 
