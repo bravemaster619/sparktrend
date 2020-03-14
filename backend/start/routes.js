@@ -24,9 +24,9 @@ Route.get('/', ({ request }) => {
 
 Route.group(() => {
 
-  Route.get('/migrate', 'Api/MigrationController.migrate');
+  // Route.get('/migrate', 'Api/MigrationController.migrate');
 
-  Route.get('/seed', 'Api/MigrationController.seed');
+  // Route.get('/seed', 'Api/MigrationController.seed');
 
   Route.get('/instainfo', 'Api/InstaaccountsController.getInstaInfo')
 
