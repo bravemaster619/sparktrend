@@ -286,6 +286,6 @@ Route.group(() => {
    *       401:
    *         $ref: '#/components/responses/Unauthorized'
    */
-  Route.delete('/:id', 'Api/OrdersController.delete').middleware(['auth:jwt']).instance('App/Models/Order')
+  Route.delete('/:id', 'Api/OrdersController.delete').middleware(['authAdmin:jwt']).instance('App/Models/Order')
 
 }).prefix('/api/orders')

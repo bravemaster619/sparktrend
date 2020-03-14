@@ -268,7 +268,7 @@ Route.group(() => {
    *       403:
    *         $ref: '#/components/responses/Forbidden'
    */
-  Route.delete('/:id', 'Api/InstaaccountsController.delete').middleware(['auth:jwt']).instance('App/Models/Instaaccount')
+  Route.delete('/:id', 'Api/InstaaccountsController.delete').middleware(['authAdmin:jwt']).instance('App/Models/Instaaccount')
 
   /**
    * @swagger

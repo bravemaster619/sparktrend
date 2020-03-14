@@ -137,7 +137,7 @@ Route.group('user', () => {
    *         $ref: '#/components/responses/Unauthorized'
    */
   Route.delete('/:id', 'Api/UsersController.destroy')
-    .middleware(['auth:jwt'])
+    .middleware(['authAdmin:jwt'])
     .instance('App/Models/User')
 
   /**
