@@ -3,7 +3,7 @@ const Validator = use('Validator')
 const ValidateErrorException = use('App/Exceptions/ValidateErrorException')
 const _ = require('lodash')
 const Env = use('Env')
-const Config = use('Config')
+const Config = use('App/Models/Config')
 
 class BaseController {
   async validate (data, rules, messages) {
