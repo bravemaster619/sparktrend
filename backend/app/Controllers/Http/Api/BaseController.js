@@ -50,7 +50,7 @@ class BaseController {
         }
       }
     } else {
-      return await Config.findOne()
+      return await Config.first()
     }
 
   }
