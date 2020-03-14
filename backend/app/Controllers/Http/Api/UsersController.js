@@ -5,6 +5,7 @@
 const BaseController = require('./BaseController')
 /** @type {typeof import('../../../Models/User')} */
 const User = use('App/Models/User')
+const Instaaccount = use('App/Models/Instaaccount')
 // const Validator = use('Validator')
 const UnAuthorizeException = use('App/Exceptions/UnAuthorizeException')
 // const Config = use('Config')
@@ -129,9 +130,9 @@ class UsersController extends BaseController {
    */
   async destroy ({ request, response, instance, auth }) {
     const user = instance
-    if (String(auth.user._id) !== String(user._id)) {
-      throw UnAuthorizeException.invoke()
-    }
+    await Instaaccount.query()
+      .where('user_id', user._id)
+      .delete()
     await user.delete()
     return response.apiDeleted()
   }

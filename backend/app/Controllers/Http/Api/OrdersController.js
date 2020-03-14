@@ -402,11 +402,7 @@ class OrdersController extends BaseController{
   }
 
   async delete({ request, response, auth, instance }) {
-    let user = auth.user
     const order = instance
-    if (user.role !== 'admin') {
-      throw UnAuthorizeException.invoke()
-    }
     await order.delete()
     return response.apiDeleted()
   }
