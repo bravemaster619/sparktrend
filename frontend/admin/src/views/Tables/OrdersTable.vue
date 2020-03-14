@@ -76,7 +76,7 @@
 
                      <template>
                         <router-link class="dropdown-item" :to="`/orders/${row._id}`">View</router-link>
-                        <a class="dropdown-item" href="#">Delete</a>
+                        <a class="dropdown-item" v-on:click.stop.prevent="removeOrder(row._id)" href="#">Delete</a>
                      </template>
                   </base-dropdown>
                </td>
@@ -188,6 +188,24 @@
                return 'completed'
             }
             return 'request'
+         },
+         removeOrder: function(id) {
+            this.$swal({
+               title: 'Are you sure to delete this order?',
+               text: 'You cannot revert past payments.',
+               showCancelButton: true
+            }).then(result => {
+               if (result.value) {
+                  httpService.delete(`orders/${id}`).then(() => {
+                     this.$noty.success("Deleted an order.")
+                     this.updateData(this.currentPage)
+                  }).error(e => {
+                     window.console.error(e)
+                     this.$noty.error("Cannot delete the order.")
+                     this.updateData(this.currentPage)
+                  })
+               }
+            })
          }
       },
       computed: {

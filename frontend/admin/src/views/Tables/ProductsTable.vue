@@ -77,7 +77,7 @@
 
                      <template>
                         <router-link class="dropdown-item" :to="`/products/${row._id}`">Edit</router-link>
-                        <a class="dropdown-item" href="#">Delete</a>
+                        <a class="dropdown-item" v-on:click.stop.prevent="removeProduct(row._id)">Delete</a>
                      </template>
                   </base-dropdown>
                </td>
@@ -187,6 +187,23 @@
                completed = parseInt(instaaccount.completed_shoutout)
             }
             return `${total} / ${completed}`
+         },
+         removeProduct: function(id) {
+            this.$swal({
+               title: 'Are you sure to delete this product?',
+               text: 'Think twice before you proceed',
+               showCancelButton: true
+            }).then(result => {
+               if (result.value) {
+                  httpService.delete(`/instaaccounts/${id}`).then(() => {
+                     this.$noty.success("Deleted a user.")
+                     this.updateData(this.currentPage)
+                  }).catch((e) => {
+                     this.$noty.error("Cannot delete a user.")
+                     this.updateData(this.currentPage)
+                  })
+               }
+            })
          }
       },
       computed: {

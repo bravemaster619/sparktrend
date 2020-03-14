@@ -77,8 +77,8 @@
 
                      <template>
                         <a class="dropdown-item" :href="`/users/${row._id}`">Edit</a>
-                        <a class="dropdown-item" href="#">Message</a>
-                        <a class="dropdown-item" href="#">Delete</a>
+                        <a class="dropdown-item" :href="`mailto:${row.email}`">Message</a>
+                        <a class="dropdown-item" v-on:click.stop.prevent="removeUser(row._id)" href="#">Delete</a>
                      </template>
                   </base-dropdown>
                </td>
@@ -140,7 +140,7 @@
                this.total = res.data.meta.total
             }).catch(e => {
                window.console.error(e)
-               this.$noty.error("Cannot get user data", { timeout: 3000 })
+               this.$noty.error("Cannot get user data")
             })
          },
          onPageChange: function(page) {
@@ -149,6 +149,24 @@
              this.loading = false
              this.currentPage = page
            })
+         },
+         removeUser(id) {
+            this.$swal({
+               title: 'Are you sure to delete this user?',
+               text: 'All accounts and products related to this user will be deleted!',
+               showCancelButton: true
+            }).then(result => {
+               if (result.value) {
+                  httpService.delete(`users/${id}`).then(() => {
+                     this.$noty.success("Deleted a user.")
+                     this.updateData(this.currentPage)
+                  }).error(e => {
+                     window.console.error(e)
+                     this.$noty.error("Cannot delete a user.")
+                     this.updateData(this.currentPage)
+                  })
+               }
+            })
          }
       },
       computed: {
