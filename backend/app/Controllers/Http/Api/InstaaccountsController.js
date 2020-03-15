@@ -303,7 +303,8 @@ class InstaaccountsController extends BaseController {
         follower_count: userdata.edge_followed_by.count,
         username: userdata.username,
         profile_img: userdata.profile_pic_url,
-        type: userdata.is_business_account ? 'business' : 'personal'
+        type: userdata.is_business_account ? 'business' : 'personal',
+        biography: userdata.biography
       }
       // const instainfo = await setTimeout(function() {
       //   return {
@@ -326,7 +327,7 @@ class InstaaccountsController extends BaseController {
 
   async validateInsta (username, code) {
     const instainfo = await this.getInstaInfo(username)
-    return instainfo.graphql && instainfo.graphql.user && instainfo.graphql.user.biography && instainfo.graphql.user.biography.includes(code)
+    return instainfo.biography.includes("code")
   }
 
   randomIntBetween (min, max) {
