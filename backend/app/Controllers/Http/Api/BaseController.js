@@ -3,8 +3,8 @@ const Validator = use('Validator')
 const ValidateErrorException = use('App/Exceptions/ValidateErrorException')
 const _ = require('lodash')
 const Env = use('Env')
-const Config = use('App/Models/Config')
-
+const Setting = use('App/Models/Config')
+const Config = use('Config')
 class BaseController {
   async validate (data, rules, messages) {
     const validation = await Validator.validateAll(data, rules, messages)
@@ -50,7 +50,7 @@ class BaseController {
         }
       }
     } else {
-      return await Config.first()
+      return await Setting.first()
     }
   }
 }
