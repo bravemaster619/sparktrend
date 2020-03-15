@@ -130,11 +130,11 @@
                         this.description = info.biography;
                         this.profile_picture = info.profile_pic_url;
                         this.username = info.username;
-                        if(this.follower_count < 1000){
-                            this.$toastr.error(this.$t("instaaccount.error.insufficient_followers"))
-                            this.error = true;
-                            return
-                        }
+                        // if(this.follower_count < 1000){
+                        //     this.$toastr.error(this.$t("instaaccount.error.insufficient_followers"))
+                        //     this.error = true;
+                        //     return
+                        // }
                         this.account_valid = true
                 }).catch( (e) => {
                     window.console.error(e)
