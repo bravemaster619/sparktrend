@@ -219,16 +219,75 @@ class InstaaccountsController extends BaseController {
       throw UnAuthorizeException.invoke()
     }
     let instaaccount = instance
-    const editData = request.only(['demographics', 'allowed', 'verified', 'product'])
+    const editData = request.only(['allowed', 'verified', 'product'])
     instaaccount.merge(editData)
+    if (!request.demographics || typeof request.demographics !== 'object') {
+      instaaccount.demographics = {
+        age: [
+          { name: '13-17', percent: 0 },
+          { name: '18-24', percent: 0 },
+          { name: '25-34', percent: 0 },
+          { name: '35-44', percent: 0 },
+          { name: '45-54', percent: 0 },
+          { name: '55-64', percent: 0 },
+          { name: '65+', percent: 0 }
+        ],
+        gender: [
+          { name: 'Men', percent: 0 },
+          { name: 'Women', percent: 0 }
+        ],
+        country: [
+          { name: ' ', percent: 0 },
+          { name: '  ', percent: 0 },
+          { name: '   ', percent: 0 },
+          { name: '    ', percent: 0 },
+          { name: '     ', percent: 0 }
+        ]
+      }
+    } else {
+      ['age', 'gender', 'country'].forEach(key => {
+        if (request.demographics[key] && request.demographics[key].length) {
+          instaaccount.demographics[key] = request.demographics[key]
+        } else {
+          if (key === 'age') {
+            instaaccount.demographics[key] = [
+              { name: '13-17', percent: 0 },
+              { name: '18-24', percent: 0 },
+              { name: '25-34', percent: 0 },
+              { name: '35-44', percent: 0 },
+              { name: '45-54', percent: 0 },
+              { name: '55-64', percent: 0 },
+              { name: '65+', percent: 0 }
+            ]
+          }
+          if (key === 'gender') {
+            instaaccount.demographics[key] = [
+              { name: 'Men', percent: 0 },
+              { name: 'Women', percent: 0 }
+            ]
+          }
+          if (key === 'country') {
+            instaccount.demographics[key] = [
+              { name: ' ', percent: 0 },
+              { name: '  ', percent: 0 },
+              { name: '   ', percent: 0 },
+              { name: '    ', percent: 0 },
+              { name: '     ', percent: 0 }
+            ]
+          }
+        }
+      })
+    }
     if (!instaaccount.verified && instaaccount.allowed) {
       instaaccount.allowed = false
     }
     try {
       await instaaccount.save()
     } catch (e) {
-      console.log(util.inspect(instaaccount, false, null, true))
-      console.error(e)
+      console.log(instaaccount.demographics)
+      // console.log(instaaccount)
+      // console.log(util.inspect(instaaccount, false, null, true))
+      // console.error(e)
       return response.validateFailed('invalid_data')
     }
 
