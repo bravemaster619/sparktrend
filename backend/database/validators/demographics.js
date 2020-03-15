@@ -1,6 +1,5 @@
 module.exports = {
   bsonType: 'array',
-  minItems: 1,
   maxItems: 100,
   uniqueItems: true,
   items: {
