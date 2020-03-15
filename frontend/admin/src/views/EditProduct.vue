@@ -228,14 +228,16 @@
             payload.demographics = { age: [], gender:[], country: [] }
             if (this.instaaccount.demographics) {
                ['age', 'gender', 'country'].forEach(demoKey => {
-                  this.instaaccount.demographics[demoKey].forEach(dg => {
-                     if(dg.name) {
-                        payload.demographics[demoKey].push({
-                           name: dg.name,
-                           percent: $n(dg.percent)
-                        })
-                     }
-                  })
+                  if (this.instaaccount.demographics[demoKey]) {
+                     this.instaaccount.demographics[demoKey].forEach(dg => {
+                        if(dg.name) {
+                           payload.demographics[demoKey].push({
+                              name: dg.name,
+                              percent: $n(dg.percent)
+                           })
+                        }
+                     })
+                  }
                })
             }
             httpService.put(`/instaaccounts/${this.$route.params.id}/adminedit`, payload).then(res => {
