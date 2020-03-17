@@ -13,7 +13,7 @@
                 ></loading>
                 <image-input
                         width="100" height="400"
-                        @change="uploadImage"
+                        @input="uploadImage"
                         :image="(instaaccount && instaaccount.insights_picture) ? instaaccount.insights_picture : null"
                 >
                 </image-input>

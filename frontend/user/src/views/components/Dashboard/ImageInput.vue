@@ -10,7 +10,7 @@
         <input type="file"
                class="file-input"
             ref="fileInput"
-            @input="onSelectFile">
+            @change="onSelectFile">
     </div>
 </template>
 <script>
