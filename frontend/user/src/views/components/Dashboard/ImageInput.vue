@@ -36,23 +36,23 @@
             },
             onSelectFile() {
                 const input = this.$refs.fileInput;
-                window.console.log("File Input: ", input);
+                //window.console.log("File Input: ", input);
                 const files = input.files;
-                window.console.log("Input Files: ", files);
+                //window.console.log("Input Files: ", files);
                 let file = files[0];
-                window.console.log("Input File: ", file);
+                //window.console.log("Input File: ", file);
                 if(files && input.files){
                     const reader = new FileReader();
-                    window.console.log("File Reader: ", reader);
+                    //window.console.log("File Reader: ", reader);
                     reader.onload = (e) => {
-                        window.console.log("Onload event: ", e);
+                        //window.console.log("Onload event: ", e);
                         this.imageData = e.target.result
-                        window.console.log("this image data, ", this.imageData);
+                        //window.console.log("this image data, ", this.imageData);
                     };
-                    window.console.log("Read as Data Url");
+                    //window.console.log("Read as Data Url");
                     reader.readAsDataURL(file);
                     this.$refs.imgdiv.classList.remove("dropzone-border");
-                    window.console.log("Input event fire", file);
+                    //window.console.log("Input event fire", file);
                     this.$emit('input', file);
                 }
             }
