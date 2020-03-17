@@ -77,15 +77,15 @@
              * @return uploaded_file: after upload, set uploaded url
              */
             uploadImage(file) {
-                console.log("uploadImage called", file);
+                window.console.log("uploadImage called", file);
                 this.uploading = true
                 this.uploaded_file = "";
 
                 let form_data = new FormData();
                 form_data.append('image', file);
-                console.log("formdata", form_data)
+                window.console.log("formdata", form_data)
                 addProductService.uploadInsight(form_data, this._id).then(({data}) => {
-                    console.log("server response", data);
+                    window.console.log("server response", data);
                     if(!data.data.insights_picture){
                         this.$toastr.error(this.$t("instaaccount.error.insights_upload_failed"));
                     }else{
