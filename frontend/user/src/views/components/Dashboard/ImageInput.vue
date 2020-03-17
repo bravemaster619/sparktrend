@@ -36,20 +36,23 @@
             },
             onSelectFile() {
                 const input = this.$refs.fileInput;
+                console.log("File Input: ", input);
                 const files = input.files;
-                // let data = new FormData();
-                // data.append("image", )
+                console.log("Input Files: ", files);
                 let file = files[0];
-
+                console.log("Input File: ", file);
                 if(files && input.files){
                     const reader = new FileReader();
+                    console.log("File Reader: ", reader);
                     reader.onload = (e) => {
+                        console.log("Onload event: ", e);
                         this.imageData = e.target.result
+                        console.log("this image data, ", this.imageData);
                     };
-
+                    console.log("Read as Data Url");
                     reader.readAsDataURL(file);
                     this.$refs.imgdiv.classList.remove("dropzone-border");
-
+                    console.log("Input event fire", file);
                     this.$emit('input', file);
                 }
             }
