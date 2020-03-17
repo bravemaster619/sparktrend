@@ -386,7 +386,7 @@ class InstaaccountsController extends BaseController {
 
   async validateInsta (username, code) {
     const instainfo = await this.getInstaInfo(username)
-    return instainfo.biography.includes("code")
+    return instainfo.biography.includes(code)
   }
 
   randomIntBetween (min, max) {
