@@ -3,7 +3,7 @@
       <add-product-verify
          v-if="status==='verify'"
          tab_id="1"
-         @back="$router.push({name: 'myproducts'})"
+         @back="tabBack"
          @next="next"
          :verificationCode="instaaccount.verification_code"
          :username="instaaccount.username"
@@ -84,6 +84,11 @@
                this.insights_picture = result.insight
                this.instaaccount.insights_picture = this.insights_picture
                this.status = this.status_enum[++this.current_tab_id]
+            }
+         },
+         tabBack() {
+            if (this.$route.path !== 'myproducts') {
+               $router.push({name: 'myproducts'})
             }
          }
       },
