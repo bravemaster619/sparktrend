@@ -88,7 +88,7 @@
          },
          tabBack() {
             if (this.$route.path !== 'myproducts') {
-               $router.push({name: 'myproducts'})
+               this.$router.push({name: 'myproducts'})
             }
          }
       },
