@@ -4,7 +4,7 @@
          <div class="product-header text-center">
             <img class="w-100 product-banner"
                  src="https://tse3-mm.cn.bing.net/th/id/OIP.jNCbt_c_8vnq7sbWluCVnQHaCG?w=300&h=85&c=7&o=5&pid=1.7"
-                 v-bind:alt="instaaccount.username + ' banner'">
+                 v-bind:alt="instaaccount.username + ' banner'" style="visibility: hidden">
             <img class="m-auto profile-img" v-bind:src="instaaccount.profile_img"
                  v-bind:alt="instaaccount.username + ' profile image'">
          </div>
