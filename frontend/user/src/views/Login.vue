@@ -60,13 +60,6 @@
 
                         </template>
                         <template>
-                            <div class="text-muted text-center">
-                                <small class="mr-2">Sign in with</small>
-                                <img slot="icon" src="img/icons/common/instagram.svg" class="d-inline-block mr-1" style="height: 18px;">
-                                <router-link type="neutral" to="/oauth">
-                                    <small>Instagram</small>
-                                </router-link>
-                            </div>
                             <div class="mt-2 text-center">
                                 <router-link to="/passwordreset" class="text-primary"><small>{{$t("Forgot password?")}}</small></router-link>
                             </div>
