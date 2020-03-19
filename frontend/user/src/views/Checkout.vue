@@ -98,7 +98,7 @@
 
    const addPayPalButton = function(order, cb) {
        let paypalScript = document.createElement('script')
-       paypalScript.setAttribute('src', 'https://www.paypal.com/sdk/js?client-id=AZmZ06MLlFUMW3b9gBGbH2X5_vhUNlAATnqumGA1ajxixMmHpPz_8MBfqq4J2uAqcKbHjoI1yxHy0Bzx')
+       paypalScript.setAttribute('src', 'https://www.paypal.com/sdk/js?client-id=AcRyBwEpgvyoys2JYGveomqKCYDODZNsAo0rLnVCDY634Ow1puIc4PwhYOH6sr7UrtPXtgeQJ8hshYl9')
        paypalScript.onload = function() {
            paypal.Buttons({
                createOrder: function(data, actions) {
