@@ -7,7 +7,7 @@ class PaypalPaymentService {
   constructor () {
     this.clientId = Env.get('PAYPAL_CLIENT')
     this.clientSecret = Env.get('PAYPAL_SECRET')
-    this.environment = new paypal.core.SandboxEnvironment(this.clientId, this.clientSecret)
+    this.environment = Env.get('PAYPAL_MODE') === 'live' ? new paypal.core.LiveEnvironment(this.clientId, this.clientSecret) : new paypal.core.SandboxEnvironment(this.clientId, this.clientSecret)
     this.client = new paypal.core.PayPalHttpClient(this.environment)
   }
 
@@ -27,14 +27,16 @@ class PaypalPaymentService {
   }
 
   async captureOrder(orderId) {
-    let request = new paypal.orders.OrdersCaptureRequest(orderId)
-    request.requestBody({})
+
     let response = await this.client.execute(request)
     return response
   }
 
   async getOrder(orderId) {
+
     let request = new paypal.orders.OrdersGetRequest(orderId)
+    let clientId = this.clientId;
+    let clientSecret = this.clientSecret;
     let response = await this.client.execute(request)
     return response
   }
