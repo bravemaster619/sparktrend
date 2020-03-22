@@ -44,3 +44,4 @@ $ npm run serve
     - Vue.js
     - Swagger
     - AWS S3
+    - Paypal Node.js SDK
