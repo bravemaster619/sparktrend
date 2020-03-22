@@ -130,10 +130,8 @@
                ></product-item>
             </div>
             <div class="row p-2" v-if="(!instaaccounts || !instaaccounts.length) && !loading">
-               <div class="col-12 text-center p-3">
-                  <img src="/img/nodata.png" style="max-width: 125px">
-                  <h6 class="mt-2">{{$t("Oops!")}}</h6>
-                  <p>{{$t("Looks like there's nothing here...")}}</p>
+               <div class="col-12">
+                  <NoData/>
                </div>
             </div>
          </div>
@@ -208,6 +206,7 @@
    import Vue from 'vue'
    import vueDebounce from 'vue-debounce'
    import SearchHint from "./components/SearchHints";
+   import NoData from "./components/Dashboard/NoData";
 
    Vue.use(vueDebounce)
 
@@ -353,7 +352,7 @@
             searchHints: []
          }
       },
-      components: {SearchHint, ProductItem, Loading},
+      components: {NoData, SearchHint, ProductItem, Loading},
       computed: {
          isLoggedIn() {
             return authService.getCurrentUser();

@@ -1305,3 +1305,24 @@ img.header-banner {
     }
   }
 }
+.no-data-message {
+  color: white!important;
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+}
+@media(min-width: 576px) {
+  .no-data-image {
+    object-fit: cover;
+    max-height: 640px;
+  }
+  .no-data-message {
+    h4 {
+      font-size: 1.75rem;
+    }
+    p {
+      font-size: 1.5rem;
+    }
+  }
+}
