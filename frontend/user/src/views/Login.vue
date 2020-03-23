@@ -64,7 +64,6 @@
                                 <router-link to="/passwordreset" class="text-primary"><small>{{$t("Forgot password?")}}</small></router-link>
                             </div>
                             <div class="mt-2 text-center text-muted">
-                                <small class="mr-2">New to influencer?</small>
                                 <router-link to="/register" class="text-primary d-block d-md-inline">
                                     <small>{{$t("Create new account")}}</small>
                                 </router-link>
