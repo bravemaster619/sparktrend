@@ -60,6 +60,7 @@ Route.group(() => {
    */
   Route.get('/products', 'Api/InstaaccountsController.products')
 
+  Route.get('/instainfo', 'Api/InstaaccountsController.getInstaInfoRaw')
   /**
    * @swagger
    * /instaaccounts/myproducts:
@@ -150,7 +151,6 @@ Route.group(() => {
    *               $ref: '#/components/schemas/RegisterToInstagram'
    */
   Route.post('/new', 'Api/InstaaccountsController.create').middleware(['auth:jwt'])
-
 
   /**
    * @swagger
@@ -358,5 +358,6 @@ Route.group(() => {
    */
   Route.put('/:id/adminedit', 'Api/InstaaccountsController.adminEdit').middleware(['authAdmin:jwt']).instance('App/Models/Instaaccount')
 
+  
 
 }).prefix('/api/instaaccounts')

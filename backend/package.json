@@ -41,6 +41,7 @@
     "mongodb": "^3.5.2",
     "mongodb-core": "^3.2.7",
     "paypal-rest-sdk": "^1.8.1",
+    "prompts": "^2.3.2",
     "punycode": "^2.1.1",
     "randomstring": "^1.1.5",
     "request": "^2.88.0",

@@ -9,12 +9,13 @@ const randomstring = require('randomstring')
 const { $n, $h } = require('../../../Helpers')
 const util = require('util')
 const Drive = use('Drive')
+const crawler = require('../../../../chromium')
+
 /**
  *
  * @class InstaaccountsController
  */
 class InstaaccountsController extends BaseController {
-
   /**
    * Index
    *
@@ -24,7 +25,6 @@ class InstaaccountsController extends BaseController {
    * @param {Response} ctx.response
    */
   async index ({ request, response, auth }) {
-
     const parsedQuery = this.buildProductQuery(request)
     const queryBuilder = Instaaccount.query()
       .where(parsedQuery.where)
@@ -35,7 +35,7 @@ class InstaaccountsController extends BaseController {
 
     let isAdmin = false
     try {
-      let user = auth.user
+      const user = auth.user
       if (user.role === 'admin') {
         isAdmin = true
       }
@@ -76,7 +76,7 @@ class InstaaccountsController extends BaseController {
     const instaaccount = instance
     let showFullname = false
     try {
-      let user = auth.user
+      const user = auth.user
       if (user.role === 'admin') {
         showFullname = true
       }
@@ -100,7 +100,7 @@ class InstaaccountsController extends BaseController {
     if (verfiedAccountExists) {
       return response.validateFailed('instagram_already_exists')
     }
-    let appliedAccountExists = await Instaaccount.where({ username: username })
+    const appliedAccountExists = await Instaaccount.where({ username: username })
       .where({ user_id: user._id })
       .count()
     if (appliedAccountExists) {
@@ -158,7 +158,7 @@ class InstaaccountsController extends BaseController {
 
   async validateInstagram ({ request, auth, response, instance }) {
     const user = auth.user
-    let instaaccount = instance
+    const instaaccount = instance
     if (user.role != 'admin' && user._id.toString() != instance.user_id.toString()) {
       throw UnAuthorizeException.invoke()
     }
@@ -174,7 +174,7 @@ class InstaaccountsController extends BaseController {
 
   async uploadInsights ({ request, auth, instance, response }) {
     const user = auth.user
-    let instaaccount = instance
+    const instaaccount = instance
 
     if (user.role !== 'admin' && user._id.toString() != instance.user_id.toString()) {
       throw UnAuthorizeException.invoke()
@@ -218,7 +218,7 @@ class InstaaccountsController extends BaseController {
     if (user.role !== 'admin') {
       throw UnAuthorizeException.invoke()
     }
-    let instaaccount = instance
+    const instaaccount = instance
     const editData = request.only(['allowed', 'verified', 'product'])
     instaaccount.merge(editData)
     if (!request.demographics || typeof request.demographics !== 'object') {
@@ -296,11 +296,11 @@ class InstaaccountsController extends BaseController {
 
   async storeProduct ({ request, auth, instance, response }) {
     const user = auth.user
-    let instaaccount = instance
+    const instaaccount = instance
     if (user.role !== 'admin' && user._id.toString() != instance.user_id.toString()) {
       throw UnAuthorizeException.invoke()
     }
-    let productData = request.only(['description', 'banner_img', 'niches', 'categories'])
+    const productData = request.only(['description', 'banner_img', 'niches', 'categories'])
     instaaccount.product = productData
     try {
       await instaaccount.save()
@@ -313,7 +313,7 @@ class InstaaccountsController extends BaseController {
 
   async delete ({ request, auth, instance, response }) {
     const user = auth.user
-    let instaaccount = instance
+    const instaaccount = instance
     if (user.role !== 'admin' && user._id.toString() != instance.user_id.toString()) {
       throw UnAuthorizeException.invoke()
     }
@@ -323,7 +323,7 @@ class InstaaccountsController extends BaseController {
 
   async deleteProduct ({ request, auth, instance, response }) {
     const user = auth.user
-    let instaaccount = instance
+    const instaaccount = instance
     if (user.role !== 'admin' && user._id.toString() != instance.user_id.toString()) {
       throw UnAuthorizeException.invoke()
     }
@@ -332,14 +332,14 @@ class InstaaccountsController extends BaseController {
     return response.apiDeleted(instaaccount)
   }
 
-  async related({ request, instance, response }) {
+  async related ({ request, instance, response }) {
     let instaaccounts = []
-    if(instance.product) {
+    if (instance.product) {
       instaaccounts = Instaaccount.where({
         verified: true,
         allowed: true,
         product: { $exists: true },
-        "product.niches": instance.product.niches
+        'product.niches': instance.product.niches
       }).orderBy({
         completed_shoutout: -1
       }).limit(3).fetch()
@@ -352,7 +352,7 @@ class InstaaccountsController extends BaseController {
     return response.apiCollection(await user.instaaccounts().fetch())
   }
 
-  async getInstaInfo (username) {
+  async getInstaInfo_old (username) {
     try {
       const req = require('request-promise')
       const instaresp = await req(`https://www.instagram.com/${username}/?__a=1`)
@@ -384,6 +384,39 @@ class InstaaccountsController extends BaseController {
     }
   }
 
+  async getInstaInfoRaw ({ request }) {
+    const username = request.input('username')
+    try {
+      const page = crawler.page
+
+      await page.goto(`https://www.instagram.com/${username}/?__a=1`, { waitUntil: 'networkidle0' })
+      const data = await page.evaluate(() => document.querySelector('pre').innerHTML)
+      return data
+    } catch (e) {
+      console.error(e)
+      return null
+    }
+  }
+
+  async getInstaInfo (username) {
+    try {
+      const page = crawler.page
+      await page.goto(`https://www.instagram.com/${username}/?__a=1`, { waitUntil: 'networkidle0' })
+      const data = await page.evaluate(() => document.querySelector('pre').innerHTML)
+      const instadata = JSON.parse(data)
+      const userdata = instadata.graphql.user
+      return {
+        follower_count: userdata.edge_followed_by.count,
+        username: userdata.username,
+        profile_img: userdata.profile_pic_url,
+        type: userdata.is_business_account ? 'business' : 'personal',
+        biography: userdata.biography
+      }
+    } catch (e) {
+      return null
+    }
+  }
+
   async validateInsta (username, code) {
     const instainfo = await this.getInstaInfo(username)
     return instainfo.biography.includes(code)
@@ -405,7 +438,7 @@ class InstaaccountsController extends BaseController {
 
     // --- begin retrieve price query ---
     let minPrice = $n(request.input('lp'), -1)
-    let maxPrice = $n(request.input('hp'), -1)
+    const maxPrice = $n(request.input('hp'), -1)
     if (minPrice < 0) minPrice = null
     if (maxPrice < 0) minPrice = null
 
@@ -451,7 +484,7 @@ class InstaaccountsController extends BaseController {
     // ---  end retrieve categories  ---
 
     // --- begin retrieve username ---
-    let username = request.input('u')
+    const username = request.input('u')
     // ---  end retrieve username  ---
 
     // --- begin build where ---
@@ -500,7 +533,6 @@ class InstaaccountsController extends BaseController {
 
     return { skip, limit, where }
   }
-
 }
 
 module.exports = InstaaccountsController
