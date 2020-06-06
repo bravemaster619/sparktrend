@@ -5,7 +5,7 @@ export const setLocale = function(locale) {
 export const getLocale = function() {
    let locale = localStorage.getItem('sparktrend-locale')
    if (!locale) {
-      locale = 'en'
+      locale = 'ar'
       setLocale(locale)
    }
    return locale
