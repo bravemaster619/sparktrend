@@ -45,8 +45,17 @@
                 required: true
             }
         },
+        data: function() {
+            return {
+                        is_loading : false
+                    };
+        },
         methods: {
             verifyAccount(){
+                if(this.is_loading){
+                    return;
+                }
+                this.is_loading = true;
                 addProductService.validateInstagram(this._id)
                     .then( ({data}) => {
                         if(!data.data.verified){
@@ -54,9 +63,11 @@
                         }else{
                             this.$emit('next', this.tab_id, {'verified' : data.data.verified})   ;
                         }
+                    this.is_loading = false;
                 }).catch( (e ) => {
                     window.console.error(e)
                     this.$toastr.error(this.$t("instaaccount.error.verification_failed"))
+                    this.is_loading = false;
                 });
             },
             onBack(){
