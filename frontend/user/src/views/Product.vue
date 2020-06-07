@@ -352,6 +352,7 @@
 
          },
          onFilesChanged: function (files) {
+            this.error.post = ''
             this.form.files = files
          },
          onOrder: function () {
@@ -379,13 +380,16 @@
                   // --- begin posts ---
                   if (!this.form.files || !this.form.files.length) {
                      this.error.post = "Upload your post"
+                     this.processing = false
                      return
                   } else if (this.form.files.length > 10) {
                      this.error.post = "Cannot upload more than 10 posts"
+                     this.processing = false
                      return
                   }
                   if (formData.get('category') !== "Multiple" && this.form.files.length > 1) {
                      this.error.post = "Cannot upload multiple posts in Single category."
+                     this.processing = false
                      return
                   }
                   for (let i = 0; i < this.form.files.length; i++) {
@@ -398,6 +402,7 @@
                   // --- begin start_from ---
                   if (!this.form.start_from) {
                      this.error.start_from = "Please select start date"
+                     this.processing = false
                      return
                   }
                   let start_from = null
@@ -405,6 +410,7 @@
                      start_from = new Date(self.form.start_from)
                   } catch (e) {
                      this.error.start_from = "Invalid date format"
+                     this.processing = false
                      return
                   }
                   this.error.start_from = ''
@@ -414,6 +420,7 @@
                   // --- begin caption ---
                   if (!this.form.caption) {
                      this.error.caption = "Please enter caption"
+                     this.processing = false
                      return
                   }
                   this.error.caption = ''
@@ -424,6 +431,7 @@
                   if (formData.get('with_bio') === 'true') {
                      if (!this.form.bio_url) {
                         this.error.bio_url = "Please enter bio url"
+                        this.processing = false
                         return
                      }
                      formData.append('bio_url', this.form.bio_url)
