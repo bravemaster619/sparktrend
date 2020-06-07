@@ -6,6 +6,7 @@ const Hash = use('Hash')
 class MigrationController extends BaseController {
 
   async migrate ({ request, response }) {
+    throw new Error('Use command instead');
     const db = await Database.connect('mongodb')
     try {
       await db.dropCollection('users')
@@ -60,6 +61,7 @@ class MigrationController extends BaseController {
   }
 
   async seed ({ request, response }) {
+    throw new Error('Use command instead');
     const db = await Database.connect('mongodb')
     // ------------------ BEGIN USER SEED ----------------------
     await db.collection('users').remove({})

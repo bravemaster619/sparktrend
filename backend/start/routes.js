@@ -19,17 +19,6 @@ Route.get('/', ({ request }) => {
   return { greeting: 'Hello world in JSON' }
 })
 
-
-
-
-Route.group(() => {
-
-  // Route.get('/migrate', 'Api/MigrationController.migrate');
-
-  // Route.get('/seed', 'Api/MigrationController.seed');
-
-}).prefix('/api')
-
 Route.group(() => {
 
   Route.get('/image/posts/:user_id/:filename', 'DownloadController.post').middleware(['auth:jwt'])

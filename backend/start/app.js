@@ -69,7 +69,9 @@ const aliases = {
 |
 */
 const commands = [
-  'App/Commands/Swagger'
+  'App/Commands/Swagger',
+  'App/Commands/Migration',
+  'App/Commands/Seed',
 ]
 
 module.exports = { providers, aceProviders, aliases, commands }

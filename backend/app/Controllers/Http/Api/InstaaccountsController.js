@@ -387,23 +387,7 @@ class InstaaccountsController extends BaseController {
   async getInstaInfoRaw ({ request }) {
     const username = request.input('username')
     try {
-      const page = crawler.page
-      if (!page) {
-        await crawler.init()
-      }
-      await page.goto(`https://www.instagram.com/${username}/?__a=1`, { waitUntil: 'networkidle0' })
-      const data = await page.evaluate(() => document.querySelector('pre').innerHTML)
-      const instadata = JSON.parse(data)
-      if (!instadata || !instadata.graphql || !instadata.graphql.user) {
-        return data
-      }
-      await page.goto(`https://www.instagram.com/${username}`, { waitUntil: 'networkidle0' })
-
-      const usernamePictureUrl = await page.evaluate(() => {
-        return document.querySelectorAll('header img')[0].getAttribute('src')
-      })
-      instadata.graphql.user.profile_pic_url = usernamePictureUrl
-      return instadata
+      return await crawler.getInstaInfo(username)
     } catch (e) {
       console.error(e)
       return null
@@ -412,25 +396,12 @@ class InstaaccountsController extends BaseController {
 
   async getInstaInfo (username) {
     try {
-      const page = crawler.page
-      if (!page) {
-        await crawler.init()
-      }
-      await page.goto(`https://www.instagram.com/${username}/?__a=1`, { waitUntil: 'networkidle0' })
-      const data = await page.evaluate(() => document.querySelector('pre').innerHTML)
-      const instadata = JSON.parse(data)
-      const userdata = instadata.graphql.user
-
-      await page.goto(`https://www.instagram.com/${username}`, { waitUntil: 'networkidle0' })
-
-      const usernamePictureUrl = await page.evaluate(() => {
-        return document.querySelectorAll('header img')[0].getAttribute('src')
-      })
-
+      const graphql = await crawler.getInstaInfoRaw(username)
+      const userdata = graphql.graphql.user
       return {
         follower_count: userdata.edge_followed_by.count,
         username: userdata.username,
-        profile_img: usernamePictureUrl,
+        profile_img: userdata.profile_pic_url,
         type: userdata.is_business_account ? 'business' : 'personal',
         biography: userdata.biography
       }
