@@ -122,7 +122,7 @@
                            slot-scope="{focus, blur}"
                            @on-open="focus"
                            @on-close="blur"
-                           :config="{allowInput: true, dateFormat: 'Y-m-d H:i:S', minDate}"
+                           :config="{allowInput: true, dateFormat: 'Y-m-d H:i:S', minDate, disableMobile: true, enableTime: true}"
                            class="form-control datepicker"
                            v-model="form.start_from">
                         </flat-picker>
