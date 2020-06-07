@@ -75,7 +75,7 @@ Route.group(() => {
    *       404:
    *         $ref: '#/components/responses/NotFound'
    */
-  Route.post('/new', 'Api/OrdersController.new')/*.middleware(['auth:jwt'])*/
+  Route.post('/new', 'Api/OrdersController.new').middleware(['auth:jwt'])
 
   /**
    * @swagger

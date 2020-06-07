@@ -5,8 +5,7 @@ const moment = require('moment')
 const User = use('App/Models/User')
 const Instaaccount = use('App/Models/Instaaccount')
 const Order = use('App/Models/Order')
-const { $n, $b } = require('../../../Helpers')
-const util = require('util')
+const { $n } = require('../../../Helpers')
 
 class StatisticController extends BaseController {
 

@@ -115,49 +115,34 @@ const { $n } = require('../Helpers')
  *               type: string
  */
 class Order extends Model {
-
-  static STATUS = {
-    SHOUTOUT: {
-      NOT_CREATED: 0,
-      CREATED: 1,
-      ACCEPTED: 2,
-      STARTED: 3,
-      EXPIRED: 4,
-      COMPLETED: 5,
-      REJECTED: -1
-    },
-    PAYMENT: {
-      NOT_PAID: 0,
-      PAID: 1,
-      REFUNDED: -1
-    }
-  }
-
-  instaaccount() {
+  instaaccount () {
     return this.belongsTo('App/Models/Instaaccount', 'insta_id', '_id')
   }
 
-  buyer() {
+  buyer () {
     return this.hasOne('App/Models/User', 'buyer_id', '_id')
   }
 
-  seller() {
+  seller () {
     return this.hasOne('App/Models/User', 'seller_id', '_id')
   }
 
-  calcSubtotal() {
-    this.subtotal = this.with_bio ? $n(this.price) + $n(this.bio_price) : $n(this.price);
-
-    return this.subtotal;
+  calcSubtotal () {
+    return this.with_bio ? $n(this.price) + $n(this.bio_price) : $n(this.price)
   }
 
-  calcTotalPrice() {
-    this.total = this.calcSubtotal() + $n(this.charge);
-
-    return this.total;
+  calcCharge (total = 0, chargeRate = 0) {
+    return $n(total * chargeRate / 100)
   }
 
-  relationship(user) {
+  calcTotalPrice (chargeRate = 0) {
+    this.subtotal = this.calcSubtotal()
+    this.charge = this.calcCharge(this.subtotal, chargeRate)
+    this.total = this.subtotal + this.charge
+    return this.total
+  }
+
+  relationship (user) {
     try {
       if (this.buyer_id.toString() === user._id.toString()) {
         return 'buyer'
@@ -165,46 +150,63 @@ class Order extends Model {
       if (this.seller_id.toString() === user._id.toString()) {
         return 'seller'
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e)
       return 'unknown'
     }
     return 'unknown'
   }
 
-  getStatus() {
-    let status = {
+  getStatus () {
+    const status = {
       shoutout: Order.STATUS.SHOUTOUT.NOT_CREATED,
       payment: Order.STATUS.PAYMENT.NOT_PAID
     }
     if (!(this.history)) {
-      return status;
+      return status
     }
     if (this.history.paid_at) {
-      status.payment = Order.STATUS.PAYMENT.PAID;
+      status.payment = Order.STATUS.PAYMENT.PAID
     }
     if (this.history.refunded_at) {
-      status.payment = Order.STATUS.PAYMENT.REFUNDED;
+      status.payment = Order.STATUS.PAYMENT.REFUNDED
     }
     if (this.history.created_at) {
-      status.shoutout = Order.STATUS.SHOUTOUT.CREATED;
+      status.shoutout = Order.STATUS.SHOUTOUT.CREATED
     }
     if (this.history.accepted_at) {
-      status.shoutout = Order.STATUS.SHOUTOUT.ACCEPTED;
+      status.shoutout = Order.STATUS.SHOUTOUT.ACCEPTED
     }
     if (this.history.started_at) {
-      status.shoutout = Order.STATUS.SHOUTOUT.STARTED;
+      status.shoutout = Order.STATUS.SHOUTOUT.STARTED
     }
     if (this.history.expired_at) {
-      status.shoutout = Order.STATUS.SHOUTOUT.EXPIRED;
+      status.shoutout = Order.STATUS.SHOUTOUT.EXPIRED
     }
     if (this.history.completed_at) {
-      status.shoutout = Order.STATUS.SHOUTOUT.COMPLETED;
+      status.shoutout = Order.STATUS.SHOUTOUT.COMPLETED
     }
     if (this.history.rejected_at) {
-      status.shoutout = Order.STATUS.SHOUTOUT.REJECTED;
+      status.shoutout = Order.STATUS.SHOUTOUT.REJECTED
     }
     return status
+  }
+}
+
+Order.STATUS = {
+  SHOUTOUT: {
+    NOT_CREATED: 0,
+    CREATED: 1,
+    ACCEPTED: 2,
+    STARTED: 3,
+    EXPIRED: 4,
+    COMPLETED: 5,
+    REJECTED: -1
+  },
+  PAYMENT: {
+    NOT_PAID: 0,
+    PAID: 1,
+    REFUNDED: -1
   }
 }
 
