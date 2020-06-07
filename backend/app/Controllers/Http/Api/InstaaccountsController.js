@@ -396,7 +396,7 @@ class InstaaccountsController extends BaseController {
 
   async getInstaInfo (username) {
     try {
-      const graphql = await crawler.getInstaInfoRaw(username)
+      const graphql = await crawler.getInstaInfo(username)
       const userdata = graphql.graphql.user
       return {
         follower_count: userdata.edge_followed_by.count,
