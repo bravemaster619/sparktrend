@@ -138,7 +138,7 @@ class Order extends Model {
   calcTotalPrice (chargeRate = 0) {
     this.subtotal = this.calcSubtotal()
     this.charge = this.calcCharge(this.subtotal, chargeRate)
-    this.total = this.subtotal + this.charge
+    this.total = $n($n(this.subtotal + this.charge).toFixed(2))
     return this.total
   }
 
