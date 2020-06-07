@@ -391,7 +391,17 @@ class InstaaccountsController extends BaseController {
 
       await page.goto(`https://www.instagram.com/${username}/?__a=1`, { waitUntil: 'networkidle0' })
       const data = await page.evaluate(() => document.querySelector('pre').innerHTML)
-      return data
+      const instadata = JSON.parse(data)
+      if (!instadata || !instadata.graphql || !instadata.graphql.user) {
+        return data
+      }
+      await page.goto(`https://www.instagram.com/${username}`, { waitUntil: 'networkidle0' })
+
+      const usernamePictureUrl = await page.evaluate(() => {
+        return document.querySelectorAll('header img')[0].getAttribute('src')
+      })
+      instadata.graphql.user.profile_pic_url = usernamePictureUrl
+      return instadata
     } catch (e) {
       console.error(e)
       return null
@@ -405,10 +415,17 @@ class InstaaccountsController extends BaseController {
       const data = await page.evaluate(() => document.querySelector('pre').innerHTML)
       const instadata = JSON.parse(data)
       const userdata = instadata.graphql.user
+
+      await page.goto(`https://www.instagram.com/${username}`, { waitUntil: 'networkidle0' })
+
+      const usernamePictureUrl = await page.evaluate(() => {
+        return document.querySelectorAll('header img')[0].getAttribute('src')
+      })
+
       return {
         follower_count: userdata.edge_followed_by.count,
         username: userdata.username,
-        profile_img: userdata.profile_pic_url,
+        profile_img: usernamePictureUrl,
         type: userdata.is_business_account ? 'business' : 'personal',
         biography: userdata.biography
       }
