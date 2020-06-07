@@ -388,7 +388,9 @@ class InstaaccountsController extends BaseController {
     const username = request.input('username')
     try {
       const page = crawler.page
-
+      if (!page) {
+        await crawler.init()
+      }
       await page.goto(`https://www.instagram.com/${username}/?__a=1`, { waitUntil: 'networkidle0' })
       const data = await page.evaluate(() => document.querySelector('pre').innerHTML)
       const instadata = JSON.parse(data)
@@ -411,6 +413,9 @@ class InstaaccountsController extends BaseController {
   async getInstaInfo (username) {
     try {
       const page = crawler.page
+      if (!page) {
+        await crawler.init()
+      }
       await page.goto(`https://www.instagram.com/${username}/?__a=1`, { waitUntil: 'networkidle0' })
       const data = await page.evaluate(() => document.querySelector('pre').innerHTML)
       const instadata = JSON.parse(data)
