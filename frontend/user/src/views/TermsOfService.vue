@@ -10,7 +10,7 @@
             In turn, you hereby grant to Sparktrend a perpetual, transferrable, royalty-free, irrevocable, worldwide and fully paid-up license to access, gather, hold and process any information that (1) you input into the Platform, or (2) we gather from your local computer system or from third-parties with your permission.
         </p>
         <h5 class="mt-4 mb-2">Terms and Termination</h5>
-        <p class="text-justify">Sparktrend fully reserves the right to terminate your account at will without any prior notice to the user. On the other hand, where you decide to cancel or terminate your Account with us, kindly send us an email to Sparktrend@hotmail.net and we will abruptly cancel same. Upon the cancellation, discontinuation or termination of your Account, all provisions of these Terms of Use which by their nature should survive will survive. This includes but not limited to dispute resolution provisions, limitations of liability, warranty disclaimers and ownership provisions. </p>
+        <p class="text-justify">Sparktrend fully reserves the right to terminate your account at will without any prior notice to the user. On the other hand, where you decide to cancel or terminate your Account with us, kindly send us an email to <a href="mailto:Legal@sparktrend.net">Legal@sparktrend.net</a> and we will abruptly cancel same. Upon the cancellation, discontinuation or termination of your Account, all provisions of these Terms of Use which by their nature should survive will survive. This includes but not limited to dispute resolution provisions, limitations of liability, warranty disclaimers and ownership provisions. </p>
         <h5 class="mt-4 mb-2">Privacy Policy</h5>
         <p class="text-justify">Kindly visit our <router-link to="/policy">Privacy Policy Page</router-link> to review our current Privacy Policy which contains important information about our practices in collecting, storing, using and disclosing your personal information, and which is hereby incorporated into and forms a part of these Terms of Use.</p>
         <h5 class="mt-4 mb-2">Unlawful or Prohibited Use</h5>
@@ -30,7 +30,7 @@
         <h5 class="mt-4 mb-2">Acceptance of these terms</h5>
         <p class="text-justify">You acknowledge that you have read this Agreement and agree to all its terms and conditions. By using the Website or its Services you agree to be bound by this Agreement. If you do not agree to abide by the terms of this Agreement, you are not authorized to use or access the Website and its Services.</p>
         <h5 class="mt-4 mb-2">Contacting Us</h5>
-        <p class="text-justify">If you would like to contact us to understand more about this Agreement or wish to contact us concerning any matter relating to it, you may send an email to <a href="mailto:sparktrend@hotmail.net">sparktrend@hotmail.net</a></p>
+        <p class="text-justify">If you would like to contact us to understand more about this Agreement or wish to contact us concerning any matter relating to it, you may send an email to <a href="mailto:sparktrend@hotmail.com">sparktrend@hotmail.com</a></p>
     </div>
 </template>
 <script>

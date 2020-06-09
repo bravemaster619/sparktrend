@@ -90,7 +90,7 @@
         <h5 class="mt-4 mb-2 text-uppercase">Contact our Data Protection Officers</h5>
         <p class="text-justify">In compliance with the GDPR, you can channel all your enquiries, complaints and recommendations relating to how we handle and process your information to our Data Protection Officer (DPO) as follows – </p>
         <p class="text-justify"><strong>By Email:</strong></p>
-        <a href="mailto:Sparktrend@hotmail.com">Sparktrend@hotmail.com</a>
+        <a href="mailto:Data-protection@sparktrend.net">Data-protection@sparktrend.net</a>
     </div>
 </template>
 <script>
