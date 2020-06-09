@@ -407,7 +407,7 @@
                   }
                   let start_from = null
                   try {
-                     start_from = new Date(self.form.start_from)
+                     start_from = moment(self.form.start_from).toDate()
                   } catch (e) {
                      this.error.start_from = "Invalid date format"
                      this.processing = false

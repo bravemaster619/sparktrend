@@ -174,7 +174,7 @@
                               v-if="instaaccount.product"
                               @change="productDetailChanged"
                            />
-                           <p v-else>This account has no pricing plan yest.</p>
+                           <p v-else>This account has no pricing plan yet.</p>
                         </div>
                      </form>
                   </template>
