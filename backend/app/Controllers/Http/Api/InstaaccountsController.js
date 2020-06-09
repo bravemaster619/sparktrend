@@ -221,7 +221,8 @@ class InstaaccountsController extends BaseController {
     const instaaccount = instance
     const editData = request.only(['allowed', 'verified', 'product'])
     instaaccount.merge(editData)
-    if (!request.demographics || typeof request.demographics !== 'object') {
+    const demographics = request.input('demographics')
+    if (!demographics || typeof demographics !== 'object') {
       instaaccount.demographics = {
         age: [
           { name: '13-17', percent: 0 },
@@ -246,8 +247,8 @@ class InstaaccountsController extends BaseController {
       }
     } else {
       ['age', 'gender', 'country'].forEach(key => {
-        if (request.demographics[key] && request.demographics[key].length) {
-          instaaccount.demographics[key] = request.demographics[key]
+        if (demographics[key] &&demographics[key].length) {
+          instaaccount.demographics[key] = demographics[key]
         } else {
           if (key === 'age') {
             instaaccount.demographics[key] = [
@@ -267,7 +268,7 @@ class InstaaccountsController extends BaseController {
             ]
           }
           if (key === 'country') {
-            instaccount.demographics[key] = [
+            instaaccount.demographics[key] = [
               { name: ' ', percent: 0 },
               { name: '  ', percent: 0 },
               { name: '   ', percent: 0 },
