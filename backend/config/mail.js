@@ -13,7 +13,7 @@ module.exports = {
   |
   */
   connection: Env.get('MAIL_CONNECTION', 'smtp'),
-  sender: 'Sparktrend.net',
+  sender: 'no-reply@sparktrend.net',
   /*
   |--------------------------------------------------------------------------
   | SMTP

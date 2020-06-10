@@ -135,7 +135,7 @@ class OrdersController extends BaseController {
       }
       Mail.send('emails.new_order', mailData, (message) => {
         message.to(seller.email, seller.name)
-        message.from(Config.get('mail.sender', 'Sparktrend'))
+        message.from(Config.get('mail.sender', 'no-reply@sparktrend.net'))
         message.subject('A new order has been requested!')
       })
     } catch (e) {
