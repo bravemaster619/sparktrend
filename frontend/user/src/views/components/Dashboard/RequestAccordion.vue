@@ -261,9 +261,9 @@
       methods: {
          startTime: function (dateString, withTimeZone = false) {
             if (withTimeZone) {
-               return new moment(dateString).local().format("YYYY-MM-DD hh:mm:ss (UTC Z)")
+               return new moment(dateString).local().format("YYYY-MM-DD HH:mm:ss (UTC Z)")
             } else {
-               return new moment(dateString).local().format("YYYY-MM-DD hh:mm:ss")
+               return new moment(dateString).local().format("YYYY-MM-DD HH:mm:ss")
             }
          },
          utcOffset: function (dateString) {

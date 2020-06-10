@@ -132,7 +132,7 @@
        },
        computed: {
           startTime: function() {
-             return new moment(this.order.start_from).local().format("YYYY-MM-DD hh:mm:ss (Z)")
+             return new moment(this.order.start_from).local().format("YYYY-MM-DD HH:mm:ss (Z)")
           }
        },
        methods: {
