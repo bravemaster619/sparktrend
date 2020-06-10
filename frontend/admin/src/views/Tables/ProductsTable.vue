@@ -196,10 +196,10 @@
             }).then(result => {
                if (result.value) {
                   httpService.delete(`/instaaccounts/${id}`).then(() => {
-                     this.$noty.success("Deleted a user.")
+                     this.$noty.success("Deleted a product.")
                      this.updateData(this.currentPage)
                   }).catch((e) => {
-                     this.$noty.error("Cannot delete a user.")
+                     this.$noty.error("Cannot delete a product.")
                      this.updateData(this.currentPage)
                   })
                }

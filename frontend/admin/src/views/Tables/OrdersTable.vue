@@ -178,6 +178,9 @@
             if(order.history.accepted_at) {
                return 'accepted'
             }
+            if(order.history.rejected_at) {
+               return 'rejected'
+            }
             if(order.history.started_at) {
                return 'started'
             }
