@@ -42,6 +42,8 @@
                         <select class="form-control" v-model="single_price_model.time">
                            <option value="12">12 {{$t("hours")}}</option>
                            <option value="24">24 {{$t("hours")}}</option>
+                           <option value="48">48 {{$t("hours")}}</option>
+                           <option value="72">72 {{$t("hours")}}</option>
                         </select>
                      </div>
                      <div class="w-26 mr-3">
@@ -98,8 +100,10 @@
                   <div class="row mb-3">
                      <div class="w-26 mr-3">
                         <select class="form-control" v-model="multiple_price_model.time">
-                           <option value="12">12 hours</option>
-                           <option value="24">24 hours</option>
+                           <option value="12">12 {{$t("hours")}}</option>
+                           <option value="24">24 {{$t("hours")}}</option>
+                           <option value="48">48 {{$t("hours")}}</option>
+                           <option value="72">72 {{$t("hours")}}</option>
                         </select>
                      </div>
                      <div class="w-26 mr-3">
@@ -158,8 +162,10 @@
                   <div class="row mb-3">
                      <div class="w-26 mr-3">
                         <select class="form-control" v-model="story_price_model.time">
-                           <option value="12">12 hours</option>
-                           <option value="24">24 hours</option>
+                           <option value="12">12 {{$t("hours")}}</option>
+                           <option value="24">24 {{$t("hours")}}</option>
+                           <option value="48">48 {{$t("hours")}}</option>
+                           <option value="72">72 {{$t("hours")}}</option>
                         </select>
                      </div>
                      <div class="w-26 mr-3">
