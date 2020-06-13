@@ -70,6 +70,24 @@ module.exports = {
           }
         },
 
+        screenshots: {
+          bsonType: 'array',
+          items: {
+            bsonType: 'object',
+            properties: {
+              filename: {
+                bsonType: 'string'
+              },
+              type: {
+                bsonType: 'string'
+              },
+              path: {
+                bsonType: 'string'
+              }
+            }
+          }
+        },
+
         time: {
           bsonType: 'int',
           minimum: 0

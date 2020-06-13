@@ -285,6 +285,55 @@ class OrdersController extends BaseController {
     }
   }
 
+  async uploadScreenshot ({ request, response, auth, instance }) {
+    const user = auth.user
+    const order = instance
+    const perm = await this.checkPermission(order, user, 'upload-screenshot')
+    if (!perm.isAllowed) {
+      return response.validateFailed(perm.reason)
+    }
+
+    const filePath = `uploads/image/screenshots/${user._id.toString()}`
+    fs.mkdirSync(use('Helpers').publicPath(filePath), { recursive: true })
+    const uploadedInfo = []
+    const files = request.file('files', {
+      types: ['image', 'video'],
+      size: '20mb',
+      maxSize: '20mb',
+      allowedExtensions: ['jpg', 'png', 'jpeg', 'mp4', 'gif']
+    })
+    if (!files) {
+      return response.validateFailed('empty_screenshots')
+    }
+    const screenshots = []
+    await files.moveAll(use('Helpers').publicPath(filePath), (file) => {
+      const fileName = `${use('uuid').v1().replace(/-/g, '')}_${file.clientName}`
+      screenshots.push({
+        filename: file.clientName,
+        type: file.type,
+        path: `${Env.get('APP_URL')}/${filePath}/${fileName}`
+      })
+      uploadedInfo.push({
+        fileName,
+        path: `${filePath}/${fileName}`
+      })
+      return {
+        name: fileName
+      }
+    })
+    let idx = 0
+    for (const fileInfo of uploadedInfo) {
+      const s3Url = await Drive.disk('s3').put(fileInfo.path, Drive.disk('local').getStream(fileInfo.path))
+      screenshots[idx].path = s3Url
+      await Drive.disk('local').delete(fileInfo.path)
+      idx++
+    }
+    order.screenshots = screenshots
+    await order.save()
+    order.instaaccount = await order.instaaccount().fetch()
+    return response.apiSuccess(order, {}, 'upload_success')
+  }
+
   async complete ({ request, response, auth, instance }) {
     const user = auth.user
     const order = instance
@@ -470,7 +519,7 @@ class OrdersController extends BaseController {
       }
     }
     action = action.toLowerCase()
-    if (['create', 'accept', 'start', 'complete', 'pay', 'reject', 'refund', 'rate'].includes(action) === false) {
+    if (['create', 'accept', 'start', 'complete', 'pay', 'reject', 'refund', 'rate', 'upload-screenshot'].includes(action) === false) {
       return {
         isAllowed: false,
         reason: 'unknown_action'
@@ -492,7 +541,7 @@ class OrdersController extends BaseController {
       }
     }
     // begin shoutout actions
-    if (['accept', 'start', 'complete', 'reject'].includes(action)) {
+    if (['accept', 'start', 'complete', 'reject', 'upload', 'upload-screenshot'].includes(action)) {
       let config = await this.getSiteConfig()
       config = config['order']['time_margin']
       if (ownership !== 'seller') {
@@ -529,6 +578,11 @@ class OrdersController extends BaseController {
                 reason: 'seller_invalid_start_time'
               }
             }
+            return { isAllowed: true }
+          }
+          break
+        case 'upload-screenshot':
+          if (status.shoutout >= Order.STATUS.SHOUTOUT.STARTED) {
             return { isAllowed: true }
           }
           break

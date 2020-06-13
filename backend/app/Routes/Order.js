@@ -154,6 +154,29 @@ Route.group(() => {
 
   /**
    * @swagger
+   * /orders/{id}/upload-screenshot:
+   *   post:
+   *     tags:
+   *       - Order
+   *     summary: Upload screenshots for order. Influencers must submit screenshots before complete their orders.
+   *     parameters:
+   *       - $ref: '#/components/parameters/Id'
+   *     responses:
+   *       200:
+   *         description: order
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Order'
+   *       401:
+   *         $ref: '#/components/responses/Unauthorized'
+   *       422:
+   *         $ref: '#/components/responses/ValidateFailed'
+   */
+  Route.post('/:id/upload-screenshot', 'Api/OrdersController.uploadScreenshot').middleware(['auth:jwt']).instance('App/Models/Order')
+
+  /**
+   * @swagger
    * /orders/{id}/complete:
    *   post:
    *     tags:
