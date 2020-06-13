@@ -101,8 +101,8 @@ class Seed extends Command {
           {
             type: 'Single',
             pricing: [
-              { time: 6, price: 15, bio_price: 10 },
-              { time: 12, price: 20, bio_price: 10 }
+              { time: 12, price: 15, bio_price: 10 },
+              { time: 24, price: 20, bio_price: 10 }
             ]
           },
           {
