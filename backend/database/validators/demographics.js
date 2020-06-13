@@ -1,7 +1,7 @@
 module.exports = {
   bsonType: 'array',
   maxItems: 100,
-  uniqueItems: true,
+  uniqueItems: false,
   items: {
     bsonType: 'object',
     required: ['name', 'percent'],
