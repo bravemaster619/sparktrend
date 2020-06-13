@@ -95,12 +95,12 @@
 <!--                                    alt="download-icon">-->
 <!--                              </a>-->
                            </div>
-                           <div class="salesorder-list-date mb-2">{{$t("Screenshot")}}</div>
+                           <div class="salesorder-list-date mb-2" v-if="getOrderShoutoutStatus(order) >= OrderStatus.SHOUTOUT.ACCEPTED">{{$t("Screenshot")}}</div>
                            <div v-if="order.screenshots && order.screenshots.length" class="salesorder-list-image-product mb-2">
                               <img class="img-fluid salesorder-list-img-product z-depth-1 mb-1" :src="order.screenshots[0].path" :alt="order.screenshots[0].filename" />
                            </div>
                            <div v-else class="salesorder-list-image-product mb-2">
-                              <p>{{$t("order.upload_screenshot_guide")}}</p>
+                              <p v-if="getOrderShoutoutStatus(order) >= OrderStatus.SHOUTOUT.ACCEPTED">{{$t("order.upload_screenshot_guide")}}</p>
                            </div>
                            <div class="d-flex mt-2" v-if="getOrderShoutoutStatus(order)===OrderStatus.SHOUTOUT.CREATED">
                               <button class="btn btn-primary btn-grad-effect btn-md  w-100"
