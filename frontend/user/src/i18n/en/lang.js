@@ -192,6 +192,8 @@ const en = {
    "Multiple Post": "Multiple Post",
    "Multiple post is simple post of multiple pictures and a caption.": "Multiple post is simple post of multiple pictures and a caption.",
    "Story post is a series of pictures and captions.": "Story post is a series of pictures and captions.",
+   "Insights": "Insights",
+   "next": "next",
    home: {
       main_legend: "SparkTrend is an online marketplace to sell and buy advertisement posts on Instagram",
       targeted_influencers_desc: "Our system algorithm allow SparkTrend to gather statistics of registered influencers accounts. These information include number of followers, Niche, Gender, Age, And country location of their audience. Based on this information the the influencer is then grouped into categories to make it easy for buyers to find the perfect influencer to advertise their brand.",
@@ -240,7 +242,8 @@ const en = {
          order_rated: "Your rating has been submitted."
       },
       feedback_solicit: "Help us improve your experience at sparktrend.net by submitting your feedback of this service.",
-      feedback_guide: "You can submit your feedback after payment. You can edit your feedback before ordered shoutout is completed."
+      feedback_guide: "You can submit your feedback after payment. You can edit your feedback before ordered shoutout is completed.",
+      upload_screenshot_guide: "Please upload a screenshot of the post. Please make sure the screenshot includes the photo, bio, and time stamp at the bottom of the post. (Please Refer to “Seller guide” at the bottom of the page, step 9 for an example)"
    },
    error: {
       default: "Oops! Something is wrong. Please try again later..."
