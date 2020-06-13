@@ -5,7 +5,7 @@
                 <div class="image-preview mx-2 my-1" >
                     <img class="img-responsive" :src="source" v-if="getFileType(files[index]) === 'image'">
                     <video class="img-responsive" :src="source" v-if="getFileType(files[index]) === 'video'" />
-                    <button class="btn btn-xs remove-file" @click="removeFile(index)">
+                    <button v-if="showDelete" class="btn btn-xs remove-file" @click="removeFile(index)">
                         <i class="fa fa-trash"></i>
                     </button>
                 </div>
@@ -29,6 +29,11 @@
             accept: {
                 type: String,
                 description: "Allowed mime type"
+            },
+            showDelete: {
+                type: Boolean,
+                description: "Show delete button", 
+                default: true
             }
         },
         data() {

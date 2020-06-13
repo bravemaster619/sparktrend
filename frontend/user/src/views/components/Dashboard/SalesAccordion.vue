@@ -80,7 +80,7 @@
                   <div class="py-2">
                      <div class="row">
                         <div class="col-12 col-md-5 images clearfix" v-viewer>
-                           <div class="salesorder-list-date mb-2">Attachment</div>
+                           <div class="salesorder-list-date mb-2">{{$t("Attachment")}}</div>
                            <div class="salesorder-list-image-product mb-2" v-for="(post,index) in order.posts"
                                 :key="index">
                               <img class="img-fluid salesorder-list-img-product z-depth-1 mb-1"
@@ -94,6 +94,13 @@
 <!--                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfiBxsJMTakVrUDAAACmElEQVRo3u2XP0gcQRSHf3ucFtHocRAklgYLwSDiJUUUJJWlWGrANJJChFiksRCChVWaoGAlGCHBQkvBSruAeiBiKRY2UQRFToyQ03wp9p2sxjPn/jkN7CsWdmb2fd/ODjNvpTj+7yBJ8j7xreyxR+v9CUwAMBEkRyKQwWPP9V4EQohYIBaIBWKBWCAWiAVigYcuQIph2v0mp51hUoH8mAdgrEjvDAAzRXrHAJgPNAOqlSSNMn23+p8k0xr1ZPA9Ay0c4MYiVaXOAFUs2lMHtAQSkGhkx5Kt8qQUAZ6wak/s0BgQL0nUkbWE2zT8S4AGtm10lroQ8JJENUuWdJ+22wRoY99GLlEdEl6SSBoMTugqJkAXJzZqJoKfVsYteZ7+mwToJ28jxkOHG2KQC0OMXBdgxHouGIwIL0n0cGagSRIFARJMWusZPRHiJYkOjgy2wBwAcyxYyxEdEeMliSZ2Dfjbc4VdmsqAlyTq2eR6bFJfJrwkUcvyFfwywfZ8HwqVTF1+gikq/eZxAkk812tJK85WkCRpBkI5Mu5ObmSAtFgBcqHu26Xhq8kBK7JF1Fl2gU4XXKiIAq0FX2HEh14VRx9FTm1q9Chk0k8nV7IAn/ReYRcU53x2PvzdnNCpJMlT8VKhodDxUlJDVHjuXeJpQhuSJE+l5+Q1K0IXQLNO3nPvEjeSWleHpJfesc47PqomZIGc8+PKvUtcF30AnJMJ/Z1vm44M5wD0ibQV0lv+T7Q74yvZsiI/LYlu247XaC4Lvpk1I3bbhsgXuYX2L33Vd2V1HBE7pYxe6Y3cuZ513hacauw3vJwxz9VlTi+HZYMf0lvgek5BnqpPL5TRswgXwI6yWtc3Z+8GgUuRlFIR4Y+d4whfLg5/8Qdiiv8HlTJ+cwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wNy0yN1QwOTo0OTo1NCswMjowMH0+KmoAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDctMjdUMDk6NDk6NTQrMDI6MDAMY5LWAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg=="-->
 <!--                                    alt="download-icon">-->
 <!--                              </a>-->
+                           </div>
+                           <div class="salesorder-list-date mb-2">{{$t("Screenshot")}}</div>
+                           <div v-if="order.screenshots && order.screenshots.length" class="salesorder-list-image-product mb-2">
+                              <img class="img-fluid salesorder-list-img-product z-depth-1 mb-1" :src="order.screenshots[0].path" :alt="order.screenshots[0].filename" />
+                           </div>
+                           <div v-else class="salesorder-list-image-product mb-2">
+                              <p>{{$t("order.upload_screenshot_guide")}}</p>
                            </div>
                            <div class="d-flex mt-2" v-if="getOrderShoutoutStatus(order)===OrderStatus.SHOUTOUT.CREATED">
                               <button class="btn btn-primary btn-grad-effect btn-md  w-100"
@@ -121,7 +128,11 @@
                                  {{$t("Start")}}
                               </button>
                            </div>
-                           <div class="d-flex mt-2" v-if="getOrderShoutoutStatus(order)===OrderStatus.SHOUTOUT.STARTED">
+                           <div class="d-flex mt-2" v-if="getOrderShoutoutStatus(order)===OrderStatus.SHOUTOUT.STARTED && (!order.screenshots || !order.screenshots.length)">
+                              <multiple-file-upload :max-file-count="1" v-bind:show-delete="false"
+                                           @files-changed="(files) => onFilesChanged(files, order)"></multiple-file-upload>
+                           </div>
+                           <div class="d-flex mt-2" v-if="getOrderShoutoutStatus(order)===OrderStatus.SHOUTOUT.STARTED && order.screenshots && order.screenshots.length">
                               <button class="btn btn-primary btn-grad-effect btn-md  w-100"
                                       style="font-size: 14px;" :data-url="`/orders/${order._id}/complete`"
                                       @click="onActionButtonClick"
@@ -222,7 +233,7 @@
    import {OrderStatus, getOrderPaymentStatus, getOrderShoutoutStatus} from '../../../helpers/order'
    import httpService from '../../../services/http.service'
    import RateModal from "../../dashboard/RateModal"
-
+   import MultipleFileUpload from "../Product/MultipleFileUpload";
    const moment = require('moment')
    const fileDownload = require('js-file-download')
    const OrderClass = {SHOUTOUT: {}, PAYMENT: {}}
@@ -247,7 +258,8 @@
       components: {
          BadgerAccordion,
          BadgerAccordionItem,
-         RateModal
+         RateModal,
+         MultipleFileUpload
          // RequestHeader,
          // RequestInfo
       },
@@ -371,6 +383,30 @@
          showRatingModal: function(order) {
             this.ratedOrder = order
             this.showingRatingModal = true
+         },
+         onFilesChanged: function(files, order) {
+            const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+               const file = files[i];
+               formData.append(`files[${i}]`, file)
+            }
+            httpService.post(`orders/${order._id}/upload-screenshot`, formData, {
+               'Content-Type': 'multipart/form-data'
+            }).then(res => {
+               if (res.status == 200 && res.data.data && res.data.data._id) {
+                  this.displayOrders = this.displayOrders.map(order => {
+                     if (order._id = res.data.data._id) {
+                        order = res.data.data
+                     }
+                     return order
+                  })
+                  this.$toastr.success(this.$t("Upload screenshot successfully"), "", { timeOut: 3000 });
+               } else {
+                  this.$toastr.error(this.$t("error.default"), "", {timeOut: 3000});
+               }
+            }).catch(e => {
+               this.$toastr.error(this.$t('error.default'))
+            })
          }
       },
       computed: {

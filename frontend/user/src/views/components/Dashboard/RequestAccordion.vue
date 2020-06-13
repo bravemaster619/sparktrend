@@ -98,6 +98,10 @@
 <!--                                    alt="download-icon">-->
 <!--                              </a>-->
                            </div>
+                           <div class="salesorder-list-date mb-2">{{$t("Screenshot")}}</div>
+                           <div v-if="order.screenshots && order.screenshots.length" class="salesorder-list-image-product mb-2">
+                              <img class="img-fluid salesorder-list-img-product z-depth-1 mb-1" :src="order.screenshots[0].path" :alt="order.screenshots[0].filename" />
+                           </div>
                            <div class="d-flex mt-2" v-if="getOrderPaymentStatus(order)===OrderStatus.PAYMENT.NOT_PAID && !order.history.rejected_at">
                               <router-link class="btn btn-primary btn-grad-effect btn-md flex-1 mx-0"
                                            style="font-size: 14px;" :to="`/orders/${order._id}/checkout`">
