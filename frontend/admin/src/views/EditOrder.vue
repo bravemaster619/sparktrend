@@ -176,6 +176,15 @@
                                  <video class="post-image" :src="post.path" v-if="post.type==='video'"/>
                               </div>
                            </div>
+                           <h4 class="heading-small text-muted text-center text-lg-left">Screenshot</h4>
+                           <template v-if="order.screenshots && order.screenshots.length">
+                              <div class="images clearfix" v-for="screenshot in order.screenshots">
+                                 <img class="w-100 post-image mb-2" :src="screenshot.path" :key="index" />
+                              </div>
+                           </template>
+                           <template v-else>
+                              <p>No screenshots uploaded</p>
+                           </template>
                         </div>
                         <div class="col-12 col-lg-7">
                            <h4 class="heading-small text-muted text-center text-lg-left">Order Detail</h4>
@@ -195,6 +204,56 @@
                               <div class="col-12 mb-4">
                                  <label class="form-control-label">Additional Information</label>
                                  <textarea class="form-control form-control-alternative" rows="5" readonly placeholder="This order has no additional information">{{order.additional_info}}</textarea>
+                              </div>
+                              <div class="col-12 mb-4" v-if="order.rating">
+                                 <label class="form-control-label">Rating</label>
+                                 <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                       <label class="d-inline">Communication</label>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                       <star-rating
+                                       :star-size="24"
+                                       :glow="10"
+                                       :increment="0.5"
+                                       :show-rating="false"
+                                       :read-only="isReadOnly"
+                                       v-model="order.rating.communication"/>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                       <label class="d-inline">Professionalism</label>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                       <star-rating
+                                       :star-size="24"
+                                       :glow="10"
+                                       :increment="0.5"
+                                       :show-rating="false"
+                                       :read-only="isReadOnly"
+                                       v-model="order.rating.professionalism"/>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                       <label class="d-inline">Recommendation to Work with</label>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                       <star-rating
+                                       :star-size="24"
+                                       :glow="10"
+                                       :increment="0.5"
+                                       :show-rating="false"
+                                       :read-only="isReadOnly"
+                                       v-model="order.rating.recommendation"/>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-12">
+                                       <label class="text-muted">{{order.rating.feedback}}</label>
+                                    </div>
+                                 </div>
                               </div>
                            </div>
                         </div>
@@ -282,6 +341,7 @@
    import httpService from "../services/http"
    import Loading from 'vue-loading-overlay'
    import 'viewerjs/dist/viewer.css'
+   import StarRating from 'vue-star-rating'
    import VueViewer from 'v-viewer'
    import {$n, historyBack, numberFormat} from '../helper'
    import Vue from 'vue'
@@ -290,7 +350,7 @@
    export default {
       name: 'edit-order',
       components: {
-         Loading, VueViewer
+         Loading, VueViewer, StarRating
       },
       data() {
          return {
@@ -322,7 +382,7 @@
                   totalRating += this.order.rating[ratingKey] || 0
                })
                if (totalRatingCount > 0) {
-                  return totalRating / totalRatingCount
+                  return (totalRating / totalRatingCount).toFixed(2)
                } else {
                   return "N/A"
                }

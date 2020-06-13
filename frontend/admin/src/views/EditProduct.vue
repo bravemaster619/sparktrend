@@ -264,7 +264,7 @@
                   })
                }
                if (totalRatingCount > 0) {
-                  return totalRating / totalRatingCount
+                  return (totalRating / totalRatingCount).toFixed(2)
                } else {
                   return "N/A"
                }
