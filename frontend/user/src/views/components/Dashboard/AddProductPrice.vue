@@ -20,7 +20,7 @@
                      <select class="form-control" v-model="niche">
                         <option v-for="(niche_option, index) in niche_options" :key="index" :value="niche_option.text"
                                 :selected="niche === niche_option.text">
-                           {{niche_option.text}}
+                           {{$t(niche_option.text)}}
                         </option>
                      </select>
                   </div>
@@ -40,6 +40,7 @@
                   <div class="row mb-3">
                      <div class="w-26 mr-3">
                         <select class="form-control" v-model="single_price_model.time">
+                           <option value="4">4 {{$t("hours")}}</option>
                            <option value="12">12 {{$t("hours")}}</option>
                            <option value="24">24 {{$t("hours")}}</option>
                            <option value="48">48 {{$t("hours")}}</option>
@@ -100,6 +101,7 @@
                   <div class="row mb-3">
                      <div class="w-26 mr-3">
                         <select class="form-control" v-model="multiple_price_model.time">
+                           <option value="4">4 {{$t("hours")}}</option>
                            <option value="12">12 {{$t("hours")}}</option>
                            <option value="24">24 {{$t("hours")}}</option>
                            <option value="48">48 {{$t("hours")}}</option>
@@ -162,6 +164,7 @@
                   <div class="row mb-3">
                      <div class="w-26 mr-3">
                         <select class="form-control" v-model="story_price_model.time">
+                           <option value="4">4 {{$t("hours")}}</option>
                            <option value="12">12 {{$t("hours")}}</option>
                            <option value="24">24 {{$t("hours")}}</option>
                            <option value="48">48 {{$t("hours")}}</option>

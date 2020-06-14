@@ -194,6 +194,11 @@ const en = {
    "Story post is a series of pictures and captions.": "Story post is a series of pictures and captions.",
    "Insights": "Insights",
    "next": "next",
+   "View Feedback": "View Feedback",
+   "Accept": "Accept",
+   "Reject": "Reject",
+   "$Price": "Price",
+   "Bio URL Price": "Bio URL Price",
    home: {
       main_legend: "SparkTrend is an online marketplace to sell and buy advertisement posts on Instagram",
       targeted_influencers_desc: "Our system algorithm allow SparkTrend to gather statistics of registered influencers accounts. These information include number of followers, Niche, Gender, Age, And country location of their audience. Based on this information the the influencer is then grouped into categories to make it easy for buyers to find the perfect influencer to advertise their brand.",
@@ -286,7 +291,7 @@ const en = {
             q: "I made a sale! Someone just purchased one of my services! What should I do?",
             a: "If you decide to accept the request, the order will be moved to the “accepted” tab. Next you can continue by posting the promotion to your Instagram account."
          },
-         nine: "When the posting time is due, download the given picture(s) and caption, then post it. Please make sure to include the “special code” for the caption. After you make a post, click on the “start” button. After the post time is completed, click on the “submit” button and it’s done."
+         nine: "When the posting time is due, download the given picture(s) and caption, then post it. Please make sure to include the “special code” for the caption. After you make a post, click on the “start” button. After the post time is completed, please take a screenshot of the post. Please make sure the screenshot includes the photo, bio, and time stamp at the bottom of the post. Then please click on the  “Complete” button and it’s done."
       },
       buyer: {
          one: "Start by going to “Browse” and select the perfect influencer for your brand.",
