@@ -72,7 +72,7 @@
                         <option value="0" v-bind:selected="!selectedCategory">{{$t("Select Categories")}}
                         </option>
                         <option v-for="(c, index) in optionCategories" :key="index" v-bind:value="c.value"
-                                v-bind:selected="selectedCategory && selectedCategory.type==c.text">{{c.text}}
+                                v-bind:selected="selectedCategory && selectedCategory.type==c.text">{{$t(c.text)}}
                         </option>
                      </select>
                      <modal :show.sync="modalStatus.whatsThis">

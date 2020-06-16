@@ -20,8 +20,8 @@
             </form>
         </div>
         <div class="col-12 col-md-10 mt-3 d-flex justify-content-between">
-            <button class="btn button-basic text-uppercase" @click="back" disabled="!instaaccount || !instaaccount.verified" :class="{'invisible': instaaccount && instaaccount.verified}">{{$t("back")}}</button>
-            <button class="btn btn-grad-effect text-uppercase" @click="next">{{$t("next")}}</button>
+            <button class="btn button-basic text-uppercase" @click="back" disabled="!instaaccount || !instaaccount.verified" :class="{'invisible': instaaccount && instaaccount.verified}">{{$t("Back")}}</button>
+            <button class="btn btn-grad-effect text-uppercase" @click="next">{{$t("Next")}}</button>
         </div>
     </div>
 </template>
