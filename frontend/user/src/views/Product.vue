@@ -71,7 +71,7 @@
                              @change="onSelectOption">
                         <option value="0" v-bind:selected="!selectedCategory">{{$t("Select Categories")}}
                         </option>
-                        <option v-for="(c, index) in optionCategories" :key="index" v-bind:value="c.value"
+                        <option v-for="(c, index) in optionCategories" :key="index" v-bind:value="c.text"
                                 v-bind:selected="selectedCategory && selectedCategory.type==c.text">{{$t(c.text)}}
                         </option>
                      </select>
@@ -306,7 +306,7 @@
          },
          onSelectOption: function (e) {
             if (e.target.selectedOptions[0]) {
-               const text = e.target.selectedOptions[0].text
+               const text = e.target.selectedOptions[0].value
                this.selectedPricing = null
                this.form.with_bio = false
                let selectedCategory = null

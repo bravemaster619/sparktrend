@@ -200,6 +200,12 @@ const en = {
    "$Price": "Price",
    "Bio URL Price": "Bio URL Price",
    "Complete": "Complete",
+   "Communication": "Communication",
+   "Professionalism": "Professionalism",
+   "Recommendation to Work with": "Recommendation to Work with",
+   "Leave a private feedback": "Leave a private feedback",
+   "This will not be shown to the influencer": "This will not be shown to the influencer",
+   "Leave a private feedback (this will not be shown to the influencer)": "Leave a private feedback (this will not be shown to the influencer)",
    home: {
       main_legend: "SparkTrend is an online marketplace to sell and buy advertisement posts on Instagram",
       targeted_influencers_desc: "Our system algorithm allow SparkTrend to gather statistics of registered influencers accounts. These information include number of followers, Niche, Gender, Age, And country location of their audience. Based on this information the the influencer is then grouped into categories to make it easy for buyers to find the perfect influencer to advertise their brand.",

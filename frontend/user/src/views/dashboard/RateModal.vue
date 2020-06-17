@@ -51,7 +51,7 @@
          <div class="col-12">
             <div class="custom-control custom-checkbox">
                <input type="checkbox" class="custom-control-input" id="customCheck" v-model="leaveMessage" :readonly="isReadOnly">
-               <label class="custom-control-label" for="customCheck">{{$t("Leave a private feedback")}} <small>({{$t("This will not be shown to the influencer")}})</small></label>
+               <label class="custom-control-label" for="customCheck">{{$t("Leave a private feedback (this will not be shown to the influencer)")}}</label>
             </div>
          </div>
       </div>
