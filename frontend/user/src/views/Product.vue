@@ -542,7 +542,7 @@
                category.pricing.forEach((p, idx) => {
                   options.push({
                      value: idx + 1,
-                     text: `${p.time} hours (with bio URL)`
+                     text: `${p.time} ${this.$t('hours')}`
                   })
                })
             }
