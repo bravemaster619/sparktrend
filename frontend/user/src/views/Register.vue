@@ -310,7 +310,7 @@
                   "value": "Iraq",
                   "text": "Iraq"
                }, {"value": "Ireland", "text": "Ireland"},
-               {"value": "Israel", "text": "Israel"}, {"value": "Italy", "text": "Italy"}, {
+                {"value": "Italy", "text": "Italy"}, {
                   "value": "Jamaica",
                   "text": "Jamaica"
                }, {"value": "Japan", "text": "Japan"},
@@ -382,7 +382,7 @@
                {"value": "Oman", "text": "Oman"}, {"value": "Pakistan", "text": "Pakistan"}, {
                   "value": "Palau",
                   "text": "Palau"
-               }, {"value": "Panama", "text": "Panama"},
+               },{"value": "Palestine", "text": "Palestine"}, {"value": "Panama", "text": "Panama"},
                {"value": "Papua New Guinea", "text": "Papua New Guinea"}, {
                   "value": "Paraguay",
                   "text": "Paraguay"
