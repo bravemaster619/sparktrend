@@ -1,10 +1,8 @@
 <template>
 
     <div class="base-image-input dropzone-border" ref="imgdiv"
-        :style="{ 'background-image' : `url(${imageData})`, 'width': width + '%', 'height': height + 'px'}"
         @click="chooseImage">
-        <span class="placeholder"
-            v-if="!imageData">
+        <span class="placeholder">
             {{$t("Choose an Image")}}
         </span>
         <input type="file"
@@ -67,6 +65,9 @@
         background-size: cover;
         background-position: center center;
         border-radius: 10px;
+        width: 100%;
+        height: 360px;
+        object-fit: cover;
     }
     .placeholder{
         background: #f0f0f0;

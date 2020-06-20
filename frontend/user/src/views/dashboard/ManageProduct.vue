@@ -15,6 +15,7 @@
          @next="next"
          :_id="instaaccount._id"
          :instaaccount="instaaccount"
+         v-on:change="changeInstaaccount"
       />
       <add-product-price
          v-if="status==='price'"
@@ -90,6 +91,9 @@
             if (this.$route.path !== 'myproducts') {
                this.$router.push({name: 'myproducts'})
             }
+         },
+         changeInstaaccount(instaaccount) {
+            this.instaaccount = instaaccount
          }
       },
       computed: {

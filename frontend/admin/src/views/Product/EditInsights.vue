@@ -6,13 +6,18 @@
                <div class="form-group has-label text-center text-md-left">
                   <label class="form-control-label text-uppercase">Insights Picture</label>
                </div>
-               <div v-viewer class="images clearfix">
-                  <img
-                     :alt="`${username} insights picture`"
-                     :src="`${insights_picture ? insights_picture : '/img/placeholder-img.jpg'}`"
-                     class="img-fluid object-fit-cover cursor-pointer"
-                     style="max-height: 500px;"
-                  >
+               <div v-viewer class="images clearfix row">
+                  <div class="col-12 col-md-6 mb-2" v-for="(insights_picture, index) in insights_pictures" :key="index">
+                     <img
+                        :alt="`${username} insights picture`"
+                        :src="insights_picture"
+                        class="img-fluid object-fit-cover cursor-pointer img-insights"
+                     >
+                     <button class="btn btn-xs btn-delete remove-image" @click="removeInsightPicture(index)">
+                        <i class="fa fa-trash"></i>
+                     </button>
+                  </div>
+                  
                </div>
             </div>
             <div class="col-12 col-md-6 mb-3">
@@ -81,12 +86,12 @@
    import VueViewer from 'v-viewer'
    import Vue from 'vue'
    Vue.use(VueViewer)
-
+   import httpService from "../../services/http"
    export default {
       name: 'edit-insights',
       props: {
          username: String,
-         insights_picture: String,
+         insights_pictures: Array,
          demographics: Object
       },
       data() {
@@ -112,13 +117,32 @@
                   { name: '', percent: 0 },
                   { name: '', percent: 0 }
                ]
-            }
+            },
+            
          }
       },
       methods: {
          dataChanged : function() {
             this.$emit('change', this.model)
+         },
+         removeInsightPicture: function(index) {
+            this.$emit('removeinsights', index)
          }
       }
    }
 </script>
+<style>
+.img-insights {
+   max-height: 120px;
+   width: 100%;
+   object-fit: cover;
+}
+.remove-image {
+    position: absolute;
+        margin-top: 5px;
+        margin-left: -30px;
+        color: rgba(0,0,0,0.5);
+        padding: 1px 6px;
+        background-color: rgba(0,0,0,0.3);
+}
+</style>

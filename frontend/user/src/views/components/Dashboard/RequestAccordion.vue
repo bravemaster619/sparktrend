@@ -78,7 +78,7 @@
                   <div class="py-2">
                      <div class="row">
                         <div class="col-12 col-md-5 images clearfix" v-viewer>
-                           <div class="salesorder-list-date mb-2">Attachment</div>
+                           <div class="salesorder-list-date mb-2">{{$t("Attachment")}}</div>
                            <div class="salesorder-list-image-product mb-2"
                                 v-for="(post,index) in order.posts"
                                 :key="index">

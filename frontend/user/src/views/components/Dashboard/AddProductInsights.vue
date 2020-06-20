@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-12 col-md-8">
+        <div class="col-12 images clearfix" v-viewer>
             <h5>{{$t("Insights")}} <label class="lbl label-success">
                 {{$t("What is this?")}}
             </label></h5>
@@ -11,12 +11,23 @@
                    loader="dots"
                    color="#5e72e4"
                 ></loading>
-                <image-input
-                        width="100" height="400"
-                        @input="uploadImage"
-                        :image="(instaaccount && instaaccount.insights_picture) ? instaaccount.insights_picture : null"
-                >
-                </image-input>
+                <div class="row">
+                    <div class="col-12 col-md-4 mb-2" v-if="instaaccount && instaaccount.insights_pictures"
+                            v-for="(url, index) in instaaccount.insights_pictures" :key="index">
+                        <img 
+                            :src="url"
+                            class="img-insight img-fluid z-depth-1"
+                        />
+                    </div>
+                    <div class="col-12 col-md-4 mb-2">
+                        <image-input
+                            @input="uploadImage"
+                            :image="null"
+                            v-if="instaaccount && (!instaaccount.insights_pictures || (instaaccount.insights_pictures && instaaccount.insights_pictures.length < 5))"
+                        >
+                        </image-input>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="col-12 col-md-10 mt-3 d-flex justify-content-between">
@@ -31,6 +42,11 @@
     import { addProductService } from "../../../services";
     import Loading from 'vue-loading-overlay'
     import 'vue-loading-overlay/dist/vue-loading.css';
+    import VueViewer from 'v-viewer'
+    import Vue from 'vue'
+    import 'viewerjs/dist/viewer.css'
+    Vue.use(VueViewer)
+
     export default {
         name: "AddProductInsights",
         event: [
@@ -58,7 +74,7 @@
             }
         },
         mounted() {
-            window.vuetemp = this
+            // window.vuetemp = this
         },
         methods: {
             next() {
@@ -86,11 +102,10 @@
                 //window.console.log("formdata", form_data)
                 addProductService.uploadInsight(form_data, this._id).then(({data}) => {
                     //window.console.log("server response", data);
-                    if(!data.data.insights_picture){
+                    if(!data.data.insights_pictures){
                         this.$toastr.error(this.$t("instaaccount.error.insights_upload_failed"));
                     }else{
-                        this.uploaded_file = data.data.insights_picture
-                        this.$toastr.success(this.$t("instaaccount.success.insights_uploaded"))
+                        this.$emit("change", data.data);
                     }
                 })
                 .catch(({response}) => {
@@ -104,5 +119,9 @@
 </script>
 
 <style scoped>
-
+    .img-insight {
+        width: 100%;
+        height: 360px;
+        object-fit: cover;
+    }
 </style>

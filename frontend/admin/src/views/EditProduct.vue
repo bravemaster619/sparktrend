@@ -158,10 +158,11 @@
                         <div class="pl-lg-4">
                            <edit-insights
                               :username="instaaccount.username"
-                              :insights_picture="instaaccount.insights_picture"
+                              :insights_pictures="instaaccount.insights_pictures"
                               :demographics="demographics"
-                              v-if="instaaccount.insights_picture"
+                              v-if="instaaccount.insights_pictures"
                               @change="insightsChanged"
+                              @removeinsights="removeInsightsPicture"
                            />
                            <p v-else>This account has no insights picture yet.</p>
                         </div>
@@ -220,11 +221,18 @@
          productDetailChanged: function(model) {
             this.instaaccount.product = model
          },
+         removeInsightsPicture: function(index) {
+            if (!this.instaaccount.insights_pictures) {
+               this.instaaccount.insights_pictures = []
+            }
+            this.$delete(this.instaaccount.insights_pictures, index)
+         },
          saveProduct: function() {
             const payload = {}
             payload.verified = this.instaaccount.verified ? true : false
             payload.allowed = this.instaaccount.allowed ? true : false
             payload.product = this.instaaccount.product
+            payload.insights_pictures = this.instaaccount.insights_pictures || []
             payload.demographics = { age: [], gender:[], country: [] }
             if (this.instaaccount.demographics) {
                ['age', 'gender', 'country'].forEach(demoKey => {
