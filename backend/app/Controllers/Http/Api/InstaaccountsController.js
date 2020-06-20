@@ -188,9 +188,27 @@ class InstaaccountsController extends BaseController {
     await image.move(use('Helpers').publicPath(filePath), { name: fileName })
     instaaccount.insights_picture = this.baseUrl() + `/${filePath}/${fileName}`
     const s3Url = await Drive.disk('s3').put(`${filePath}/${fileName}`, Drive.disk('local').getStream(`${filePath}/${fileName}`))
-    instaaccount.insights_picture = s3Url
+    if (!instaaccount.insights_pictures) {
+      instaaccount.insights_pictures = []
+    }
+    instaaccount.insights_pictures.push(s3Url)
     await Drive.disk('local').delete(`${filePath}/${fileName}`)
     await instaaccount.save()
+    return response.apiUpdated(instaaccount)
+  }
+
+  async deleteInsight ({ request, auth, instance, response }) {
+    const user = auth.user
+    const instaaccount = instance
+
+    if (user.role !== 'admin' && user._id.toString() != instance.user_id.toString()) {
+      throw UnAuthorizeException.invoke()
+    }
+    const index = request.input('index')
+    if (!instaaccount.insights_pictures) {
+      instaaccount.insights_pictures = []
+    }
+    instaaccount.insights_pictures.splice(index, 1)
     return response.apiUpdated(instaaccount)
   }
 
@@ -219,7 +237,7 @@ class InstaaccountsController extends BaseController {
       throw UnAuthorizeException.invoke()
     }
     const instaaccount = instance
-    const editData = request.only(['allowed', 'verified', 'product'])
+    const editData = request.only(['allowed', 'verified', 'product', 'insights_pictures'])
     instaaccount.merge(editData)
     const demographics = request.input('demographics')
     if (!demographics || typeof demographics !== 'object' || !instaaccount.demographics) {

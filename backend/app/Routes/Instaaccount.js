@@ -80,7 +80,6 @@ Route.group(() => {
    */
   Route.get('/myproducts', 'Api/InstaaccountsController.myproducts').middleware(['auth:jwt'])
 
-
   /**
    * @swagger
    * /instaaccounts/{id}:
@@ -214,6 +213,8 @@ Route.group(() => {
    *         $ref: '#/components/responses/ValidateFailed'
    */
   Route.post('/:id/upload-insights', 'Api/InstaaccountsController.uploadInsights').middleware(['auth:jwt']).instance('App/Models/Instaaccount')
+
+  Route.post('/:id/delete-insight', 'Api/InstaaccountsController.deleteInsight').middleware(['auth:jwt']).instance('App/Models/Instaaccount')
 
   /**
    * @swagger
