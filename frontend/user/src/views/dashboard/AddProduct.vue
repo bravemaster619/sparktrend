@@ -41,7 +41,6 @@
         },
         methods :    {
             next(tab_id, result) {
-                console.log('next')
                 this.current_tab_id = tab_id;
                 switch (tab_id) {
                     case "0": this.processCheck(result); break;
