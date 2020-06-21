@@ -8,7 +8,7 @@
                     </div>
                     <div class="mt-4">
                         <p>&copy; Copyright {{year}} Sparktrend.net</p>
-                        <p><a class="text-primary" href="mailto:sparktrend@hotmail.com">sparktrend@hotmail.com</a></p>
+                        <p><a class="text-primary" href="mailto:support@sparktrend.net">support@sparktrend.net</a></p>
                     </div>
                 </div>
                 <div class="col-md-3 mb-4">

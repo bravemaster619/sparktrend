@@ -45,7 +45,7 @@
             status_enum: [
                "check", "verify", "insights", "price"
             ],
-            insights_picture: ''
+            insights_pictures: []
          }
       },
       methods: {
@@ -102,7 +102,7 @@
                if (!this.instaaccount.verified) {
                   return 'verify'
                }
-               if (!this.insights_picture) {
+               if (!this.insights_pictures || !this.insights_pictures.length) {
                   return 'insights'
                }
                return 'price'
@@ -112,7 +112,7 @@
                   this.instaaccount.verified = false
                }
                if (newValue == 'insights') {
-                  this.insights_picture = ''
+                  this.insights_pictures = []
                }
             }
          }
@@ -121,7 +121,7 @@
          httpService.get('/instaaccounts/' + this.$route.params.id).then((res) => {
             if (res.status === 200 && res.data && res.data.data._id) {
                this.instaaccount = res.data.data
-               this.insights_picture = this.instaaccount.insights_picture
+               this.insights_pictures = this.instaaccount.insights_pictures
             } else {
                this.$toastr.error(this.$t("error.default"), "", {timeOut: 3000})
             }
