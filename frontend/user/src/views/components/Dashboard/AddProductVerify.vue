@@ -61,7 +61,8 @@
                         if(!data.data.verified){
                             this.$toastr.error(this.$t("instaaccount.error.verification_failed"))
                         }else{
-                            this.$emit('next', this.tab_id, {'verified' : data.data.verified})   ;
+                            // this.$emit('next', this.tab_id, {'verified' : data.data.verified})   ;
+                            window.location.href = `/myproducts/${this._id}`;
                         }
                     this.is_loading = false;
                 }).catch( (e ) => {
