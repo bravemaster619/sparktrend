@@ -51,7 +51,8 @@
         name: "AddProductInsights",
         event: [
             'back',
-            'next'
+            'next',
+            'foo'
         ],
         props:  {
             tab_id:{
@@ -69,7 +70,7 @@
         },
         data () {
             return {
-                uploaded_file : this.instaaccount && this.instaaccount.insights_picture ? this.instaaccount.insights_picture : "",
+                uploaded_file : this.instaaccount && this.instaaccount.insights_pictures ? this.instaaccount.insights_pictures[this.instaaccount.insights_pictures.length - 1] : "",
                 uploading: false,
             }
         },
@@ -106,6 +107,7 @@
                         this.$toastr.error(this.$t("instaaccount.error.insights_upload_failed"));
                     }else{
                         this.$emit("change", data.data);
+                        this.uploaded_file = data.data.insights_pictures[data.data.insights_pictures.length - 1]
                     }
                 })
                 .catch(({response}) => {

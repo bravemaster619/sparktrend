@@ -83,8 +83,8 @@
          processInsight(result) {
             if (!this.isEmpty(result.insight)) {
                this.insights_picture = result.insight
-               this.instaaccount.insights_picture = this.insights_picture
-               this.status = this.status_enum[++this.current_tab_id]
+               this.insights_pictures = [this.insights_picture]
+               this.status = "price"
             }
          },
          tabBack() {

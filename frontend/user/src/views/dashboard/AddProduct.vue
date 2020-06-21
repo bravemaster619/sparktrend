@@ -5,7 +5,7 @@
         <add-product-verify v-if="status==='verify'" tab_id="1" @back="back" @next="next"
                             :verificationCode="verification_code" :username="username" :_id="insta_id">
         </add-product-verify>
-        <add-product-insights v-if="status==='insights'" tab_id="2" @back="back" @next="next" :_id="insta_id">
+        <add-product-insights v-if="status==='insights'" tab_id="2" @next="next" @back="back" :_id="insta_id">
         </add-product-insights>
         <add-product-price v-if="status==='price'" tab_id="3" :_id="insta_id"></add-product-price>
     </div>
@@ -41,6 +41,7 @@
         },
         methods :    {
             next(tab_id, result) {
+                console.log('next')
                 this.current_tab_id = tab_id;
                 switch (tab_id) {
                     case "0": this.processCheck(result); break;
