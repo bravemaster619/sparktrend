@@ -12,8 +12,8 @@
                    color="#5e72e4"
                 ></loading>
                 <div class="row">
-                    <div class="col-12 col-md-4 mb-2" v-if="instaaccount && instaaccount.insights_pictures"
-                            v-for="(url, index) in instaaccount.insights_pictures" :key="index">
+                    <div class="col-12 col-md-4 mb-2"
+                        v-for="(url, index) in (instaaccount && instaaccount.insights_pictures ? instaaccount.insights_pictures : [])" :key="index">
                         <img 
                             :src="url"
                             class="img-insight img-fluid z-depth-1"
