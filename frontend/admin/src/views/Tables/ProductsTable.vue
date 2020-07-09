@@ -138,7 +138,7 @@
       methods: {
          moment,
          updateData: function (page = 1) {
-            return httpService.get(`instaaccounts/adminlist?page==${page}`).then(res => {
+            return httpService.get(`instaaccounts/adminlist?page=${page}`).then(res => {
                this.tableData = res.data.data
                this.total = res.data.meta.total
             }).catch(e => {
