@@ -125,7 +125,7 @@
             tableData: [],
             loading: true,
             total: 0,
-            perPage: 10,
+            perPage: 20,
             currentPage: 1
          }
       },
