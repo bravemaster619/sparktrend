@@ -472,8 +472,8 @@
          httpService.get(`instaaccounts/${window.location.search}`).then((resp) => {
             if (resp.status === 200) {
                this.instaaccounts = resp.data.data
-               if (resp.meta && resp.meta.total) {
-                  this.total_count = resp.meta.total
+               if (resp.data.meta && resp.data.meta.total) {
+                  this.total_count = resp.data.meta.total
                }
                this.loading = false
             } else {
