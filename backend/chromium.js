@@ -16,7 +16,8 @@ class InstagramCrawler {
     this.processing = true
     this.browser = await puppeteer.launch({
       headless: true,
-      args: ['--no-sandbox']
+      args: ['--no-sandbox'],
+      userDataDir: './instagram-user-data'
     })
     console.log('Browser launched')
     this.page = await this.browser.newPage()
