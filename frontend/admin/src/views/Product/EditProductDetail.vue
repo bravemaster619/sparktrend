@@ -45,7 +45,7 @@
    </div>
 </template>
 <script>
-
+   import config from '../../config/config'
    export default {
       name: 'edit-product-detail',
       props: {
@@ -58,7 +58,7 @@
                niches: '',
                categories: []
             },
-            niches: [{"value":"1","text":"Humour & Memes","checked":false},{"value":"2","text":"Fashion & Style","checked":false},{"value":"3","text":"Fitness & Sports","checked":false},{"value":"4","text":"Quotes & Texts","checked":false},{"value":"5","text":"Luxury & Motivation","checked":false},{"value":"6","text":"Cars & Bikes","checked":false},{"value":"7","text":"Outdoor & Travel","checked":false},{"value":"8","text":"Food & Nutrition","checked":false},{"value":"9","text":"Pets & Animals","checked":false},{"value":"10","text":"Models & Lifestyle","checked":false},{"value":"11","text":"Personal & Talent","checked":false},{"value":"12","text":"Music & Singers","checked":false},{"value":"13","text":"Science & Technology","checked":false},{"value":"14","text":"Art","checked":false},{"value":"15","text":"Beauty, Cosmetic & Personal Care","checked":false},{"value":"16","text":"Clip & Movie","checked":false},{"value":"17","text":"Drink & Beverage","checked":false},{"value":"18","text":"Games & Play","checked":false},{"value":"19","text":"Cabin and Wood","checked":false},{"value":"20","text":"Interior Design","checked":false}]
+            niches: config.niches.map(niche => { return { ...niche, checked: false } })
          }
       },
       methods: {

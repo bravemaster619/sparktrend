@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import config from '../config'
+import config from '../config/config'
 
 export const baseUrl = function(url) {
    return config.API_HOST +  (url.startsWith('/') ? url : `/${url}`)
