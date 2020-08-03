@@ -174,7 +174,11 @@
          updateData: function () {
             this.loading = true
             return httpService.get(`/users/${this.$route.params.id}`).then(res => {
-               this.user = res.data.data
+              const userInfo = res.data.data
+              if (!userInfo.bank_info) {
+                userInfo.bank_info = {}
+              }
+               this.user = userInfo
             }).catch(e => {
                this.$noty.error("Cannot read user data")
             })
@@ -200,7 +204,11 @@
                   this.saving = true
                   httpService.put(`/users/${this.$route.params.id}`, this.user).then(res => {
                      this.$noty.success("User saved")
-                     this.user = res.data.data
+                    const userInfo = res.data.data
+                    if (!userInfo.bank_info) {
+                      userInfo.bank_info = {}
+                    }
+                    this.user = userInfo
                   }).catch(e => {
                      this.$noty.error("Cannot save user data")
                   }).finally(() => {
