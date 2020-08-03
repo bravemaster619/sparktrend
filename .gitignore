@@ -1,2 +1,3 @@
 
-frontend/user/src/config/index.js
+frontend/user/src/config/api.js
+frontend/admin/src/config/api.js
