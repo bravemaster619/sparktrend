@@ -26,8 +26,8 @@ dotenv.config();
 
 if (process.env.SSL_KEY_PATH) {
   const options = {
-    key: fs.readFileSync("path-to-key.key"),
-    cert: fs.readFileSync("path-to-key.crt"),
+    key: fs.readFileSync(process.env.SSL_KEY_PATH),
+    cert: fs.readFileSync(process.env.SSL_CERT_PATH),
   };
 
   new Ignitor(require("@adonisjs/fold"))
