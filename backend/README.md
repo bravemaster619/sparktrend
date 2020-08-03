@@ -28,6 +28,29 @@ Start the project:
 $ npm run start
 ```
 
+## Cronjobs
+
+Delete unaccepted requests and expire requests
+
+```console
+# Run every twelve hours
+0	0,12	*	*	* cd /home/sparktr4/source/sparktrend/backend; node ace cronjob:order >cronjob.log 2>&1
+```
+
+Apply random priorities to products
+
+```console
+# Run every 6 hours
+0 */6 * * * cd /home/sparktr4/source/sparktrend/backend; node ace cronjob:randomsort >cronjob.log 2>&1
+```
+
+Update instagram informations
+
+```console
+# Run every three days
+0 0 */3 * * cd /home/sparktr4/source/sparktrend/backend; node ace cronjob:insta >cronjob.log 2>&1
+```
+
 ## TROUBLESHOOTING
 
 ### Chromium won't start
