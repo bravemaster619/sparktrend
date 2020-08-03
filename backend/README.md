@@ -34,7 +34,7 @@ Delete unaccepted requests and expire requests
 
 ```console
 # Run every twelve hours
-0	0,12	*	*	* cd /home/sparktr4/source/sparktrend/backend; node ace cronjob:order >cronjob.log 2>&1
+0 0,12 * * * cd /home/sparktr4/source/sparktrend/backend; node ace cronjob:order >cronjob.log 2>&1
 ```
 
 Apply random priorities to products
