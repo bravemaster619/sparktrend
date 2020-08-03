@@ -555,7 +555,7 @@
                category.pricing.forEach((p, idx) => {
                   options.push({
                      value: idx + 1,
-                     text: `${p.time} ${this.$t('hours')}`
+                     text: p.time > 186 ? this.$t('Permanent') : `${p.time} ${this.$t('hours')}`
                   })
                })
             }

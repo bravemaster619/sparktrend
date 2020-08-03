@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-12 col-md-5">
                     <div class="salesorder-list-image-product mb-2" v-for="shoutout_attachment in item.shoutout_attachments" :key="shoutout_attachment.id">
-                        <div class="salesorder-list-date">Attachement</div>
+                        <div class="salesorder-list-date">Attachment</div>
                         <img class="img-fluid salesorder-list-img-product z-depth-1"
                              :src="shoutout_attachment.file_full_url">
                         <button data-toggle="tooltip" title="Download Attachment(s)" class="salesorder-list-download-post" style="top:31px; right: 15px;">

@@ -63,7 +63,7 @@
                            class="pl-md-2 py-md-0 py-2 text-center border-md-left border-sm-top d-flex flex-column w-100">
                            <div class="m-auto">
                               <p class="salesorder-list-date mb-1">{{$t("Duration")}}</p>
-                              <p>{{order.time}} {{$t("hour(s)")}}</p>
+                              <p>{{order.time > 186 ? $t('Permanent') : `${order.time} ${$t('hour(s)')}`}}</p>
                            </div>
                         </div>
                         <div
