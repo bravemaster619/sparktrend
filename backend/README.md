@@ -1,3 +1,32 @@
+## DEVELOPMENT
+
+### Initial Launch
+
+Copy `.env.example` to `.env`:
+
+```console
+$ cp .env.example .env
+```
+
+Install dependencies:
+
+```console
+$ npm i
+```
+
+Migrate and seed database:
+
+```console
+$ node ace migrate
+$ node ace seeddb
+```
+
+Start the project:
+
+```console
+$ npm run start
+```
+
 ## TROUBLESHOOTING
 
 ### Chromium won't start
