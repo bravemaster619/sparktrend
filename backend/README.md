@@ -12,6 +12,7 @@ Install dependencies:
 
 ```console
 $ npm i
+$ npm i -g @adonisjs/cli
 ```
 
 Migrate and seed database:
