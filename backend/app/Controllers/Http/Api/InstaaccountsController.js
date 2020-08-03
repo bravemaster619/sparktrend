@@ -30,6 +30,7 @@ class InstaaccountsController extends BaseController {
       .where(parsedQuery.where)
       .where({ allowed: true })
       .where({ product: { $exists: true } })
+      .orderBy({ priority: -1 })
       .skip(parsedQuery.skip)
       .limit(parsedQuery.limit);
 
@@ -122,6 +123,7 @@ class InstaaccountsController extends BaseController {
       username,
       verified: false,
       verification_code: randomstring.generate(7),
+      priority: 0,
     });
     instaaccount.merge(instainfo);
     await instaaccount.save();
