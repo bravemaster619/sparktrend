@@ -1,9 +1,11 @@
+import { API_HOST } from './api';
+
 export const config = {
     base_url(url) {
         if (url.startsWith("/")) {
-            return "https://sparktrend.net:3333/api" + url;
+            return API_HOST + url;
         } else {
-            return "https://sparktrend.net:3333/api/" + url;
+            return `${API_HOST}/${url}`;
         }
     }
 };
