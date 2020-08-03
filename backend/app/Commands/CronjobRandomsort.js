@@ -28,6 +28,7 @@ class CronjobRandomsort extends Command {
       count += 1
     }
     console.log(`End random sort, updated ${count} products`)
+    process.exit()
   }
 }
 

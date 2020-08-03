@@ -15,6 +15,7 @@ class UpdateInsta extends Command {
   async handle (args, options) {
     await this.deleteUnverifiedAccounts()
     await this.refetchInstagramInfo()
+    process.exit()
   }
 
   async deleteUnverifiedAccounts() {
