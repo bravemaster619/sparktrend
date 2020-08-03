@@ -332,9 +332,8 @@ class InstaaccountsController extends BaseController {
     try {
       await instaaccount.save();
     } catch (e) {
-      console.log(instaaccount.demographics);
       // console.log(instaaccount)
-      // console.log(util.inspect(instaaccount, false, null, true))
+      // console.log(util.inspect(instaaccount.product.categories, false, null, true))
       // console.error(e)
       return response.validateFailed("invalid_data");
     }

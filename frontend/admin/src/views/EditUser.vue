@@ -94,6 +94,39 @@
                                  </select>
                               </div>
                            </div>
+                           <div class="col-12">
+                             <div class="form-group has-label">
+                               <label class="form-control-label">
+                                 Bank Detail
+                               </label>
+                             </div>
+                             <div class="row">
+                               <div class="col-12 col-md-6">
+                                 <label>Account Holder Name</label>
+                                 <input class="form-control" v-model="user.bank_info.name" />
+                               </div>
+                               <div class="col-12 col-md-6">
+                                 <label>Account Number</label>
+                                 <input class="form-control" v-model="user.bank_info.account_number" />
+                               </div>
+                               <div class="col-12 col-md-6">
+                                 <label>IBAN Number</label>
+                                 <input class="form-control" v-model="user.bank_info.iban_number" />
+                               </div>
+                               <div class="col-12 col-md-6">
+                                 <label>Bank Name</label>
+                                 <input class="form-control" v-model="user.bank_info.bank_name"/>
+                               </div>
+                               <div class="col-12 col-md-6">
+                                 <label>Bank Address</label>
+                                 <input class="form-control" v-model="user.bank_info.bank_address"/>
+                               </div>
+                               <div class="col-12 col-md-6">
+                                 <label>SWIFT Code</label>
+                                 <input class="form-control" v-model="user.bank_info.swift"/>
+                               </div>
+                             </div>
+                           </div>
                         </div>
                      </form>
                   </div>

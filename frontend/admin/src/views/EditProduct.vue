@@ -248,6 +248,15 @@
                   }
                })
             }
+            if (this.instaaccount.product && this.instaaccount.product.categories) {
+              this.instaaccount.product.categories.forEach(cat => {
+                cat.pricing.forEach(p => {
+                  p.time = Number(p.time)
+                  p.price = Number(p.price)
+                  p.bio_price = Number(p.bio_price)
+                })
+              })
+            }
             httpService.put(`/instaaccounts/${this.$route.params.id}/adminedit`, payload).then(res => {
                // back up user info because response will not return user info
                const userinfo = this.instaaccount.user_info

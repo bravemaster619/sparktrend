@@ -51,6 +51,7 @@
                   {{gender.text}}
                </option>
             </select>
+            <!--
             <label>{{$t("Referral Code")}}</label>
             <base-input
                class="mb-3"
@@ -61,6 +62,45 @@
                class="mb-3"
                type="text"
                readonly>
+            </base-input> -->
+            <div>
+              <label class="font-weight-bold">{{$t("Bank Details")}}</label>
+            </div>
+            <base-input
+              class="mb-3"
+              :placeholder="$t('Name of Account Holder')"
+              v-model="user.bank_info.name"
+            >
+            </base-input>
+            <base-input
+              class="mb-3"
+              :placeholder="$t('Account Number')"
+              v-model="user.bank_info.account_number"
+            >
+            </base-input>
+            <base-input
+              class="mb-3"
+              :placeholder="$t('IBAN Number')"
+              v-model="user.bank_info.iban_number"
+            >
+            </base-input>
+            <base-input
+              class="mb-3"
+              :placeholder="$t('Bank Name')"
+              v-model="user.bank_info.bank_name"
+            >
+            </base-input>
+            <base-input
+              class="mb-3"
+              :placeholder="$t('Bank Address')"
+              v-model="user.bank_info.bank_address"
+            >
+            </base-input>
+            <base-input
+              class="mb-3"
+              :placeholder="$t('SWIFT Code')"
+              v-model="user.bank_info.swift"
+            >
             </base-input>
             <template>
                <button type="button" class="btn btn-primary w-100 mt-3" v-if="saving" disabled>{{$t("Updating...")}}</button>
@@ -102,8 +142,13 @@
          updateData: function () {
             this.loading = true
             httpService.get('/auth/me').then(res => {
-               this.user = res.data.data
+               const userInfo = res.data.data
+               if (!userInfo.bank_info) {
+                 userInfo.bank_info = {}
+               }
+               this.user = userInfo
             }).catch(e => {
+              console.error(e)
                this.$toastr.error(this.$t('error.default'))
             }).finally(() => {
                this.loading = false
@@ -129,8 +174,12 @@
                }
                this.saving = true
                httpService.put(`/users/${this.user._id}`, this.user).then(res => {
-                  this.user = res.data.data
-                  this.$toastr.success(this.$t("Updated successfully!"))
+                const userInfo = res.data.data
+                if (!userInfo.bank_info) {
+                  userInfo.bank_info = {}
+                }
+                this.user = userInfo
+                this.$toastr.success(this.$t("Updated successfully!"))
                }).catch(e => {
                   this.$toastr.error(this.$t('error.default'))
                }).finally(() => {
@@ -147,5 +196,8 @@
 <style>
    body {
       background-color: #fdfdfd;
+   }
+   .font-weight-bold {
+     font-weight: 600
    }
 </style>

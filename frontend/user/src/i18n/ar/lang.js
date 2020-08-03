@@ -215,6 +215,13 @@ const ar = {
    "Leave a private feedback": "Leave a private feedback",
    "This will not be shown to the influencer": "This will not be shown to the influencer",
    "Leave private feedback (this will not be shown to influencer)": "يرجى ترك ملاحظات خاصة (ان هذي الملاحظات لن يراها المؤثر)",
+   "Bank Details": " البيانات البنكية",
+   "Name of Account Holder": " اسم صاحب الحساب",
+   "Account Number": " رقم الحساب",
+   "IBAN Number": "رقم الأيبان",
+   "Bank Name": "اسم البنك",
+   "Bank Address": " عنوان البنك",
+   "SWIFT Code": " كود السويفت",
    home: {
       main_legend: "سبارك ترند هي منصة إلكترونية لبيع وشراء إعلانات الإنستقرام بكل سهولة واريحية",
       targeted_influencers_desc: "نحن نقسم المؤثرين المسجلين إلى مجموعات إسنادًا على احصائيات الحساب. على سبيل المثال اعلى الدول متابعة، الفئة العمرية، الجنس، عدد المتابعين، وحتى نوع الحساب ",
