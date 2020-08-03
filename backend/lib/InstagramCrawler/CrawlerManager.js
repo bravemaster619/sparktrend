@@ -5,19 +5,21 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 class InstagramCrawler {
-  constructor () {
+  constructor(options = {}) {
     this.browser = null
     this.page = null
     this.processing = false
+    this.options = options
   }
 
   async init () {
     console.log('---Starting headless browser---')
     this.processing = true
     this.browser = await puppeteer.launch({
-      headless: true,
+      headless: false,
       args: ['--no-sandbox'],
-      userDataDir: './instagram-user-data'
+      userDataDir: './instagram-user-data',
+      ...this.options
     })
     console.log('Browser launched')
     this.page = await this.browser.newPage()
@@ -139,20 +141,21 @@ class InstagramCrawler {
 }
 
 class CrawlerManager {
-  constructor () {
+  constructor(initOptions = {}) {
+    this.options = initOptions
     this.crawlers = [
-      new InstagramCrawler()
+      new InstagramCrawler(this.initOptions)
     ]
   }
 
-  async getCrawler () {
+  async getCrawler(options = {}) {
     console.log("Finding free crawler")
     const crawlerIdx = this.crawlers.findIndex(c => !c.processing)
     console.log("Free crawler index: " + crawlerIdx)
     let crawler = this.crawlers[crawlerIdx]
     if (!crawler) {
       console.log("Crawler not found. Init another crawler")
-      crawler = new InstagramCrawler()
+      crawler = new InstagramCrawler(options)
       this.crawlers.push(crawler)
       await crawler.init()
       return { crawler, crawlerIdx: this.crawlers.length - 1 }
