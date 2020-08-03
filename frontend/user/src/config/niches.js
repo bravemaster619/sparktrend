@@ -39,7 +39,7 @@ export default [
     value: "16",
     text: "Clip & Movie",
   },
-  { value: "17", text: "Drink & Beverage" },
+  { value: "17", text: "Food & Beverage" },
   {
     value: "18",
     text: "Games & Play",
@@ -49,4 +49,40 @@ export default [
     value: "20",
     text: "Interior Design",
   },
+  {
+    value: "21",
+    text: "Religions & Spirituality",
+  },
+  {
+    value: "22",
+    text: "Business & Projects",
+  },
+  {
+    value: "23",
+    text: "Dance",
+  },
+  {
+    value: "24",
+    text: "Parenting & Babies",
+  },
+  {
+    value: "25",
+    text: "Farming & Flowers",
+  },
+  {
+    value: "26",
+    text: "Marketing",
+  },
+  {
+    value: "27",
+    text: "Martial Arts",
+  },
+  {
+    value: "28",
+    text: "News",
+  },
+  {
+    vaule: "29",
+    text: "Others"
+  }
 ];
