@@ -148,7 +148,7 @@
                }
                this.user = userInfo
             }).catch(e => {
-              console.error(e)
+               window.console.error(e)
                this.$toastr.error(this.$t('error.default'))
             }).finally(() => {
                this.loading = false
