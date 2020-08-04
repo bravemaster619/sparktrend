@@ -9,7 +9,7 @@ class UpdateInsta extends Command {
       cronjob:insta
       { count?=10 : Number of accounts to update }
       { username?=\0 : Name of instagram account to update }
-      { --delaccount : Flag to delete unverified account }
+      { --delunverified : Flag to delete unverified account }
       { --force : Flag to force update regardless of last crawled time }
     `;
   }
@@ -19,7 +19,7 @@ class UpdateInsta extends Command {
   }
 
   async handle(args, options) {
-    if (options.delaccount) {
+    if (options.delunverified) {
       await this.deleteUnverifiedAccounts();
     }
     const force = options.force
