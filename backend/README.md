@@ -40,15 +40,15 @@ Delete unaccepted requests and expire requests
 Apply random priorities to products
 
 ```console
-# Run every 6 hours
-0 */6 * * * cd /home/sparktr4/source/sparktrend/backend; node ace cronjob:randomsort >cronjob.log 2>&1
+# Run every 1 hours
+0 * * * * cd /home/sparktr4/source/sparktrend/backend; node ace cronjob:randomsort >cronjob.log 2>&1
 ```
 
 Update instagram informations
 
 ```console
 # Run every three days
-0 0 */3 * * cd /home/sparktr4/source/sparktrend/backend; node ace cronjob:insta >cronjob.log 2>&1
+0 0 */3 * * cd /home/sparktr4/source/sparktrend/backend; node ace cronjob:insta --delunverified >cronjob.log 2>&1
 ```
 
 ## TROUBLESHOOTING
