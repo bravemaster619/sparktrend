@@ -45,6 +45,11 @@
                            <option value="24">24 {{$t("hours")}}</option>
                            <option value="48">48 {{$t("hours")}}</option>
                            <option value="72">72 {{$t("hours")}}</option>
+                           <option value="96">4 {{$t("days")}}</option>
+                           <option value="120">5 {{$t("days")}}</option>
+                           <option value="144">6 {{$t("days")}}</option>
+                           <option value="186">7 {{$t("days")}}</option>
+                           <option value="999999">{{$t("Permanent")}}</option>
                         </select>
                      </div>
                      <div class="w-26 mr-3">
@@ -62,7 +67,7 @@
                   </div>
                   <div class="row mb-3" v-for="(single_price, index) in single_prices" :key="index">
                      <div class="w-26 mr-3">
-                        <input type="text" :value="single_price.time + 'hours'" readonly class="form-control">
+                        <input type="text" :value="single_price.time > 186 ? $t('Permanent') : single_price.time + ' ' + $t('hours')" readonly class="form-control">
                      </div>
                      <div class="w-26 mr-3">
                         <input type="text" :value="single_price.price" placeholder="$Price" readonly
@@ -106,6 +111,11 @@
                            <option value="24">24 {{$t("hours")}}</option>
                            <option value="48">48 {{$t("hours")}}</option>
                            <option value="72">72 {{$t("hours")}}</option>
+                           <option value="96">4 {{$t("days")}}</option>
+                           <option value="120">5 {{$t("days")}}</option>
+                           <option value="144">6 {{$t("days")}}</option>
+                           <option value="186">7 {{$t("days")}}</option>
+                           <option value="999999">{{$t("Permanent")}}</option>
                         </select>
                      </div>
                      <div class="w-26 mr-3">
@@ -125,7 +135,7 @@
                   </div>
                   <div class="row mb-3" v-for="(multiple_price, index) in multiple_prices" :key="index">
                      <div class="w-26 mr-3">
-                        <input type="text" :value="multiple_price.time + 'hours'" readonly class="form-control">
+                        <input type="text" :value="multiple_price.time > 186 ? $t('Permanent') : multiple_price.time + ' ' + $t('hours')" readonly class="form-control">
                      </div>
                      <div class="w-26 mr-3">
                         <input type="text" :value="multiple_price.price" placeholder="$Price" readonly
@@ -169,6 +179,11 @@
                            <option value="24">24 {{$t("hours")}}</option>
                            <option value="48">48 {{$t("hours")}}</option>
                            <option value="72">72 {{$t("hours")}}</option>
+                           <option value="96">4 {{$t("days")}}</option>
+                           <option value="120">5 {{$t("days")}}</option>
+                           <option value="144">6 {{$t("days")}}</option>
+                           <option value="186">7 {{$t("days")}}</option>
+                           <option value="999999">{{$t("Permanent")}}</option>
                         </select>
                      </div>
                      <div class="w-26 mr-3">
@@ -186,7 +201,7 @@
                   </div>
                   <div class="row mb-3" v-for="(story_price, index) in story_prices" :key="index">
                      <div class="w-26 mr-3">
-                        <input type="text" readonly class="form-control" :value="story_price.time + 'hours'">
+                        <input type="text" readonly class="form-control" :value="story_price.time > 186 ? $t('Permanent') : story_price.time + ' ' + $t('hours')">
                      </div>
                      <div class="w-26 mr-3">
                         <input type="text" :value="story_price.price" placeholder="$Price" readonly
@@ -227,7 +242,7 @@
 
 <script>
    import {addProductService} from "../../../services";
-
+   import niches from '../../../config/niches';
    export default {
       name: "AddProductPrice",
       props: {
@@ -261,28 +276,7 @@
                price: "",
                bio_price: ""
             },
-            niche_options: [{"value": "1", "text": "Humour & Memes"}, {
-               "value": "2",
-               "text": "Fashion & Style"
-            }, {"value": "3", "text": "Fitness & Sports"}, {"value": "4", "text": "Quotes & Texts"}, {
-               "value": "5",
-               "text": "Luxury & Motivation"
-            }, {"value": "6", "text": "Cars & Bikes"}, {"value": "7", "text": "Outdoor & Travel"}, {
-               "value": "8",
-               "text": "Food & Nutrition"
-            }, {"value": "9", "text": "Pets & Animals"}, {"value": "10", "text": "Models & Lifestyle"}, {
-               "value": "11",
-               "text": "Personal & Talent"
-            }, {"value": "12", "text": "Music & Singers"}, {
-               "value": "13",
-               "text": "Science & Technology"
-            }, {"value": "14", "text": "Art"}, {
-               "value": "15",
-               "text": "Beauty, Cosmetic & Personal Care"
-            }, {"value": "16", "text": "Clip & Movie"}, {"value": "17", "text": "Drink & Beverage"}, {
-               "value": "18",
-               "text": "Games & Play"
-            }, {"value": "19", "text": "Cabin and Wood"}, {"value": "20", "text": "Interior Design"}]
+            niche_options: niches
          }
          if (this.instaaccount && this.instaaccount.product) {
             const data = {}

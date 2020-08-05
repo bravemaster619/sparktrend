@@ -1,3 +1,56 @@
+## DEVELOPMENT
+
+### Initial Launch
+
+Copy `.env.example` to `.env`:
+
+```console
+$ cp .env.example .env
+```
+
+Install dependencies:
+
+```console
+$ npm i
+$ npm i -g @adonisjs/cli
+```
+
+Migrate and seed database:
+
+```console
+$ node ace migrate
+$ node ace seeddb
+```
+
+Start the project:
+
+```console
+$ npm run start
+```
+
+## Cronjobs
+
+Delete unaccepted requests and expire requests
+
+```console
+# Run every twelve hours
+0 0,12 * * * cd /home/sparktr4/source/sparktrend/backend; node ace cronjob:order >cronjob.log 2>&1
+```
+
+Apply random priorities to products
+
+```console
+# Run every 1 hours
+0 * * * * cd /home/sparktr4/source/sparktrend/backend; node ace cronjob:randomsort >cronjob.log 2>&1
+```
+
+Update instagram informations
+
+```console
+# Run every three days
+0 0 */3 * * cd /home/sparktr4/source/sparktrend/backend; node ace cronjob:insta --delunverified >cronjob.log 2>&1
+```
+
 ## TROUBLESHOOTING
 
 ### Chromium won't start

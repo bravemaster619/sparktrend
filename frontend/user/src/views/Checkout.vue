@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-12 col-md-4 text-center border-right">
                             <label class="font-weight-bold">{{$t("Duration")}}</label>
-                            <p>{{order.time}} {{$t("hour(s)")}}</p>
+                            <p>{{order.time > 186 ? $t('Permanent') : `${order.time} ${$t('hour(s)')}`}}</p>
                         </div>
                         <div class="col-12 col-md-4 text-center">
                             <label class="font-weight-bold">{{$t("Category Type")}}</label>

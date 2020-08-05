@@ -89,7 +89,7 @@
                         </option>
                      </select>
                   </div>
-                  <div class="col-12 form-group" v-if="selectedPricing">
+                  <div class="col-12 form-group" v-if="selectedPricing && bioPriceExists">
                      <div class="custom-control custom-checkbox">
                         <input id="bioUrlCheck" class="custom-control-input" type="checkbox"
                                @change="onBioUrlCheck" v-bind:checked="this.form.with_bio">
@@ -475,6 +475,19 @@
          }
       },
       computed: {
+         bioPriceExists: function() {
+           const category = this.selectedCategory;
+           console.log('bioPriceExsit check category', category)
+           if (!category || !category.pricing) {
+             return false
+           }
+           for (let p of category.pricing) {
+             if (p.bio_price) {
+               return true
+             }
+           }
+           return false
+         },
          getMinPrice: function () {
             let minPrice
             try {
@@ -542,7 +555,7 @@
                category.pricing.forEach((p, idx) => {
                   options.push({
                      value: idx + 1,
-                     text: `${p.time} ${this.$t('hours')}`
+                     text: p.time > 186 ? this.$t('Permanent') : `${p.time} ${this.$t('hours')}`
                   })
                })
             }

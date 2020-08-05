@@ -238,7 +238,7 @@
                      this.$noty.info('Updated successfully')
                      this.updateData()
                   }).catch(e => {
-                     console.error(e)
+                     window.console.error(e)
                      this.$noty.error('Save failed')
                   }).finally(() => {
                      this.saving = false

@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 /*
 |--------------------------------------------------------------------------
@@ -17,18 +17,28 @@
 |     Make sure to pass relative path from the project root.
 */
 
-const { Ignitor } = require('@adonisjs/ignitor')
-const https = require('https')
-const fs = require('fs')
+const { Ignitor } = require("@adonisjs/ignitor");
+const https = require("https");
+const fs = require("fs");
+const dotenv = require("dotenv");
 
-const options = {
-  key: fs.readFileSync('path-to-key.key'),
-  cert: fs.readFileSync('path-to-key.crt')
+dotenv.config();
+
+if (process.env.SSL_KEY_PATH) {
+  const options = {
+    key: fs.readFileSync(process.env.SSL_KEY_PATH),
+    cert: fs.readFileSync(process.env.SSL_CERT_PATH),
+  };
+
+  new Ignitor(require("@adonisjs/fold"))
+    .appRoot(__dirname)
+    .fireHttpServer((handler) => {
+      return https.createServer(options, handler);
+    })
+    .catch(console.error);
+} else {
+  new Ignitor(require("@adonisjs/fold"))
+    .appRoot(__dirname)
+    .fireHttpServer()
+    .catch(console.error);
 }
-
-new Ignitor(require('@adonisjs/fold'))
-  .appRoot(__dirname)
-  .fireHttpServer((handler) => {
-    return https.createServer(options, handler)
-  })
-  .catch(console.error)

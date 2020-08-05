@@ -110,6 +110,14 @@ class UsersController extends BaseController {
       }
     }
     instance.merge(request.only(userData))
+    if (request.input('bank_info')) {
+      if (!instance.bank_info) {
+        instance.bank_info = {}
+      }
+      ['name', 'account_number', 'iban_number', 'bank_name', 'bank_address', 'swift'].forEach(key => {
+        instance.bank_info[key] = String(request.input('bank_info')[key] || "").substring(0, 100)
+      })
+    }
     instance.verified = $b(instance.verified)
     await instance.save()
     if(user.role === 'admin') {

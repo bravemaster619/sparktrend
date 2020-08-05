@@ -72,6 +72,9 @@ const commands = [
   'App/Commands/Swagger',
   'App/Commands/Migration',
   'App/Commands/Seed',
+  'App/Commands/CronjobUpdateInsta',
+  'App/Commands/CronjobOrder',
+  'App/Commands/CronjobRandomsort',
 ]
 
 module.exports = { providers, aceProviders, aliases, commands }

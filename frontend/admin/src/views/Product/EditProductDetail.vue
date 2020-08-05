@@ -3,19 +3,26 @@
       <div class="form-gruop">
          <div class="form-gruop has-label text-center text-md-left">
             <label class="form-control-label text-uppercase">Categories</label>
-            <template v-for="(plan, index) in model.categories">
-               <div class="row mb-3" :key="index">
-                  <label class="col-12 col-form-label font-weight-bold text-center text-lg-left"><i class="ni ni-tag font-weight-300"></i> {{ plan.type }}</label>
+            <template v-for="(plan, catIndex) in model.categories">
+               <div class="row mb-3" :key="catIndex">
+                  <div class="col-12">
+                    <label class="font-weight-bold text-center text-lg-left"><i class="ni ni-tag font-weight-300"></i> {{ plan.type }}</label>
+                    <button class="btn btn-xs ml-2 p-1" @click="addPlan(catIndex)"><i class="fa fa-plus text-primary"></i></button>
+                  </div>
                   <div class="col-12 px-lg-5">
-                     <div class="row mb-2" v-for="(pricing, index) in plan.pricing" :key="index">
+                     <div class="row mb-2" v-for="(pricing, planIndex) in plan.pricing" :key="catIndex + planIndex">
                         <div class="col-md-4">
-                           Time: {{pricing.time}}
+                          <button class="btn btn-xs mr-2 p-1" @click="removePlan(catIndex, planIndex)"><i class="fa fa-minus text-danger"></i></button>
+                          <label class="form-label">Time</label>
+                          <input type="number" min="0" class="form-control" v-model="pricing.time"/>
                         </div>
                         <div class="col-md-4">
-                           Price: ${{pricing.price}}
+                          <label class="form-label">Price</label>
+                          <input type="number" min="0" class="form-control" v-model="pricing.price" />
                         </div>
                         <div class="col-md-4">
-                           Bio Price: ${{pricing.bio_price}}
+                          <label class="form-label">Bio Price</label>
+                          <input type="number" min="0" class="form-control" v-model="pricing.bio_price" />
                         </div>
                      </div>
                   </div>
@@ -45,7 +52,7 @@
    </div>
 </template>
 <script>
-
+   import config from '../../config/config'
    export default {
       name: 'edit-product-detail',
       props: {
@@ -58,12 +65,22 @@
                niches: '',
                categories: []
             },
-            niches: [{"value":"1","text":"Humour & Memes","checked":false},{"value":"2","text":"Fashion & Style","checked":false},{"value":"3","text":"Fitness & Sports","checked":false},{"value":"4","text":"Quotes & Texts","checked":false},{"value":"5","text":"Luxury & Motivation","checked":false},{"value":"6","text":"Cars & Bikes","checked":false},{"value":"7","text":"Outdoor & Travel","checked":false},{"value":"8","text":"Food & Nutrition","checked":false},{"value":"9","text":"Pets & Animals","checked":false},{"value":"10","text":"Models & Lifestyle","checked":false},{"value":"11","text":"Personal & Talent","checked":false},{"value":"12","text":"Music & Singers","checked":false},{"value":"13","text":"Science & Technology","checked":false},{"value":"14","text":"Art","checked":false},{"value":"15","text":"Beauty, Cosmetic & Personal Care","checked":false},{"value":"16","text":"Clip & Movie","checked":false},{"value":"17","text":"Drink & Beverage","checked":false},{"value":"18","text":"Games & Play","checked":false},{"value":"19","text":"Cabin and Wood","checked":false},{"value":"20","text":"Interior Design","checked":false}]
+            niches: config.niches.map(niche => { return { ...niche, checked: false } })
          }
       },
       methods: {
          dataChanged : () => {
             this.$emit('change', this.model)
+         },
+         removePlan: function(catIndex, planIndex) {
+            this.model.categories[catIndex].pricing.splice(planIndex, 1)
+         },
+         addPlan: function(catIndex) {
+           this.model.categories[catIndex].pricing.push({
+             time: 0,
+             price: 0,
+             bio_price: 0
+           })
          }
       }
    }

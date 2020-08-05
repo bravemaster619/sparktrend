@@ -4,3 +4,5 @@ tmp
 package-lock.json
 .nyc_output
 /public/uploads/
+instagram-user-data
+./lib/InstagramCrawler/instagram-user-data
